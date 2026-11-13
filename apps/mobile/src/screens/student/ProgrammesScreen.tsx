@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { endpoints, type ProgrammeCard } from '../../api';
 import { Async, Badge, Button, Card, IconCircle, InfoBanner, Muted, PremiumBadge, ProgressBar, Row, Screen, SectionTitle, type IconName } from '../../components/ui';
 import { useApi } from '../../hooks/useApi';
-import type { StudentStackScreen } from '../../navigation/types';
+import type { StudentTabScreen } from '../../navigation/types';
 import { colors, fontSizes, spacing } from '../../theme';
 import { fmtDate, lockReasonText } from '../../utils/format';
 
@@ -15,7 +16,7 @@ export const PROGRAMME_ICONS: Record<string, IconName> = {
   YOUNG_SCIENTIST: 'flask-outline',
 };
 
-export default function ProgrammesScreen({ navigation }: StudentStackScreen<'Programmes'>) {
+export default function ProgrammesScreen({ navigation }: StudentTabScreen<'Programmes'>) {
   const state = useApi(endpoints.programmes, [], { reloadOnFocus: true });
   const [lockedInfo, setLockedInfo] = useState<string | null>(null);
 

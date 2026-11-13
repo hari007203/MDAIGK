@@ -33,7 +33,7 @@ export type StudentTabParams = {
   Home: undefined;
   Learn: { subjectId?: string } | undefined;
   Games: undefined;
-  News: undefined;
+  Programmes: undefined;
   Progress: undefined;
 };
 
@@ -47,8 +47,8 @@ export type StudentStackParams = {
   LearningItem: { id: string; title?: string };
   Quiz: QuizParams;
   GamePlay: { gameId: string; code: string; name: string; attemptId: string; config: GameConfig; dailyUsage: DailyUsage };
+  News: undefined;
   NewsArticle: { id: string; title?: string };
-  Programmes: undefined;
   ProgrammeDetail: { id: string; name: string };
   Certificates: undefined;
   CertificateDetail: { id: string };

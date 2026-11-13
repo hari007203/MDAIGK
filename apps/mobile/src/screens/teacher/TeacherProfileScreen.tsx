@@ -1,5 +1,6 @@
 import React from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { useAuth } from '../../auth/AuthContext';
 import { Button, Card, Divider, IconCircle, ListRow, Muted, Row, Screen, SectionTitle } from '../../components/ui';
 import type { TeacherTabScreen } from '../../navigation/types';

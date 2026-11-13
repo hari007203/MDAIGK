@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="fruit" x1="173" y1="260" x2="326" y2="402" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE45A"/><stop offset=".48" stop-color="#FFC21B"/><stop offset="1" stop-color="#F49B08"/>
+    </linearGradient>
+    <linearGradient id="fruitShade" x1="207" y1="282" x2="318" y2="390" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFEA67" stop-opacity="0"/><stop offset="1" stop-color="#D98108" stop-opacity=".48"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="276" y1="252" x2="367" y2="220" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#47A928"/><stop offset=".54" stop-color="#8CD237"/><stop offset="1" stop-color="#B3E34E"/>
+    </linearGradient>
+    <linearGradient id="page" x1="253" y1="354" x2="252" y2="471" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFDF3"/><stop offset="1" stop-color="#F4E9C2"/>
+    </linearGradient>
+    <linearGradient id="cover" x1="253" y1="438" x2="253" y2="484" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17833D"/><stop offset="1" stop-color="#07552E"/>
+    </linearGradient>
+    <linearGradient id="capBadge" x1="165" y1="112" x2="246" y2="193" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F1FFD7"/><stop offset="1" stop-color="#CDEDA8"/>
+    </linearGradient>
+    <linearGradient id="creamBadge" x1="330" y1="114" x2="411" y2="195" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8E3"/><stop offset="1" stop-color="#F7E8BE"/>
+    </linearGradient>
+    <filter id="shadow" x="17" y="18" width="478" height="477" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <filter id="fruitShadow" x="172" y="227" width="181" height="195" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+  </defs>
+
+  <!-- Soft grounding shadow -->
+  <ellipse cx="257" cy="469" rx="226" ry="22" fill="#002E20" opacity=".24" filter="url(#shadow)"/>
+
+  <!-- Broken dotted learning path follows the reference's broad arch -->
+  <g stroke="#B7E66B" stroke-width="5" stroke-linecap="round" opacity=".96">
+    <path d="M115 326c11-20 19-32 30-44" stroke-dasharray="10 15"/>
+    <path d="M151 260c20-32 45-52 77-61" stroke-dasharray="10 15"/>
+    <path d="M245 192c32-8 62-8 91 0" stroke-dasharray="10 15"/>
+    <path d="M357 202c31 13 53 34 72 63" stroke-dasharray="10 15"/>
+    <path d="M439 282c12 14 21 29 30 48" stroke-dasharray="10 15"/>
+    <path d="M90 382l3 13M450 379l-3 14" stroke-dasharray="9 13"/>
+  </g>
+
+  <!-- Badge circles: cap and trophy high, books and controller at mid-height -->
+  <circle cx="205" cy="153" r="41" fill="url(#capBadge)"/>
+  <circle cx="371" cy="155" r="42" fill="url(#creamBadge)"/>
+  <circle cx="112" cy="274" r="43" fill="#FFF8E7"/>
+  <circle cx="433" cy="274" r="43" fill="#FFF8E7"/>
+
+  <!-- Graduation cap -->
+  <g stroke="#075A39" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m178 148 27-13 28 13-28 14-27-14Z" fill="#087044" stroke-width="2.4"/>
+    <path d="M187 154v12c10 8 24 8 35 0v-12l-17 9-18-9Z" fill="#087044" stroke-width="2.2"/>
+    <path d="M232 149v19" stroke-width="3"/>
+    <circle cx="232" cy="170" r="2.5" fill="#F7C52D" stroke="none"/>
+    <path d="m195 148 10 5 10-5" stroke="#D5F1A5" stroke-width="2"/>
+  </g>
+  <!-- Trophy -->
+  <g stroke="#D78B00" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+    <path d="M355 134h31v24c0 13-7 21-15 21s-16-8-16-21v-24Z" fill="#FFB80C"/>
+    <path d="M355 141h-10v8c0 9 7 14 15 14M386 141h10v8c0 9-7 14-15 14"/>
+    <path d="M371 180v10m-12 5h24m-19-5h14"/>
+    <path d="m370 141 2 6 6 .5-4.5 4 1.4 6-5-3.1-5 3.1 1.4-6-4.5-4 6-.5 2.2-6Z" fill="#FFD94A" stroke-width="1.2"/>
+  </g>
+  <!-- Two stacked books -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <path d="M89 252c0-6 5-10 11-10h36v18h-36c-6 0-11-3-11-8Z" fill="#43B6CE" stroke="#18879B" stroke-width="2.2"/>
+    <path d="M127 242h14v18h-14" stroke="#14764F" stroke-width="4"/>
+    <path d="M86 277c0-6 5-10 11-10h39v19H97c-6 0-11-3-11-9Z" fill="#FFC02B" stroke="#E6A312" stroke-width="2.2"/>
+    <path d="M127 267h14v19h-14" stroke="#14764F" stroke-width="4"/>
+    <path d="M95 248h26M94 273h27" stroke="#B5ECF0" stroke-width="2"/>
+  </g>
+  <!-- Game controller -->
+  <g stroke="#08724A" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M405 268c2-9 8-13 17-11l10 3 10-3c9-2 15 2 17 11l4 16c2 9-7 13-14 8l-10-8h-14l-10 8c-7 5-16 1-14-8l4-16Z" fill="#08724A" stroke-width="2"/>
+    <path d="M416 267v12m-6-6h12" stroke="#F6F4DE" stroke-width="4"/>
+    <circle cx="447" cy="266" r="2.5" fill="#F6F4DE" stroke="none"/>
+    <circle cx="455" cy="272" r="2.5" fill="#F6F4DE" stroke="none"/>
+    <circle cx="447" cy="278" r="2.5" fill="#F6F4DE" stroke="none"/>
+    <circle cx="439" cy="272" r="2.5" fill="#F6F4DE" stroke="none"/>
+  </g>
+
+  <!-- Small four-point stars -->
+  <path d="M320 31c3 17 7 21 22 25-15 4-19 8-22 25-3-17-7-21-22-25 15-4 19-8 22-25Z" fill="#FFD21D"/>
+  <path d="M57 335c3 14 6 18 19 21-13 3-16 7-19 21-3-14-6-18-19-21 13-3 16-7 19-21Z" fill="#FFD21D"/>
+
+  <!-- Book cover and layered fore-edge -->
+  <path d="M47 421c60-29 127-29 209 8 82-37 149-37 209-8l-8 34c-62-17-126-8-201 35-75-43-139-52-201-35l-8-34Z" fill="url(#cover)"/>
+  <path d="M53 418c61-28 128-26 203 11 75-37 142-39 203-11l-7 15c-65-18-130-6-196 35-66-41-131-53-196-35l-7-15Z" fill="#79C943" opacity=".9"/>
+  <path d="M50 407c61-26 128-24 206 13 78-37 145-39 206-13l-6 23c-62-17-130-7-200 37-70-44-138-54-200-37l-6-23Z" fill="#F0C831"/>
+
+  <!-- Sculpted page spread with separate curved leaves and central gutter -->
+  <path d="M50 407c57-29 119-28 206 11v57c-69-48-139-50-212-36l6-32Z" fill="url(#page)"/>
+  <path d="M462 407c-57-29-119-28-206 11v57c69-48 139-50 212-36l-6-32Z" fill="url(#page)"/>
+  <path d="M55 408c57-28 122-22 195 11-58-19-117-15-190 9l-5-20Z" fill="#FFFDF4"/>
+  <path d="M457 408c-57-28-122-22-195 11 58-19 117-15 190 9l5-20Z" fill="#FFFDF4"/>
+  <path d="M75 410c45-17 88-12 135 8M65 425c52-17 95-11 145 13M437 410c-45-17-88-12-135 8M447 425c-52-17-95-11-145 13" stroke="#E8DAB2" stroke-width="4" stroke-linecap="round" opacity=".8"/>
+  <path d="M51 407c57-29 119-28 205 11 86-39 148-40 205-11" stroke="#FFF9E5" stroke-width="5" stroke-linecap="round"/>
+  <path d="M256 418v57" stroke="#D99F0B" stroke-width="4" stroke-linecap="round"/>
+  <path d="M49 438c73-14 142-12 207 37 65-49 134-51 207-37" stroke="#F5D14B" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Mango shadow, custom slanted silhouette, stem, leaf, and gloss -->
+  <path d="M207 269c-25 18-45 56-48 91-4 46 19 69 56 59 52-14 94-70 91-119-2-36-31-56-66-47-12 3-23 8-33 16Z" fill="#123C1D" opacity=".22" filter="url(#fruitShadow)"/>
+  <g transform="rotate(13 247 322)">
+    <path d="M226 261c-35 5-59 40-60 83-1 48 24 83 60 81 45-2 87-48 91-96 4-42-24-72-63-71-10 0-19 1-28 3Z" fill="url(#fruit)"/>
+    <path d="M261 261c33 12 52 40 48 75-4 38-32 74-68 86 41-4 72-47 76-91 4-40-19-69-56-70Z" fill="url(#fruitShade)"/>
+    <path d="M224 269c-5-10-5-20 1-29 7 8 8 17 5 27" stroke="#8B5A19" stroke-width="7" stroke-linecap="round"/>
+    <path d="M233 253c21-29 48-42 82-38-12 27-38 48-77 54-5-4-7-9-5-16Z" fill="url(#leaf)"/>
+    <path d="M237 263c24-20 47-34 72-42" stroke="#4F9E25" stroke-width="3" stroke-linecap="round"/>
+    <path d="M193 302c8-17 19-28 35-35" stroke="#FFF5C8" stroke-width="7" stroke-linecap="round"/>
+    <path d="M187 320c2-5 4-9 7-12" stroke="#FFF9DA" stroke-width="4" stroke-linecap="round" opacity=".9"/>
+  </g>
+</svg>

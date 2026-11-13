@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { NEWS_CATEGORIES } from '@mango/shared';
 import { endpoints } from '../../api';
 import { Async, Badge, Card, Chip, ChipRow, Muted, Row, Screen } from '../../components/ui';
 import { useApi } from '../../hooks/useApi';
-import type { StudentTabScreen } from '../../navigation/types';
+import type { StudentStackScreen } from '../../navigation/types';
 import { colors, fontSizes, spacing } from '../../theme';
 import { fmtDate } from '../../utils/format';
 
 export const categoryName = (code: string) => NEWS_CATEGORIES.find((c) => c.code === code)?.name ?? code;
 
-export default function NewsScreen({ navigation }: StudentTabScreen<'News'>) {
+export default function NewsScreen({ navigation }: StudentStackScreen<'News'>) {
   const [category, setCategory] = useState<string | undefined>();
   const cats = useApi(endpoints.newsCategories);
   const list = useApi(() => endpoints.news(category), [category]);

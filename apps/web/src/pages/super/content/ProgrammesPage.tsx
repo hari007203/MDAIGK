@@ -1,10 +1,11 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { ArrowDown, ArrowUp, PlusCircle, Trash2 } from 'lucide-react';
+import { ArrowDown, ArrowUp, BookOpen, GraduationCap, PlusCircle, Trash2 } from 'lucide-react';
 import { CONTENT_STATUS } from '@mango/shared';
 import { ApiError, api, errorMessage } from '../../../api/client';
 import { useGet, useInvalidate } from '../../../api/hooks';
 import type { Programme, ProgrammeItem, ProgrammeModule } from '../../../api/types';
-import { Card, PageHeader } from '../../../components/Cards';
+import { Card } from '../../../components/Cards';
+import { ContentModuleHeader, ContentModulePage, ContentModuleStats } from '../../../components/ContentModuleChrome';
 import { DataTable, type Column } from '../../../components/DataTable';
 import { ClassLevelPicker, FormField, FormGrid } from '../../../components/Form';
 import { InlineAlert, QueryState } from '../../../components/Feedback';
@@ -38,11 +39,18 @@ export default function ProgrammesPage() {
     },
   ];
   return (
-    <>
-      <PageHeader title="Programmes" subtitle="Premium academies and the separate Young Scientist programme. Counts are all time." />
+    <ContentModulePage module="programmes">
+      <ContentModuleHeader icon={GraduationCap} title="Programmes" subtitle="Premium academies and the separate Young Scientist programme. Counts are all time." />
       <QueryState query={q}>
         {(rows) => (
           <div className="stack">
+            <ContentModuleStats
+              items={[
+                { label: 'Total programmes', value: rows.length, icon: BookOpen },
+                { label: 'Premium academies', value: rows.filter((programme) => programme.premium).length, icon: GraduationCap, tone: 'gold' },
+                { label: 'Other programmes', value: rows.filter((programme) => !programme.premium).length, icon: BookOpen },
+              ]}
+            />
             <Card title={<span className="row">Premium academies <PremiumBadge label="Premium" /></span>}>
               <DataTable rows={rows.filter((p) => p.premium)} rowKey={(p) => p._id} columns={columns} emptyTitle="No premium academies" />
             </Card>
@@ -53,7 +61,7 @@ export default function ProgrammesPage() {
         )}
       </QueryState>
       <ProgrammeModal programme={editing} onClose={() => setEditing(null)} />
-    </>
+    </ContentModulePage>
   );
 }
 

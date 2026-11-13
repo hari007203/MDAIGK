@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { endpoints } from '../../api';
 import { Async, Badge, Button, Card, EmptyState, IconCircle, ListRow, Muted, ProgressBar, Row, Screen, SectionTitle, StatGrid, StatTile } from '../../components/ui';
 import { useApi } from '../../hooks/useApi';

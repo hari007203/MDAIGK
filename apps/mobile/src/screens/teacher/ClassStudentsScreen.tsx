@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { endpoints } from '../../api';
 import { Async, Badge, Card, Divider, EmptyState, IconCircle, ListRow, Screen, TextField } from '../../components/ui';
 import { useApi } from '../../hooks/useApi';

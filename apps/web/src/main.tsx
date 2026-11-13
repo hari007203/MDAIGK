@@ -8,6 +8,8 @@ import { AuthProvider } from './auth/AuthContext';
 import { ToastProvider } from './components/Toast';
 import { App } from './App';
 import './styles.css';
+import './super-admin.css';
+import './teacher-portal.css';
 
 // Brand tokens come from @mango/shared so web and mobile stay in sync.
 const root = document.documentElement.style;

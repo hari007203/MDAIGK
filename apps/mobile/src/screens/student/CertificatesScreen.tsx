@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { endpoints, type CertificationLevelRow } from '../../api';
 import { Async, Badge, Button, Card, Divider, IconCircle, ListRow, Muted, Row, Screen, SectionTitle } from '../../components/ui';
 import { useApi } from '../../hooks/useApi';

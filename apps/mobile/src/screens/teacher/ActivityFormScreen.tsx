@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, View } from 'react-native';
+import { Text } from '../../components/Typography';
 import type { ActivityType } from '@mango/shared';
 import { endpoints, errorMessage, type ActivityInput } from '../../api';
 import { addDays, DateStepper, endOfDay, startOfDay } from '../../components/DateStepper';

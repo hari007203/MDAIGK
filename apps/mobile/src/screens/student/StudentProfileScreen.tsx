@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Pressable, Text, View } from 'react-native';
+import { Alert, Pressable, View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { endpoints, errorMessage } from '../../api';
 import { useAuth } from '../../auth/AuthContext';
 import { Async, Button, Card, InfoBanner, InlineError, Muted, Row, Screen, SectionTitle, TextField } from '../../components/ui';

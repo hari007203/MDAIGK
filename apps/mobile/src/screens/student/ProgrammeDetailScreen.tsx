@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { ApiError, endpoints, errorMessage, type ProgrammeItem } from '../../api';
 import { Async, Badge, Body, Button, Card, EmptyState, Ionicons, InlineError, Muted, PremiumBadge, ProgressBar, Row, Screen, SectionTitle } from '../../components/ui';
 import { useApi } from '../../hooks/useApi';

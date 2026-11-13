@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { endpoints, errorMessage, ApiError, type GameSummary } from '../../api';
 import { Async, Badge, Button, Card, IconCircle, InfoBanner, Muted, ProgressBar, Row, Screen, type IconName } from '../../components/ui';
 import { useApi } from '../../hooks/useApi';

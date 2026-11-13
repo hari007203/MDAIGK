@@ -1,0 +1,122 @@
+.app--teacher .teacher-performance-page { position: relative; isolation: isolate; width: 100%; min-width: 0; overflow-x: clip; }
+.app--teacher .teacher-performance-page::after { position: absolute; z-index: -1; inset: auto -32px -32px; height: 72px; background: radial-gradient(70% 115% at 10% 110%,#d5ebc8 0 49%,transparent 50%),radial-gradient(60% 120% at 88% 125%,#f4dc85 0 44%,transparent 45%),linear-gradient(168deg,transparent 38%,#e3efda 39% 58%,transparent 59%); content:""; opacity:.46; pointer-events:none; }
+.app--teacher .teacher-performance-page > .teacher-page-heading { min-height: 94px; margin-bottom: 14px; padding: 13px 19px; border-radius: 16px; background: linear-gradient(110deg,#fff 0%,#fffefa 68%,#f3f8ef 100%); }
+.app--teacher .teacher-performance-page .teacher-page-heading__eyebrow { display: none; }
+.app--teacher .teacher-performance-page .teacher-page-heading__icon { width: 54px; height: 54px; border-radius: 15px; color: #087647; background: #e3f3e4; }
+.app--teacher .teacher-performance-page .teacher-page-heading h1 { color: #18251f; font-size: clamp(1.55rem,2.2vw,1.95rem); }
+.app--teacher .teacher-performance-page .teacher-page-heading p { margin-top: 4px; color: #69766f; font-size: .87rem; }
+
+.app--teacher .teacher-performance-tabs { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; margin: 0 0 11px; padding: 4px; border: 1px solid #e8e3d3; border-radius: 999px; background: #f3f0e5; }
+.app--teacher .teacher-performance-tab { display: flex; min-height: 36px; align-items: center; justify-content: center; padding: 7px 12px; border-radius: 999px; color: #53675a; font-size: .78rem; font-weight: 700; text-align: center; text-decoration: none; transition: background-color .2s ease,color .2s ease,box-shadow .2s ease; }
+.app--teacher .teacher-performance-tab.is-active { color: #075d39; background: #fff; box-shadow: 0 2px 6px rgb(30 49 34 / 10%); }
+.app--teacher .teacher-performance-tab:not(.is-unavailable):not(.is-active):hover { color: #075d39; background: rgb(255 255 255 / 68%); }
+.app--teacher .teacher-performance-tab.is-unavailable { color: #869087; cursor: not-allowed; }
+.app--teacher .teacher-performance-anchor { display: block; scroll-margin-top: 96px; }
+
+.app--teacher .teacher-performance-filter-card { margin-bottom: 13px; border-radius: 15px; box-shadow: 0 3px 12px rgb(36 55 39 / 5%); }
+.app--teacher .teacher-performance-filter-card .card__body { padding: 12px 14px; }
+.app--teacher .teacher-performance-filter-card .toolbar { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); align-items: end; gap: 12px; padding: 0; border: 0; background: transparent; }
+.app--teacher .teacher-performance-filter-card .field { min-width: 0; margin: 0; }
+.app--teacher .teacher-performance-filter-card .field label { margin-bottom: 4px; color: #596d61; font-size: .69rem; font-weight: 700; }
+.app--teacher .teacher-performance-filter-card .field select,
+.app--teacher .teacher-performance-filter-card .field input { width: 100%; min-width: 0; height: 38px; border-color: #e1e6dc; border-radius: 9px; background-color: #fff; font-size: .8rem; }
+.app--teacher .teacher-performance-filter-card .field select:focus,
+.app--teacher .teacher-performance-filter-card .field input:focus { border-color: #8cbea1; box-shadow: 0 0 0 3px rgb(22 131 79 / 12%); }
+.app--teacher .teacher-performance-page > .teacher-performance-filter-card + .inline-alert { margin: 0 0 12px; }
+
+.app--teacher .teacher-performance-summary .stat-grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-bottom: 14px; }
+.app--teacher .teacher-performance-summary .stat { min-height: 88px; padding: 11px 15px; border-radius: 15px; box-shadow: 0 4px 12px rgb(35 56 40 / 5%); }
+.app--teacher .teacher-performance-summary .stat__label { color: #586b60; font-size: .73rem; font-weight: 750; letter-spacing: .025em; }
+.app--teacher .teacher-performance-summary .stat__icon { width: 21px; height: 21px; padding: 8px; border-radius: 12px; color: #13854c; background: #e4f5e2; }
+.app--teacher .teacher-performance-summary .stat:nth-child(2) .stat__icon { color: #16884d; background: #e7f5e7; }
+.app--teacher .teacher-performance-summary .stat:nth-child(3) .stat__icon { color: #1688bd; background: #e3f4ff; }
+.app--teacher .teacher-performance-summary .stat:nth-child(3) { border-color: #d7e9f3; background: linear-gradient(145deg,#f1f8ff,#fff); }
+.app--teacher .teacher-performance-summary .stat__value { margin-top: 5px; color: #173e2c; font-size: 1.75rem; line-height: 1.08; }
+.app--teacher .teacher-performance-summary .stat__hint { margin-top: 4px; color: #748178; font-size: .68rem; line-height: 1.35; }
+.app--teacher .teacher-performance-summary .stat__hint br { display: block; content: ""; margin-top: 2px; }
+
+.app--teacher .teacher-performance-main-grid { display: grid; grid-template-columns: minmax(0,.96fr) minmax(0,1.04fr); align-items: stretch; gap: 14px; margin-bottom: 14px; min-width: 0; }
+.app--teacher .teacher-performance-main-grid > .card { min-width: 0; border-radius: 16px; box-shadow: 0 4px 14px rgb(34 55 39 / 6%); }
+.app--teacher .teacher-performance-main-grid .card__header { padding: 15px 17px 9px; }
+.app--teacher .teacher-performance-main-grid .card__title { color: #173e2c; font-size: .98rem; font-weight: 800; }
+.app--teacher .teacher-performance-main-grid .card__sub { margin-top: 3px; font-size: .72rem; }
+.app--teacher .teacher-performance-subject-card .card__body { padding: 8px 17px 16px; }
+.app--teacher .teacher-performance-subject-list { display: grid; gap: 11px; }
+.app--teacher .teacher-performance-subject-row { display: grid; grid-template-columns: 24px minmax(90px,.95fr) minmax(60px,1fr) 38px; align-items: center; gap: 9px; min-width: 0; }
+.app--teacher .teacher-performance-subject-row__icon { display: grid; place-items: center; width: 23px; height: 23px; border-radius: 7px; color: var(--subject-color,#16834f); background: #edf5ed; background: color-mix(in srgb,var(--subject-color,#16834f) 11%,white); }
+.app--teacher .teacher-performance-subject-row__name { overflow: hidden; color: #3d5145; font-size: .75rem; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.app--teacher .teacher-performance-subject-row__track { display: block; height: 9px; overflow: hidden; border-radius: 999px; background: #edf1e9; }
+.app--teacher .teacher-performance-subject-row__track > span { display: block; height: 100%; border-radius: inherit; background: var(--subject-color,#16834f); transition: width .45s ease; }
+.app--teacher .teacher-performance-subject-row > strong { color: #263d30; font-size: .72rem; text-align: right; }
+.app--teacher .teacher-performance-main-grid .chart-card__body { height: 236px !important; padding: 5px 10px 8px; }
+.app--teacher .teacher-performance-main-grid .recharts-wrapper { max-width: 100%; }
+.app--teacher .teacher-performance-trend-label { fill: #263c30; font-size: 10px; font-weight: 750; }
+.app--teacher .teacher-performance-main-grid .recharts-cartesian-axis-tick-value { fill: #6c7b71; font-size: 10px; }
+.app--teacher .teacher-performance-main-grid .recharts-cartesian-grid line { stroke: #e9eee7; }
+
+.app--teacher .teacher-performance-page > .chart-card { margin-bottom: 14px; border-radius: 16px; box-shadow: 0 4px 14px rgb(34 55 39 / 6%); }
+.app--teacher .teacher-performance-page > .chart-card .card__header { padding: 14px 17px 6px; }
+.app--teacher .teacher-performance-page > .chart-card .chart-card__body { height: 222px !important; padding: 5px 12px 8px; }
+.app--teacher .teacher-performance-page > .card.teacher-performance-table-card { border-radius: 16px; box-shadow: 0 4px 14px rgb(34 55 39 / 6%); }
+.app--teacher .teacher-performance-table-card .card__header { padding: 14px 17px 8px; }
+.app--teacher .teacher-performance-table-wrap { width: 100%; min-width: 0; overflow-x: auto; border: 1px solid #e4eae1; border-radius: 12px; background: #fff; }
+.app--teacher .teacher-performance-table { width: 100%; min-width: 470px; border-collapse: separate; border-spacing: 0; font-size: .79rem; }
+.app--teacher .teacher-performance-table thead th { padding: 10px 12px; color: #315f49; background: #eaf4e9; font-size: .68rem; }
+.app--teacher .teacher-performance-table tbody td { padding: 10px 12px; border-top: 1px solid #edf0eb; }
+.app--teacher .teacher-subject-table-cell { display: grid; grid-template-columns:minmax(100px,1fr) minmax(70px,150px); align-items: center; gap: 12px; }
+.app--teacher .teacher-performance-table .teacher-subject-performance__track { display: block; height: 7px; overflow: hidden; border-radius: 999px; background: #edf1e9; }
+.app--teacher .teacher-performance-table .teacher-subject-performance__track > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#ffc928,#16834f); transition: width .4s ease; }
+
+@media (max-width: 1050px) {
+  .app--teacher .teacher-performance-filter-card .toolbar { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .app--teacher .teacher-performance-main-grid { grid-template-columns: minmax(0,1fr); }
+  .app--teacher .teacher-performance-subject-row { grid-template-columns: 24px minmax(110px,.9fr) minmax(90px,1fr) 42px; }
+}
+
+@media (max-width: 640px) {
+  .app--teacher .teacher-performance-page > .teacher-page-heading { min-height: 86px; margin-bottom: 11px; padding: 10px 12px; }
+  .app--teacher .teacher-performance-page .teacher-page-heading__icon { width: 43px; height: 43px; border-radius: 13px; }
+  .app--teacher .teacher-performance-page .teacher-page-heading h1 { font-size: 1.32rem; }
+  .app--teacher .teacher-performance-page .teacher-page-heading p { font-size: .69rem; line-height: 1.35; }
+  .app--teacher .teacher-performance-tabs { gap: 3px; margin-bottom: 9px; }
+  .app--teacher .teacher-performance-tab { min-height: 38px; padding: 6px 5px; font-size: .64rem; line-height: 1.15; }
+  .app--teacher .teacher-performance-filter-card .card__body { padding: 10px; }
+  .app--teacher .teacher-performance-filter-card .toolbar { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; }
+  .app--teacher .teacher-performance-filter-card .field label { font-size: .64rem; }
+  .app--teacher .teacher-performance-filter-card .field select,
+  .app--teacher .teacher-performance-filter-card .field input { height: 36px; padding-inline: 8px; font-size: .72rem; }
+  .app--teacher .teacher-performance-summary .stat-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin-bottom: 10px; }
+  .app--teacher .teacher-performance-summary .stat:last-child { grid-column: 1 / -1; }
+  .app--teacher .teacher-performance-summary .stat { min-height: 88px; padding: 9px; border-radius: 12px; }
+  .app--teacher .teacher-performance-summary .stat__top { align-items: flex-start; gap: 3px; }
+  .app--teacher .teacher-performance-summary .stat__label { font-size: .59rem; line-height: 1.2; }
+  .app--teacher .teacher-performance-summary .stat__icon { width: 14px; height: 14px; padding: 5px; border-radius: 8px; }
+  .app--teacher .teacher-performance-summary .stat__value { font-size: 1.12rem; overflow-wrap: anywhere; }
+  .app--teacher .teacher-performance-summary .stat__hint { font-size: .55rem; line-height: 1.25; }
+  .app--teacher .teacher-performance-main-grid { gap: 10px; margin-bottom: 10px; }
+  .app--teacher .teacher-performance-main-grid .card__header { padding: 12px 12px 7px; }
+  .app--teacher .teacher-performance-main-grid .card__body { padding: 7px 11px 12px; }
+  .app--teacher .teacher-performance-subject-list { gap: 10px; }
+  .app--teacher .teacher-performance-subject-row { grid-template-columns: 22px minmax(72px,.8fr) minmax(50px,1fr) 34px; gap: 6px; }
+  .app--teacher .teacher-performance-subject-row__icon { width: 21px; height: 21px; }
+  .app--teacher .teacher-performance-subject-row__name { font-size: .65rem; }
+  .app--teacher .teacher-performance-subject-row__track { height: 8px; }
+  .app--teacher .teacher-performance-subject-row > strong { font-size: .64rem; }
+  .app--teacher .teacher-performance-main-grid .chart-card__body { height: 226px !important; padding: 5px 5px 8px; }
+  .app--teacher .teacher-performance-page > .chart-card .chart-card__body { height: 205px !important; padding: 5px 5px 8px; }
+  .app--teacher .teacher-performance-table { min-width: 0; }
+  .app--teacher .teacher-performance-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+  .app--teacher .teacher-performance-table tbody { display: grid; gap: 7px; }
+  .app--teacher .teacher-performance-table tbody tr { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); padding: 7px 9px; border: 1px solid #e7ebe4; border-radius: 11px; }
+  .app--teacher .teacher-performance-table tbody td { min-width: 0; padding: 6px 3px; border: 0; font-size: .68rem; }
+  .app--teacher .teacher-performance-table tbody td:first-child { grid-column: 1 / -1; }
+  .app--teacher .teacher-performance-table tbody td:nth-child(2)::before { margin-right: 5px; color: #78847d; content: "Average"; font-size: .59rem; }
+  .app--teacher .teacher-performance-table tbody td:nth-child(3)::before { margin-right: 5px; color: #78847d; content: "Attempts"; font-size: .59rem; }
+  .app--teacher .teacher-subject-table-cell { grid-template-columns:minmax(0,1fr) minmax(56px,95px); gap: 8px; }
+  .app--teacher .teacher-performance-table-card .card__body { padding: 10px; }
+}
+
+@media (max-width: 360px) {
+  .app--teacher .teacher-performance-summary .stat-grid { grid-template-columns: minmax(0,1fr); }
+  .app--teacher .teacher-performance-summary .stat:last-child { grid-column: auto; }
+}

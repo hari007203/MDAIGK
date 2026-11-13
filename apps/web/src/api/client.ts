@@ -207,12 +207,17 @@ export function createApiClient(config: ApiClientConfig = {}) {
     post: <T>(path: string, body?: unknown) => request<T>('POST', path, { body: body ?? {} }),
     put: <T>(path: string, body?: unknown) => request<T>('PUT', path, { body: body ?? {} }),
     patch: <T>(path: string, body?: unknown) => request<T>('PATCH', path, { body: body ?? {} }),
-    /** Download a file (e.g. CSV export) with the auth header and save it via an object URL. */
-    async download(path: string, query: Query | undefined, fallbackName: string) {
+    /** Fetch a file with the auth header and return its blob plus server filename. */
+    async file(path: string, query: Query | undefined, fallbackName: string) {
       const res = await raw('GET', path, { query });
       const blob = await res.blob();
       const cd = res.headers.get('Content-Disposition') ?? '';
       const name = /filename="?([^";]+)"?/.exec(cd)?.[1] ?? fallbackName;
+      return { blob, name };
+    },
+    /** Download a file (e.g. CSV export) with the auth header and save it via an object URL. */
+    async download(path: string, query: Query | undefined, fallbackName: string) {
+      const { blob, name } = await this.file(path, query, fallbackName);
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -222,6 +227,11 @@ export function createApiClient(config: ApiClientConfig = {}) {
       a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
       return name;
+    },
+    /** Fetch a file and return an object URL for inline display (caller must revoke it). */
+    async objectUrl(path: string, query?: Query) {
+      const { blob } = await this.file(path, query, 'file');
+      return URL.createObjectURL(blob);
     },
     tokens: storage,
     setSchoolId(id: string | null) {

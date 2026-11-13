@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, Linking, Text } from 'react-native';
+import { Image, Linking } from 'react-native';
+import { Text } from '../../components/Typography';
 import { endpoints } from '../../api';
 import { Async, Badge, Body, Button, Card, Muted, Row, Screen, SectionTitle } from '../../components/ui';
 import { useApi } from '../../hooks/useApi';

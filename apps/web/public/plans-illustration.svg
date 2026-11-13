@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 200" fill="none" role="img" aria-label="Books with graduation cap illustration">
+  <!-- ground -->
+  <ellipse cx="260" cy="188" rx="235" ry="34" fill="#cde9cb"/>
+  <!-- back leaves -->
+  <ellipse cx="140" cy="118" rx="58" ry="24" fill="#2f8f5b" transform="rotate(-22 140 118)"/>
+  <ellipse cx="382" cy="112" rx="58" ry="24" fill="#2f8f5b" transform="rotate(20 382 112)"/>
+  <ellipse cx="168" cy="82" rx="34" ry="14" fill="#3aa267" transform="rotate(-30 168 82)"/>
+  <ellipse cx="352" cy="76" rx="34" ry="14" fill="#3aa267" transform="rotate(28 352 76)"/>
+  <!-- book: bottom (green) -->
+  <rect x="168" y="140" width="184" height="28" rx="9" fill="#0e6a45"/>
+  <rect x="176" y="147" width="168" height="15" rx="5" fill="#ffffff"/>
+  <!-- book: middle (yellow) -->
+  <rect x="184" y="114" width="152" height="26" rx="9" fill="#f6b73c"/>
+  <rect x="192" y="120" width="136" height="14" rx="5" fill="#ffffff"/>
+  <!-- book: top (white) -->
+  <rect x="202" y="90" width="116" height="24" rx="8" fill="#ffffff" stroke="#d8e0d4" stroke-width="2"/>
+  <rect x="210" y="96" width="100" height="12" rx="4" fill="#eef3ea"/>
+  <!-- graduation cap -->
+  <path d="M260 28 L336 54 L260 80 L184 54 Z" fill="#22385c"/>
+  <path d="M226 64 L226 86 Q260 102 294 86 L294 64 L260 78 Z" fill="#1a2c48"/>
+  <path d="M336 54 L344 82" stroke="#f6b73c" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="344" cy="88" r="6" fill="#f6b73c"/>
+  <!-- sparkle -->
+  <path d="M410 42 L413 50 L421 53 L413 56 L410 64 L407 56 L399 53 L407 50 Z" fill="#f6b73c"/>
+  <circle cx="112" cy="52" r="5" fill="#3aa267"/>
+</svg>

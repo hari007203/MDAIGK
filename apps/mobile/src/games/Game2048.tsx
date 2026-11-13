@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { PanResponder, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { PanResponder, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Text } from '../components/Typography';
 import { Badge, Button, IconButton, InfoBanner, Muted, Row } from '../components/ui';
 import { colors, fontSizes, radii, spacing } from '../theme';
 import { addRandomTile, canMove, levelFor, maxTile, move, newGame, type Board, type Direction } from './logic/game2048';

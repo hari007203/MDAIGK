@@ -1,10 +1,11 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { PlusCircle } from 'lucide-react';
+import { BookOpenCheck, CheckCircle2, FileText, PlusCircle } from 'lucide-react';
 import { CLASS_LEVELS, LEARNING_ITEM_TYPES } from '@mango/shared';
 import { ApiError, api, errorMessage } from '../../../api/client';
 import { useGet, useInvalidate, useMutate } from '../../../api/hooks';
 import type { LearningItem, Paginated } from '../../../api/types';
-import { PageHeader, Toolbar } from '../../../components/Cards';
+import { Toolbar } from '../../../components/Cards';
+import { ContentModuleHeader, ContentModulePage, ContentModuleStats } from '../../../components/ContentModuleChrome';
 import { DataTable } from '../../../components/DataTable';
 import { ClassLevelPicker, FormField, FormGrid } from '../../../components/Form';
 import { InlineAlert } from '../../../components/Feedback';
@@ -32,8 +33,9 @@ export default function LearningItemsPage() {
   });
 
   return (
-    <>
-      <PageHeader
+    <ContentModulePage module="learning">
+      <ContentModuleHeader
+        icon={BookOpenCheck}
         title="Learning items"
         subtitle="Author content and move it through moderation: draft → review → published → archived."
         actions={
@@ -42,6 +44,15 @@ export default function LearningItemsPage() {
           </button>
         }
       />
+      {list.data && (
+        <ContentModuleStats
+          items={[
+            { label: 'Matching resources', value: list.data.total, icon: BookOpenCheck },
+            { label: 'Published on this page', value: list.data.items.filter((item) => item.status === 'published').length, icon: CheckCircle2 },
+            { label: 'Drafts on this page', value: list.data.items.filter((item) => item.status === 'draft').length, icon: FileText, tone: 'gold' },
+          ]}
+        />
+      )}
       <Toolbar>
         <div className="field toolbar__grow">
           <label className="field__label" htmlFor="li-q">
@@ -128,7 +139,7 @@ export default function LearningItemsPage() {
         pagination={list.data ? { page: list.data.page, totalPages: list.data.totalPages, total: list.data.total, pageSize: list.data.pageSize, onPage: setPage } : undefined}
       />
       <LearningItemModal item={editing === 'new' ? null : editing} open={editing !== null} onClose={() => setEditing(null)} />
-    </>
+    </ContentModulePage>
   );
 }
 

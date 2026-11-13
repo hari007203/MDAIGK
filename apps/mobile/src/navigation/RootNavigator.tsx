@@ -2,8 +2,10 @@ import React from 'react';
 import { DefaultTheme, NavigationContainer, type Theme } from '@react-navigation/native';
 import { createNativeStackNavigator, type NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { createBottomTabNavigator, type BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
+import { useFonts } from 'expo-font';
 import { useAuth } from '../auth/AuthContext';
 import { Ionicons, Loading, type IconName } from '../components/ui';
+import { TypographyProvider, useTypographyReady } from '../components/Typography';
 import { colors } from '../theme';
 import LoginScreen from '../screens/LoginScreen';
 import SchoolPickerScreen from '../screens/SchoolPickerScreen';
@@ -41,23 +43,35 @@ const navTheme: Theme = {
   colors: { ...DefaultTheme.colors, primary: colors.forestGreen, background: colors.warmIvory, card: colors.white, text: colors.text, border: colors.border },
 };
 
-const stackOptions: NativeStackNavigationOptions = {
-  headerStyle: { backgroundColor: colors.forestGreen },
-  headerTintColor: colors.white,
-  headerTitleStyle: { fontWeight: '700' },
-  contentStyle: { backgroundColor: colors.warmIvory },
+const appFonts = {
+  Inter_400Regular: require('../../assets/fonts/Inter-400.ttf'),
+  Inter_500Medium: require('../../assets/fonts/Inter-500.ttf'),
+  Inter_600SemiBold: require('../../assets/fonts/Inter-600.ttf'),
+  Inter_700Bold: require('../../assets/fonts/Inter-700.ttf'),
+  Nunito_700Bold: require('../../assets/fonts/Nunito-700.ttf'),
+  Nunito_800ExtraBold: require('../../assets/fonts/Nunito-800.ttf'),
+  Nunito_900Black: require('../../assets/fonts/Nunito-900.ttf'),
 };
 
-function tabOptions(icons: Record<string, [IconName, IconName]>) {
+function stackOptions(fontsReady: boolean): NativeStackNavigationOptions {
+  return {
+    headerStyle: { backgroundColor: colors.forestGreen },
+    headerTintColor: colors.white,
+    headerTitleStyle: fontsReady ? { fontFamily: 'Nunito_700Bold' } : { fontWeight: '700' },
+    contentStyle: { backgroundColor: colors.warmIvory },
+  };
+}
+
+function tabOptions(icons: Record<string, [IconName, IconName]>, fontsReady: boolean) {
   return ({ route }: { route: { name: string } }): BottomTabNavigationOptions => ({
     headerStyle: { backgroundColor: colors.forestGreen },
     headerTintColor: colors.white,
-    headerTitleStyle: { fontWeight: '700' },
+    headerTitleStyle: fontsReady ? { fontFamily: 'Nunito_700Bold' } : { fontWeight: '700' },
     tabBarActiveTintColor: colors.forestGreen,
     tabBarInactiveTintColor: colors.textMuted,
     tabBarActiveBackgroundColor: '#FFF4CC',
     tabBarStyle: { height: 64, paddingBottom: 8, paddingTop: 6, borderTopColor: colors.border },
-    tabBarLabelStyle: { fontSize: 12, fontWeight: '700' },
+    tabBarLabelStyle: fontsReady ? { fontFamily: 'Inter_700Bold', fontSize: 12 } : { fontSize: 12, fontWeight: '700' },
     tabBarItemStyle: { borderRadius: 12, marginHorizontal: 2 },
     tabBarIcon: ({ focused, color, size }) => {
       const [on, off] = icons[route.name] ?? ['ellipse', 'ellipse-outline'];
@@ -71,6 +85,7 @@ const TTabs = createBottomTabNavigator<TeacherTabParams>();
 const TStack = createNativeStackNavigator<TeacherStackParams>();
 
 function TeacherTabs() {
+  const isReady = useTypographyReady();
   return (
     <TTabs.Navigator
       screenOptions={tabOptions({
@@ -79,7 +94,7 @@ function TeacherTabs() {
         Activities: ['clipboard', 'clipboard-outline'],
         Insights: ['analytics', 'analytics-outline'],
         Profile: ['person-circle', 'person-circle-outline'],
-      })}
+      }, isReady)}
     >
       <TTabs.Screen name="Home" component={TeacherHomeScreen} options={{ title: 'Mango Dude' }} />
       <TTabs.Screen name="Classes" component={ClassesScreen} options={{ title: 'My Classes', tabBarLabel: 'Classes' }} />
@@ -91,8 +106,9 @@ function TeacherTabs() {
 }
 
 function TeacherApp() {
+  const isReady = useTypographyReady();
   return (
-    <TStack.Navigator screenOptions={stackOptions}>
+    <TStack.Navigator screenOptions={stackOptions(isReady)}>
       <TStack.Screen name="TeacherTabs" component={TeacherTabs} options={{ headerShown: false }} />
       <TStack.Screen name="ClassStudents" component={ClassStudentsScreen} options={({ route }) => ({ title: route.params.label })} />
       <TStack.Screen name="StudentProfile" component={StudentProfileScreen} options={({ route }) => ({ title: route.params.name })} />
@@ -108,35 +124,37 @@ const STabs = createBottomTabNavigator<StudentTabParams>();
 const SStack = createNativeStackNavigator<StudentStackParams>();
 
 function StudentTabs() {
+  const fontsReady = useTypographyReady();
   return (
     <STabs.Navigator
       screenOptions={tabOptions({
         Home: ['home', 'home-outline'],
         Learn: ['book', 'book-outline'],
         Games: ['game-controller', 'game-controller-outline'],
-        News: ['newspaper', 'newspaper-outline'],
+        Programmes: ['rocket', 'rocket-outline'],
         Progress: ['stats-chart', 'stats-chart-outline'],
-      })}
+      }, fontsReady)}
     >
       <STabs.Screen name="Home" component={StudentHomeScreen} options={{ title: 'Mango Dude' }} />
       <STabs.Screen name="Learn" component={LearnScreen} />
       <STabs.Screen name="Games" component={GamesScreen} />
-      <STabs.Screen name="News" component={NewsScreen} options={{ title: 'News & GK', tabBarLabel: 'News' }} />
+      <STabs.Screen name="Programmes" component={ProgrammesScreen} />
       <STabs.Screen name="Progress" component={ProgressScreen} options={{ title: 'My Progress', tabBarLabel: 'Progress' }} />
     </STabs.Navigator>
   );
 }
 
 function StudentApp() {
+  const fontsReady = useTypographyReady();
   return (
-    <SStack.Navigator screenOptions={stackOptions}>
+    <SStack.Navigator screenOptions={stackOptions(fontsReady)}>
       <SStack.Screen name="StudentTabs" component={StudentTabs} options={{ headerShown: false }} />
       <SStack.Screen name="MyActivities" component={MyActivitiesScreen} options={{ title: 'My Activities' }} />
       <SStack.Screen name="LearningItem" component={LearningItemScreen} options={({ route }) => ({ title: route.params.title ?? 'Learning' })} />
       <SStack.Screen name="Quiz" component={QuizPlayerScreen} options={({ route }) => ({ title: route.params.title ?? 'Quiz' })} />
       <SStack.Screen name="GamePlay" component={GamePlayScreen} options={({ route }) => ({ title: route.params.name, gestureEnabled: false })} />
+      <SStack.Screen name="News" component={NewsScreen} options={{ title: 'News & GK' }} />
       <SStack.Screen name="NewsArticle" component={NewsArticleScreen} options={{ title: 'News & GK' }} />
-      <SStack.Screen name="Programmes" component={ProgrammesScreen} />
       <SStack.Screen name="ProgrammeDetail" component={ProgrammeDetailScreen} options={({ route }) => ({ title: route.params.name })} />
       <SStack.Screen name="Certificates" component={CertificatesScreen} />
       <SStack.Screen name="CertificateDetail" component={CertificateDetailScreen} options={{ title: 'Certificate' }} />
@@ -148,13 +166,19 @@ function StudentApp() {
 // ------------------------------------------------------------------ root
 export default function RootNavigator() {
   const { status, isTeacher, isStudent, schoolId } = useAuth();
+  const [fontsLoaded, fontError] = useFonts(appFonts);
   let content: React.ReactNode;
-  if (status === 'loading') content = <Loading label="Starting Mango Dude…" />;
+  if (!fontsLoaded && !fontError) content = <Loading label="Starting Mango Dude…" />;
+  else if (status === 'loading') content = <Loading label="Starting Mango Dude…" />;
   else if (status === 'signedOut') content = <LoginScreen />;
   else if (status === 'needsSchool') content = <SchoolPickerScreen />;
   // key by school so switching schools resets all cached screens
   else if (isTeacher) content = <TeacherApp key={schoolId ?? 'none'} />;
   else if (isStudent) content = <StudentApp />;
   else content = <LoginScreen />;
-  return <NavigationContainer theme={navTheme}>{content}</NavigationContainer>;
+  return (
+    <TypographyProvider ready={fontsLoaded}>
+      <NavigationContainer theme={navTheme}>{content}</NavigationContainer>
+    </TypographyProvider>
+  );
 }

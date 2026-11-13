@@ -1,11 +1,10 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { PlusCircle } from 'lucide-react';
+import { Award, CheckCircle2, Crown, FlaskConical, GraduationCap, Layers, Pencil, PlusCircle, Users } from 'lucide-react';
 import { CLASS_LEVELS, PROGRAMMES } from '@mango/shared';
 import { ApiError, api, errorMessage } from '../../api/client';
 import { useGet, useInvalidate } from '../../api/hooks';
 import type { Plan } from '../../api/types';
-import { PageHeader } from '../../components/Cards';
 import { DataTable } from '../../components/DataTable';
 import { FormField, FormGrid } from '../../components/Form';
 import { InlineAlert } from '../../components/Feedback';
@@ -15,6 +14,18 @@ import { useToast } from '../../components/Toast';
 import { num } from '../../lib/format';
 
 const progName = (code: string) => PROGRAMMES.find((p) => p.code === code)?.name ?? code;
+
+function planKey(name: string) {
+  const k = name.toLowerCase();
+  return k === 'premium' || k === 'pro' || k === 'basic' ? k : 'other';
+}
+
+function PlanIcon({ name }: { name: string }) {
+  const k = planKey(name);
+  if (k === 'premium') return <Crown size={18} />;
+  if (k === 'pro') return <Award size={18} />;
+  return <GraduationCap size={18} />;
+}
 
 export default function PlansPage() {
   const q = useGet<Plan[]>('/plans');
@@ -27,28 +38,87 @@ export default function PlansPage() {
     }
   }, [params, setParams]);
 
+  const plans = q.data;
+  const totalPlans = plans?.length;
+  const activePlans = plans?.filter((p) => p.status === 'active').length;
+  const totalAssignments = plans?.reduce((sum, p) => sum + (p.activeSchools ?? 0), 0);
+
   return (
-    <>
-      <PageHeader
-        title="Subscription plans"
-        subtitle="Plans define the class range and programmes a school receives when “apply plan entitlements” is used."
-        actions={
+    <div className="plans-page">
+      <div className="plans-head">
+        <div className="plans-head__title">
+          <span className="plans-head__icon" aria-hidden="true">
+            <Layers size={26} />
+          </span>
+          <div>
+            <h1>Subscription plans</h1>
+            <p className="plans-head__sub">Plans define the class range and programmes a school receives when “apply plan entitlements” is used.</p>
+          </div>
+        </div>
+        <div className="plans-head__side">
+          <img className="plans-head__art" src="/plans-illustration.svg" alt="" aria-hidden="true" width="230" height="89" />
           <button type="button" className="btn btn--primary" onClick={() => setEditing('new')}>
-            <PlusCircle size={16} aria-hidden /> Create plan
+            <PlusCircle size={17} aria-hidden /> Create plan
           </button>
-        }
-      />
+        </div>
+      </div>
+
+      <div className="plans-stats">
+        <div className="plans-stat">
+          <span className="plans-stat__icon plans-stat__icon--green" aria-hidden="true">
+            <Layers size={22} />
+          </span>
+          <div>
+            <p className="plans-stat__label">Total Plans</p>
+            <p className="plans-stat__value">{totalPlans === undefined ? '–' : num(totalPlans)}</p>
+          </div>
+        </div>
+        <div className="plans-stat plans-stat--mint">
+          <span className="plans-stat__icon plans-stat__icon--mint" aria-hidden="true">
+            <CheckCircle2 size={22} />
+          </span>
+          <div>
+            <p className="plans-stat__label">Active Plans</p>
+            <p className="plans-stat__value">{activePlans === undefined ? '–' : num(activePlans)}</p>
+          </div>
+        </div>
+        <div className="plans-stat plans-stat--gold">
+          <span className="plans-stat__icon plans-stat__icon--gold" aria-hidden="true">
+            <Users size={22} />
+          </span>
+          <div>
+            <p className="plans-stat__label">Total Active School Assignments</p>
+            <p className="plans-stat__value">{totalAssignments === undefined ? '–' : num(totalAssignments)}</p>
+          </div>
+        </div>
+      </div>
+
       <DataTable
         caption="Subscription plans"
-        rows={q.data}
+        rows={plans}
         loading={q.isLoading}
         error={q.error}
         onRetry={() => q.refetch()}
         rowKey={(p) => p._id}
         emptyTitle="No plans yet"
         emptyMessage="Create a plan to start assigning subscriptions."
+        rowClassName={(p) => `plan-row plan-row--${planKey(p.name)}`}
         columns={[
-          { key: 'name', header: 'Plan', render: (p) => (<div><strong>{p.name}</strong>{p.description && <div className="muted small">{p.description}</div>}</div>) },
+          {
+            key: 'name',
+            header: 'Plan',
+            render: (p) => (
+              <div className="plan-cell">
+                <span className={`plan-cell__icon plan-cell__icon--${planKey(p.name)}`} aria-hidden="true">
+                  <PlanIcon name={p.name} />
+                </span>
+                <div>
+                  <strong>{p.name}</strong>
+                  {p.description && <div className="muted small">{p.description}</div>}
+                </div>
+              </div>
+            ),
+          },
           { key: 'max', header: 'Classes', render: (p) => `1–${p.maxClassLevel}` },
           {
             key: 'programmes',
@@ -57,29 +127,35 @@ export default function PlansPage() {
               p.programmeCodes.length ? (
                 <div className="tag-list">
                   {p.programmeCodes.map((c) =>
-                    PROGRAMMES.find((x) => x.code === c)?.premium ? <PremiumBadge key={c} label={progName(c)} /> : <Badge key={c} tone="green">{progName(c)}</Badge>,
+                    PROGRAMMES.find((x) => x.code === c)?.premium ? (
+                      <PremiumBadge key={c} label={progName(c)} />
+                    ) : (
+                      <Badge key={c} tone="green">
+                        <FlaskConical size={12} aria-hidden /> {progName(c)}
+                      </Badge>
+                    ),
                   )}
                 </div>
               ) : (
                 <span className="muted">None</span>
               ),
           },
-          { key: 'schools', header: 'Active schools', align: 'right', render: (p) => num(p.activeSchools) },
+          { key: 'schools', header: 'Active schools', render: (p) => num(p.activeSchools) },
           { key: 'status', header: 'Status', render: (p) => <StatusBadge status={p.status} /> },
           {
             key: 'actions',
-            header: <span className="sr-only">Actions</span>,
+            header: 'Actions',
             align: 'right',
             render: (p) => (
-              <button type="button" className="btn btn--ghost btn--sm" onClick={() => setEditing(p)}>
-                Edit
+              <button type="button" className="btn btn--secondary btn--sm" onClick={() => setEditing(p)}>
+                <Pencil size={13} aria-hidden /> Edit
               </button>
             ),
           },
         ]}
       />
       <PlanModal plan={editing === 'new' ? null : editing} open={editing !== null} onClose={() => setEditing(null)} />
-    </>
+    </div>
   );
 }
 

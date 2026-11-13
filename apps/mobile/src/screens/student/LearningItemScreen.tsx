@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Linking, Text, View } from 'react-native';
+import { Linking, View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { endpoints, errorMessage } from '../../api';
 import { Async, Badge, Body, Button, Card, InfoBanner, InlineError, Muted, ProgressBar, Row, Screen, SectionTitle } from '../../components/ui';

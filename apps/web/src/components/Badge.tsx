@@ -36,6 +36,33 @@ export function PremiumBadge({ label = 'Premium' }: { label?: string }) {
   );
 }
 
+export function PlanBadge({ name }: { name?: string | null }) {
+  if (!name) return <Badge tone="outline">—</Badge>;
+  const plan = name.toLowerCase();
+  if (plan === 'premium') {
+    return (
+      <Badge tone="gold">
+        <Crown size={12} aria-hidden /> {name}
+      </Badge>
+    );
+  }
+  if (plan === 'pro') {
+    return (
+      <Badge tone="blue">
+        <Crown size={12} aria-hidden /> {name}
+      </Badge>
+    );
+  }
+  if (plan === 'basic') {
+    return (
+      <Badge tone="grey">
+        <Crown size={12} aria-hidden /> {name}
+      </Badge>
+    );
+  }
+  return <Badge tone="outline">{name}</Badge>;
+}
+
 export function LockedBadge({ label = 'Locked' }: { label?: string }) {
   return (
     <Badge tone="grey">

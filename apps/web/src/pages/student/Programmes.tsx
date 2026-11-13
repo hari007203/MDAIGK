@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Crown, Lock, PlayCircle, Sparkles } from 'lucide-react';
 import { ERROR_CODES } from '@mango/shared';
@@ -63,36 +64,67 @@ function ProgrammeCard({ p }: { p: StudentProgramme }) {
 
 export default function ProgrammesPage() {
   const q = useGet<{ premiumAcademies: StudentProgramme[]; otherProgrammes: StudentProgramme[] }>('/programmes');
+  const [view, setView] = useState<'all' | 'mine'>('all');
   return (
     <div className="student-page">
       <PageHeader title="Programmes" subtitle="Enrichment programmes your school has unlocked for you." />
+      <div className="seg seg--sm" role="radiogroup" aria-label="Programme filter" style={{ marginBottom: 12 }}>
+        {(
+          [
+            ['all', 'All programmes'],
+            ['mine', 'My programmes'],
+          ] as const
+        ).map(([v, l]) => (
+          <button key={v} type="button" role="radio" aria-checked={view === v} className={`seg__btn ${view === v ? 'seg__btn--active' : ''}`} onClick={() => setView(v)}>
+            {l}
+          </button>
+        ))}
+      </div>
       <QueryState query={q} loadingLabel="Loading programmes…">
-        {(d) => (
-          <>
-            <SectionTitle>Young Scientist & more</SectionTitle>
-            {d.otherProgrammes.length === 0 ? (
-              <EmptyState title="No programmes yet" />
-            ) : (
-              <div className="programme-grid">
-                {d.otherProgrammes.map((p) => (
-                  <ProgrammeCard key={p.id} p={p} />
-                ))}
-              </div>
-            )}
-            <SectionTitle>
-              <Crown size={18} aria-hidden className="text-gold" /> Premium academies
-            </SectionTitle>
-            {d.premiumAcademies.length === 0 ? (
-              <EmptyState title="No premium academies" />
-            ) : (
-              <div className="programme-grid">
-                {d.premiumAcademies.map((p) => (
-                  <ProgrammeCard key={p.id} p={p} />
-                ))}
-              </div>
-            )}
-          </>
-        )}
+        {(d) => {
+          const filter = (list: StudentProgramme[]) => (view === 'mine' ? list.filter((p) => p.enrolment) : list);
+          const others = filter(d.otherProgrammes);
+          const premium = filter(d.premiumAcademies);
+          if (view === 'mine' && others.length + premium.length === 0) {
+            return (
+              <EmptyState
+                title="No programmes joined yet"
+                message="Explore the catalogue and enrol to see your programmes here."
+                action={
+                  <button type="button" className="btn btn--secondary" onClick={() => setView('all')}>
+                    Browse all programmes
+                  </button>
+                }
+              />
+            );
+          }
+          return (
+            <>
+              <SectionTitle>Young Scientist & more</SectionTitle>
+              {others.length === 0 ? (
+                <EmptyState title="No programmes yet" />
+              ) : (
+                <div className="programme-grid">
+                  {others.map((p) => (
+                    <ProgrammeCard key={p.id} p={p} />
+                  ))}
+                </div>
+              )}
+              <SectionTitle>
+                <Crown size={18} aria-hidden className="text-gold" /> Premium academies
+              </SectionTitle>
+              {premium.length === 0 ? (
+                <EmptyState title="No premium academies" />
+              ) : (
+                <div className="programme-grid">
+                  {premium.map((p) => (
+                    <ProgrammeCard key={p.id} p={p} />
+                  ))}
+                </div>
+              )}
+            </>
+          );
+        }}
       </QueryState>
     </div>
   );

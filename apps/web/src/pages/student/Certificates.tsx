@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Award, CheckCircle2, Download, Lock, PlayCircle } from 'lucide-react';
+import { ArrowLeft, Award, CheckCircle2, Download, Eye, Lock, PlayCircle } from 'lucide-react';
 import { api, errorMessage } from '../../api/client';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGet } from '../../api/hooks';
 import type { AttemptBody, AttemptResult, CertLevel, CertificateRow, PublicQuiz } from '../../api/portalTypes';
 import { useAuth } from '../../auth/AuthContext';
 import { Card, PageHeader } from '../../components/Cards';
-import { EmptyState, QueryState } from '../../components/Feedback';
+import { EmptyState, InlineAlert, Loading, QueryState } from '../../components/Feedback';
+import { Modal } from '../../components/Modal';
 import { QuizPlayer } from '../../components/QuizPlayer';
 import { useToast } from '../../components/Toast';
 import { date } from '../../lib/format';
 import { SectionTitle, lockText, pctOrDash } from './shared';
+
+interface PreviewTarget {
+  id: string;
+  number?: string;
+}
 
 export function useCertificateDownload() {
   const toast = useToast();
@@ -30,11 +36,87 @@ export function useCertificateDownload() {
   return { download, busy };
 }
 
+function CertificatePreviewDialog({
+  target,
+  onClose,
+  onDownload,
+  downloading,
+}: {
+  target: PreviewTarget | null;
+  onClose: () => void;
+  onDownload: (id: string, number?: string) => void;
+  downloading: boolean;
+}) {
+  const [url, setUrl] = useState<string | null>(null);
+  const [error, setError] = useState<unknown>(null);
+
+  useEffect(() => {
+    if (!target) {
+      setUrl(null);
+      setError(null);
+      return;
+    }
+    let live = true;
+    let created: string | null = null;
+    setUrl(null);
+    setError(null);
+    api
+      .objectUrl(`/certificates/${target.id}/pdf`)
+      .then((u) => {
+        created = u;
+        if (live) setUrl(u);
+        else URL.revokeObjectURL(u);
+      })
+      .catch((e) => {
+        if (live) setError(e);
+      });
+    return () => {
+      live = false;
+      if (created) URL.revokeObjectURL(created);
+    };
+  }, [target]);
+
+  return (
+    <Modal
+      open={Boolean(target)}
+      title="Certificate preview"
+      onClose={onClose}
+      size="lg"
+      footer={
+        <>
+          <button type="button" className="btn btn--ghost" onClick={onClose}>
+            Close
+          </button>
+          <button
+            type="button"
+            className="btn btn--primary"
+            disabled={!target || downloading}
+            onClick={() => target && onDownload(target.id, target.number)}
+          >
+            <Download size={14} aria-hidden /> {downloading ? 'Downloading…' : 'Download PDF'}
+          </button>
+        </>
+      }
+    >
+      {error ? (
+        <InlineAlert>
+          Could not load the certificate preview: {errorMessage(error)}. You can still download the PDF.
+        </InlineAlert>
+      ) : url ? (
+        <iframe className="cert-preview__frame" src={url} title={target?.number ? `Certificate ${target.number}` : 'Certificate preview'} />
+      ) : (
+        <Loading label="Preparing certificate preview…" />
+      )}
+    </Modal>
+  );
+}
+
 export default function CertificatesPage() {
   const { user } = useAuth();
   const levels = useGet<{ currentLevel: number; levels: CertLevel[] }>('/certifications/levels');
   const certs = useGet<CertificateRow[]>(user ? `/students/${user.id}/certificates` : null);
   const { download, busy } = useCertificateDownload();
+  const [preview, setPreview] = useState<PreviewTarget | null>(null);
 
   return (
     <div className="student-page">
@@ -76,6 +158,13 @@ export default function CertificatesPage() {
                             <span className="badge badge--gold">
                               <CheckCircle2 size={12} aria-hidden /> Certified {date(l.certificate.issuedAt)}
                             </span>
+                            <button
+                              type="button"
+                              className="btn btn--ghost btn--sm"
+                              onClick={() => setPreview({ id: l.certificate!.id, number: l.certificate!.certificateNumber })}
+                            >
+                              <Eye size={14} aria-hidden /> Preview
+                            </button>
                             <button type="button" className="btn btn--secondary btn--sm" disabled={busy === l.certificate.id} onClick={() => void download(l.certificate!.id, l.certificate!.certificateNumber)}>
                               <Download size={14} aria-hidden /> {busy === l.certificate.id ? 'Downloading…' : 'PDF'}
                             </button>
@@ -115,6 +204,9 @@ export default function CertificatesPage() {
                       {c.percent !== undefined ? ` · scored ${Math.round(c.percent)}%` : ''}
                     </span>
                   </div>
+                  <button type="button" className="btn btn--ghost btn--sm" onClick={() => setPreview({ id: c._id, number: c.certificateNumber })}>
+                    <Eye size={14} aria-hidden /> Preview
+                  </button>
                   <button type="button" className="btn btn--secondary btn--sm" disabled={busy === c._id} onClick={() => void download(c._id, c.certificateNumber)}>
                     <Download size={14} aria-hidden /> {busy === c._id ? 'Downloading…' : 'Download PDF'}
                   </button>
@@ -124,6 +216,13 @@ export default function CertificatesPage() {
           )
         }
       </QueryState>
+
+      <CertificatePreviewDialog
+        target={preview}
+        onClose={() => setPreview(null)}
+        onDownload={(id, number) => void download(id, number)}
+        downloading={Boolean(busy && preview && busy === preview.id)}
+      />
     </div>
   );
 }

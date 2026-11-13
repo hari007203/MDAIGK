@@ -1,9 +1,9 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { PlusCircle } from 'lucide-react';
+import { BookOpen, CheckCircle2, PlusCircle, XCircle } from 'lucide-react';
 import { ApiError, api, errorMessage } from '../../../api/client';
 import { useGet, useInvalidate, useMutate } from '../../../api/hooks';
 import type { Subject } from '../../../api/types';
-import { PageHeader } from '../../../components/Cards';
+import { ContentModuleHeader, ContentModulePage, ContentModuleStats } from '../../../components/ContentModuleChrome';
 import { DataTable } from '../../../components/DataTable';
 import { ClassLevelPicker, FormField, FormGrid, Toggle } from '../../../components/Form';
 import { InlineAlert } from '../../../components/Feedback';
@@ -19,8 +19,9 @@ export default function SubjectsPage() {
     success: 'Subject updated',
   });
   return (
-    <>
-      <PageHeader
+    <ContentModulePage module="subjects">
+      <ContentModuleHeader
+        icon={BookOpen}
         title="Subjects"
         subtitle="Enable or disable subjects platform-wide and choose which classes each subject applies to."
         actions={
@@ -29,6 +30,15 @@ export default function SubjectsPage() {
           </button>
         }
       />
+      {q.data && (
+        <ContentModuleStats
+          items={[
+            { label: 'Total subjects', value: q.data.length, icon: BookOpen },
+            { label: 'Enabled', value: q.data.filter((subject) => subject.enabled).length, icon: CheckCircle2 },
+            { label: 'Disabled', value: q.data.filter((subject) => !subject.enabled).length, icon: XCircle, tone: 'gold' },
+          ]}
+        />
+      )}
       <DataTable
         caption="Subjects"
         rows={q.data}
@@ -61,7 +71,7 @@ export default function SubjectsPage() {
         ]}
       />
       <SubjectModal subject={editing === 'new' ? null : editing} open={editing !== null} onClose={() => setEditing(null)} />
-    </>
+    </ContentModulePage>
   );
 }
 

@@ -1,10 +1,11 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { PlusCircle, Star } from 'lucide-react';
+import { CheckCircle2, FileText, Newspaper, PlusCircle, Star } from 'lucide-react';
 import { NEWS_CATEGORIES } from '@mango/shared';
 import { ApiError, api, errorMessage } from '../../../api/client';
 import { useGet, useInvalidate, useMutate } from '../../../api/hooks';
 import type { NewsArticle, Paginated } from '../../../api/types';
-import { PageHeader, Toolbar } from '../../../components/Cards';
+import { Toolbar } from '../../../components/Cards';
+import { ContentModuleHeader, ContentModulePage, ContentModuleStats } from '../../../components/ContentModuleChrome';
 import { DataTable } from '../../../components/DataTable';
 import { ClassLevelPicker, FormField, FormGrid, Toggle } from '../../../components/Form';
 import { InlineAlert } from '../../../components/Feedback';
@@ -41,8 +42,9 @@ export default function NewsPage() {
   const feature = useMutate((a: NewsArticle) => api.patch(`/news/${a._id}`, { featured: !a.featured }), { invalidate: ['/news'], success: 'Featured flag updated' });
 
   return (
-    <>
-      <PageHeader
+    <ContentModulePage module="news">
+      <ContentModuleHeader
+        icon={Newspaper}
         title="News"
         subtitle="Age-appropriate articles across eight categories, targeted by class."
         actions={
@@ -51,6 +53,15 @@ export default function NewsPage() {
           </button>
         }
       />
+      {list.data && (
+        <ContentModuleStats
+          items={[
+            { label: 'Matching articles', value: list.data.total, icon: Newspaper },
+            { label: 'Published on this page', value: list.data.items.filter((article) => article.status === 'published').length, icon: CheckCircle2 },
+            { label: 'Drafts on this page', value: list.data.items.filter((article) => article.status === 'draft').length, icon: FileText, tone: 'gold' },
+          ]}
+        />
+      )}
       <Toolbar>
         <div className="field toolbar__grow">
           <label className="field__label" htmlFor="n-q">
@@ -136,7 +147,7 @@ export default function NewsPage() {
         onConfirm={() => archiving && archive.mutate(archiving._id)}
         onCancel={() => setArchiving(null)}
       />
-    </>
+    </ContentModulePage>
   );
 }
 

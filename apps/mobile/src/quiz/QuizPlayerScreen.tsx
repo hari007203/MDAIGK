@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../components/Typography';
 import * as Crypto from 'expo-crypto';
 import { ApiError, endpoints, errorMessage, type PublicQuiz, type QuizResult } from '../api';
 import { Badge, Body, Button, Card, EmptyState, ErrorState, InfoBanner, InlineError, Ionicons, Loading, Muted, ProgressBar, Row, Screen, SectionTitle } from '../components/ui';

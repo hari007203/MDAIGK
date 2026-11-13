@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, type LayoutChangeEvent } from 'react-native';
+import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import { Text } from './Typography';
 import Svg, { Circle, Line, Polyline, Text as SvgText } from 'react-native-svg';
 import { colors, fontSizes, spacing } from '../theme';
 import { ProgressBar } from './ui';
@@ -45,7 +46,7 @@ export function LineChart({ points, height = 180 }: { points: Array<{ label: str
           {[0, 50, 100].map((g) => (
             <React.Fragment key={g}>
               <Line x1={padL} x2={width - padR} y1={y(g)} y2={y(g)} stroke={colors.border} strokeWidth={1} />
-              <SvgText x={padL - 6} y={y(g) + 4} fontSize={10} fill={colors.textMuted} textAnchor="end">
+              <SvgText x={padL - 6} y={y(g) + 4} fontSize={10} fill={colors.textMuted} textAnchor="end" fontFamily="Inter_400Regular">
                 {String(g)}
               </SvgText>
             </React.Fragment>
@@ -58,7 +59,7 @@ export function LineChart({ points, height = 180 }: { points: Array<{ label: str
           ))}
           {points.map((p, i) =>
             i % labelEvery === 0 || i === points.length - 1 ? (
-              <SvgText key={`l-${p.label}-${i}`} x={x(i)} y={height - 8} fontSize={10} fill={colors.textMuted} textAnchor="middle">
+              <SvgText key={`l-${p.label}-${i}`} x={x(i)} y={height - 8} fontSize={10} fill={colors.textMuted} textAnchor="middle" fontFamily="Inter_400Regular">
                 {p.label}
               </SvgText>
             ) : null,

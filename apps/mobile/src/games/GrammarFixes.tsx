@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../components/Typography';
 import { Badge, Button, Card, InfoBanner, Ionicons, Muted, ProgressBar, Row } from '../components/ui';
 import { colors, fontSizes, radii, spacing, TOUCH } from '../theme';
 import { shuffle } from './logic/words';

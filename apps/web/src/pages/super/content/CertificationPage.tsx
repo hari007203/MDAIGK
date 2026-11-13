@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
-import { Award, PlusCircle } from 'lucide-react';
+import { Award, CheckCircle2, PlusCircle, ShieldCheck } from 'lucide-react';
 import { CERTIFICATION_LEVELS, CONTENT_STATUS } from '@mango/shared';
 import { ApiError, api, errorMessage } from '../../../api/client';
 import { useGet, useInvalidate } from '../../../api/hooks';
 import type { CertificationLevel } from '../../../api/types';
-import { PageHeader } from '../../../components/Cards';
+import { ContentModuleHeader, ContentModulePage, ContentModuleStats } from '../../../components/ContentModuleChrome';
 import { DataTable } from '../../../components/DataTable';
 import { ClassLevelPicker, FormField, FormGrid } from '../../../components/Form';
 import { InlineAlert } from '../../../components/Feedback';
@@ -19,8 +19,9 @@ export default function CertificationPage() {
   const [editing, setEditing] = useState<CertificationLevel | 'new' | null>(null);
   const missing = useMemo(() => CERTIFICATION_LEVELS.filter((n) => !q.data?.some((l) => l.level === n)), [q.data]);
   return (
-    <>
-      <PageHeader
+    <ContentModulePage module="certification">
+      <ContentModuleHeader
+        icon={Award}
         title="Certification levels"
         subtitle="Ten progressive general-knowledge levels. Students must pass the assessment and any prerequisite level."
         actions={
@@ -31,6 +32,15 @@ export default function CertificationPage() {
           ) : undefined
         }
       />
+      {q.data && (
+        <ContentModuleStats
+          items={[
+            { label: 'Total levels', value: q.data.length, icon: Award, tone: 'gold' },
+            { label: 'Published', value: q.data.filter((level) => level.status === 'published').length, icon: CheckCircle2 },
+            { label: 'Drafts', value: q.data.filter((level) => level.status === 'draft').length, icon: ShieldCheck },
+          ]}
+        />
+      )}
       <DataTable
         caption="Certification levels"
         rows={q.data}
@@ -75,7 +85,7 @@ export default function CertificationPage() {
         ]}
       />
       <LevelModal level={editing === 'new' ? null : editing} open={editing !== null} available={missing} onClose={() => setEditing(null)} />
-    </>
+    </ContentModulePage>
   );
 }
 

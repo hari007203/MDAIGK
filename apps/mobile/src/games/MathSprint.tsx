@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Text } from '../components/Typography';
 import { Badge, Button, Card, Muted, ProgressBar, Row } from '../components/ui';
 import { colors, fontSizes, radii, spacing } from '../theme';
 import { generateQuestion, normalizeOps, scoreFor, type MathQuestion } from './logic/mathSprint';

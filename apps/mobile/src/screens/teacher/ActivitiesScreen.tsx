@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { endpoints, errorMessage, type ActivityStatus, type TeacherActivity } from '../../api';
 import { Async, Badge, Button, Card, Chip, ChipRow, Muted, ProgressBar, Row, Screen } from '../../components/ui';
 import { useApi } from '../../hooks/useApi';

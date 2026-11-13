@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { endpoints, type InsightStudent } from '../../api';
 import { BarList, LineChart } from '../../components/charts';
 import { Async, Card, Chip, ChipRow, Divider, InfoBanner, ListRow, Muted, Screen, SectionTitle, Segmented, StatGrid, StatTile } from '../../components/ui';

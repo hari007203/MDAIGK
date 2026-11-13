@@ -16,21 +16,43 @@ interface ModalProps {
 const FOCUSABLE = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export function Modal({ open, title, onClose, children, footer, size = 'md', busy = false }: ModalProps) {
+  const isSuper = typeof document !== 'undefined' && document.querySelector('.app--super') !== null;
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true;
+  const [present, setPresent] = useState(open);
   const titleId = useId();
   const ref = useRef<HTMLDivElement>(null);
   const closeRef = useRef(onClose);
   closeRef.current = onClose;
   const busyRef = useRef(busy);
   busyRef.current = busy;
+  const openRef = useRef(open);
+  openRef.current = open;
 
   useEffect(() => {
-    if (!open) return;
+    if (open) {
+      setPresent(true);
+      return;
+    }
+    if (!isSuper || prefersReducedMotion) {
+      setPresent(false);
+      return;
+    }
+    if (!present) return;
+    const timeout = window.setTimeout(() => setPresent(false), 180);
+    return () => window.clearTimeout(timeout);
+  }, [open, isSuper, prefersReducedMotion, present]);
+
+  const rendered = open || (isSuper && !prefersReducedMotion && present);
+  const closing = isSuper && !prefersReducedMotion && !open && present;
+
+  useEffect(() => {
+    if (!rendered) return;
     const prev = document.activeElement as HTMLElement | null;
     const node = ref.current;
     const first = node?.querySelector<HTMLElement>('[data-autofocus]') ?? node?.querySelector<HTMLElement>('.modal__body ' + FOCUSABLE.split(', ').join(', .modal__body '));
     (first ?? node?.querySelector<HTMLElement>(FOCUSABLE))?.focus();
     function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape' && !busyRef.current) {
+      if (e.key === 'Escape' && openRef.current && !busyRef.current) {
         e.stopPropagation();
         closeRef.current();
       }
@@ -53,12 +75,12 @@ export function Modal({ open, title, onClose, children, footer, size = 'md', bus
       document.removeEventListener('keydown', onKey);
       prev?.focus?.();
     };
-  }, [open]);
+  }, [rendered]);
 
-  if (!open) return null;
+  if (!rendered) return null;
   return createPortal(
-    <div className="modal-backdrop" onMouseDown={(e) => e.target === e.currentTarget && !busy && onClose()}>
-      <div ref={ref} className={`modal modal--${size}`} role="dialog" aria-modal="true" aria-labelledby={titleId}>
+    <div className={`modal-backdrop${isSuper ? ' modal-backdrop--super' : ''}${closing ? ' is-closing' : ''}`} onMouseDown={(e) => e.target === e.currentTarget && open && !busy && onClose()}>
+      <div ref={ref} className={`modal modal--${size}${isSuper ? ' modal--super' : ''}${closing ? ' is-closing' : ''}`} role="dialog" aria-modal="true" aria-labelledby={titleId}>
         <header className="modal__header">
           <h2 id={titleId}>{title}</h2>
           <button type="button" className="icon-btn" aria-label="Close dialog" onClick={onClose} disabled={busy}>

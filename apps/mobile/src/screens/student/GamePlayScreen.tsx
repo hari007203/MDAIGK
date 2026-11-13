@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { endpoints, errorMessage } from '../../api';
 import { Button, Card, InlineError, Ionicons, Muted, Screen } from '../../components/ui';
 import Game2048 from '../../games/Game2048';

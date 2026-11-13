@@ -1,10 +1,11 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { ArrowDown, ArrowUp, PlusCircle, Trash2 } from 'lucide-react';
+import { ArrowDown, ArrowUp, CheckCircle2, ClipboardCheck, FileText, PlusCircle, Trash2 } from 'lucide-react';
 import { CONTENT_STATUS } from '@mango/shared';
 import { ApiError, api, errorMessage } from '../../../api/client';
 import { useGet, useInvalidate } from '../../../api/hooks';
 import type { Paginated, Quiz, QuizQuestion } from '../../../api/types';
-import { PageHeader, Toolbar } from '../../../components/Cards';
+import { Toolbar } from '../../../components/Cards';
+import { ContentModuleHeader, ContentModulePage, ContentModuleStats } from '../../../components/ContentModuleChrome';
 import { DataTable } from '../../../components/DataTable';
 import { ClassLevelPicker, FormField, FormGrid } from '../../../components/Form';
 import { InlineAlert } from '../../../components/Feedback';
@@ -28,8 +29,9 @@ export default function QuizzesPage() {
   const list = useGet<Paginated<Quiz>>('/quizzes', { q, context, status, page, pageSize: 20 });
 
   return (
-    <>
-      <PageHeader
+    <ContentModulePage module="quizzes">
+      <ContentModuleHeader
+        icon={ClipboardCheck}
         title="Quizzes"
         subtitle="Question banks for learning items, news, programmes and certification. Editing questions creates a new version; past attempts keep their original scoring."
         actions={
@@ -38,6 +40,15 @@ export default function QuizzesPage() {
           </button>
         }
       />
+      {list.data && (
+        <ContentModuleStats
+          items={[
+            { label: 'Matching quizzes', value: list.data.total, icon: ClipboardCheck },
+            { label: 'Published on this page', value: list.data.items.filter((quiz) => quiz.status === 'published').length, icon: CheckCircle2 },
+            { label: 'Drafts on this page', value: list.data.items.filter((quiz) => quiz.status === 'draft').length, icon: FileText, tone: 'gold' },
+          ]}
+        />
+      )}
       <Toolbar>
         <div className="field toolbar__grow">
           <label className="field__label" htmlFor="qz-q">
@@ -92,7 +103,7 @@ export default function QuizzesPage() {
         pagination={list.data ? { page: list.data.page, totalPages: list.data.totalPages, total: list.data.total, pageSize: list.data.pageSize, onPage: setPage } : undefined}
       />
       <QuizModal quiz={editing === 'new' ? null : editing} open={editing !== null} onClose={() => setEditing(null)} />
-    </>
+    </ContentModulePage>
   );
 }
 

@@ -18,6 +18,10 @@ export interface PaginationProps {
   total: number;
   pageSize?: number;
   onPage: (page: number) => void;
+  /** Show numbered page buttons with a window around the current page instead of "Page X of Y". */
+  numbered?: boolean;
+  /** Noun used in the "Showing X–Y of Z …" summary. */
+  totalLabel?: string;
 }
 
 interface DataTableProps<T> {
@@ -87,21 +91,59 @@ export function DataTable<T>({
   );
 }
 
-export function Pagination({ page, totalPages, total, pageSize, onPage }: PaginationProps) {
+function pageWindow(page: number, totalPages: number): Array<number | '…'> {
+  if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1);
+  const pages: Array<number | '…'> = [1];
+  const lo = Math.max(2, page - 1);
+  const hi = Math.min(totalPages - 1, page + 1);
+  if (lo > 2) pages.push('…');
+  for (let n = lo; n <= hi; n++) pages.push(n);
+  if (hi < totalPages - 1) pages.push('…');
+  pages.push(totalPages);
+  return pages;
+}
+
+export function Pagination({ page, totalPages, total, pageSize, onPage, numbered, totalLabel }: PaginationProps) {
   const from = pageSize ? (page - 1) * pageSize + 1 : undefined;
   const to = pageSize ? Math.min(page * pageSize, total) : undefined;
   return (
     <nav className="pagination" aria-label="Pagination">
       <span className="pagination__info">
-        {from !== undefined && total > 0 ? `${from}–${to} of ${total.toLocaleString('en-IN')}` : `${total.toLocaleString('en-IN')} total`}
+        {totalLabel
+          ? from !== undefined && total > 0
+            ? `Showing ${from}–${to} of ${total.toLocaleString('en-IN')} ${totalLabel}`
+            : `${total.toLocaleString('en-IN')} ${totalLabel} total`
+          : from !== undefined && total > 0
+            ? `${from}–${to} of ${total.toLocaleString('en-IN')}`
+            : `${total.toLocaleString('en-IN')} total`}
       </span>
       <div className="pagination__controls">
         <button type="button" className="icon-btn" onClick={() => onPage(page - 1)} disabled={page <= 1} aria-label="Previous page">
           <ChevronLeft size={16} />
         </button>
-        <span aria-current="page">
-          Page {page} of {Math.max(1, totalPages)}
-        </span>
+        {numbered ? (
+          pageWindow(page, Math.max(1, totalPages)).map((p, i) =>
+            p === '…' ? (
+              <span key={`e${i}`} className="pagination__ellipsis" aria-hidden="true">
+                …
+              </span>
+            ) : (
+              <button
+                key={p}
+                type="button"
+                className="pagination__page"
+                aria-current={p === page ? 'page' : undefined}
+                onClick={() => onPage(p)}
+              >
+                {p}
+              </button>
+            ),
+          )
+        ) : (
+          <span aria-current="page">
+            Page {page} of {Math.max(1, totalPages)}
+          </span>
+        )}
         <button type="button" className="icon-btn" onClick={() => onPage(page + 1)} disabled={page >= totalPages} aria-label="Next page">
           <ChevronRight size={16} />
         </button>

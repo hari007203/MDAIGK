@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { File, Paths } from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
 import { api, endpoints, errorMessage, type Certificate } from '../../api';

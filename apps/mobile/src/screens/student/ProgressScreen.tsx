@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { endpoints, type ProgressRange } from '../../api';
 import { BarList } from '../../components/charts';
 import { Async, Badge, Button, Card, Divider, IconCircle, ListRow, Muted, PremiumBadge, ProgressBar, Row, Screen, SectionTitle, Segmented, StatGrid, StatTile } from '../../components/ui';
@@ -63,7 +64,7 @@ export default function ProgressScreen({ navigation }: StudentTabScreen<'Progres
                 {p.lockedBadges.length ? <Muted style={{ marginTop: spacing.md }}>{p.lockedBadges.length} more badges to discover.</Muted> : null}
               </Card>
 
-              <SectionTitle action={<Button title="All" small variant="ghost" onPress={() => navigation.navigate('Programmes')} />}>Programmes</SectionTitle>
+              <SectionTitle action={<Button title="All" small variant="ghost" onPress={() => navigation.navigate('StudentTabs', { screen: 'Programmes' })} />}>Programmes</SectionTitle>
               <Card>
                 {p.programmes.map((pr) => (
                   <View key={pr.id} style={{ marginBottom: spacing.md }}>

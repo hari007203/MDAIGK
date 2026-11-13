@@ -16,7 +16,7 @@ import {
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { useGet } from '../../api/hooks';
 import type { PlatformAnalytics } from '../../api/types';
-import { Card, ChartCard, PageHeader, StatCard, StatGrid } from '../../components/Cards';
+import { Card, ChartCard, StatCard, StatGrid } from '../../components/Cards';
 import { QueryState } from '../../components/Feedback';
 import { DataTable } from '../../components/DataTable';
 import { Badge, PremiumBadge, StatusBadge } from '../../components/Badge';
@@ -27,20 +27,46 @@ export default function PlatformOverview() {
   const q = useGet<PlatformAnalytics>('/analytics/platform');
   const navigate = useNavigate();
   return (
-    <>
-      <PageHeader
-        title="Platform overview"
-        subtitle="All schools on Mango Dude AIGK"
-        actions={
-          <button type="button" className="btn btn--primary" onClick={() => navigate('/super/schools?new=1')}>
-            <PlusCircle size={16} aria-hidden /> Add school
-          </button>
-        }
-      />
+    <div className="super-overview">
+      <section className="super-overview-heading" aria-labelledby="platform-overview-title">
+        <div className="super-overview-heading__copy">
+          <span className="super-overview-heading__eyebrow">Super Admin</span>
+          <h1 id="platform-overview-title">Platform Overview</h1>
+          <p>A complete view of schools, users, learning activity and platform performance.</p>
+        </div>
+        <SchoolScene />
+        <button type="button" className="btn btn--primary super-overview-heading__action" onClick={() => navigate('/super/schools?new=1')}>
+          <PlusCircle size={16} aria-hidden /> Add school
+        </button>
+      </section>
       <QueryState query={q} loadingLabel="Loading platform metrics…">
         {(d) => <Overview data={d} />}
       </QueryState>
-    </>
+    </div>
+  );
+}
+
+function SchoolScene() {
+  return (
+    <svg className="super-school-scene" viewBox="0 0 440 140" role="img" aria-label="Illustration of a school surrounded by trees">
+      <path d="M8 128c35-24 66-17 96-6 27-27 59-22 83-7 28-26 62-18 82-4 23-21 54-22 78-2 29-19 60-13 85 4v27H8z" fill="#e5f3e4" />
+      <path d="M43 120c-8-21 10-34 26-28 2-20 34-23 39 0 17-3 27 11 22 28zM318 119c-8-18 8-29 22-24 3-19 32-20 36 0 16-2 24 11 19 24z" fill="#d5edd2" />
+      <g fill="#20804f">
+        <path d="M105 115V78c0-13 12-24 24-24s24 11 24 24v37zM289 115V73c0-14 12-26 25-26s25 12 25 26v42z" />
+        <path d="M119 73h20v42h-20zM303 68h22v47h-22z" fill="#126b49" />
+      </g>
+      <g stroke="#126b49" strokeWidth="3" strokeLinecap="round">
+        <path d="M131 88v27M314 78v37" />
+        <path d="M131 96l-12-9M131 101l12-11M314 91l-11-9M314 98l12-10" />
+      </g>
+      <path d="M164 119V62l56-37 56 37v57z" fill="#fffdf5" stroke="#d7dfd1" strokeWidth="3" />
+      <path d="M154 64l66-45 66 45h-30l-36-24-36 24z" fill="#ffc928" stroke="#e6ae16" strokeWidth="3" />
+      <path d="M201 119V91a19 19 0 0 1 38 0v28z" fill="#126b49" />
+      <path d="M178 70h17v17h-17zM205 70h17v17h-17zM232 70h17v17h-17z" fill="#b9e0ee" stroke="#fff" strokeWidth="3" />
+      <path d="M216 18V7h5v11" stroke="#126b49" strokeWidth="3" />
+      <path d="M221 7h19l-5 7 5 7h-19z" fill="#f2a51c" />
+      <path d="M159 120h121" stroke="#e2b121" strokeWidth="5" strokeLinecap="round" />
+    </svg>
   );
 }
 

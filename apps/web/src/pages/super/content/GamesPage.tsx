@@ -1,9 +1,10 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { SUBJECTS } from '@mango/shared';
+import { CheckCircle2, Gamepad2, XCircle } from 'lucide-react';
 import { ApiError, api, errorMessage } from '../../../api/client';
 import { useGet, useInvalidate, useMutate } from '../../../api/hooks';
 import type { Game } from '../../../api/types';
-import { PageHeader } from '../../../components/Cards';
+import { ContentModuleHeader, ContentModulePage, ContentModuleStats } from '../../../components/ContentModuleChrome';
 import { DataTable } from '../../../components/DataTable';
 import { ClassLevelPicker, FormField, Toggle } from '../../../components/Form';
 import { InlineAlert } from '../../../components/Feedback';
@@ -17,8 +18,17 @@ export default function GamesPage() {
   const [editing, setEditing] = useState<Game | null>(null);
   const toggle = useMutate((g: Game) => api.patch(`/games/${g._id}`, { enabled: !g.enabled }), { invalidate: ['/games'], success: 'Game availability updated' });
   return (
-    <>
-      <PageHeader title="Games" subtitle="Control which games are available, for which classes, and how many attempts each student gets per day." />
+    <ContentModulePage module="games">
+      <ContentModuleHeader icon={Gamepad2} title="Games" subtitle="Control which games are available, for which classes, and how many attempts each student gets per day." />
+      {q.data && (
+        <ContentModuleStats
+          items={[
+            { label: 'Total games', value: q.data.length, icon: Gamepad2 },
+            { label: 'Available', value: q.data.filter((game) => game.enabled).length, icon: CheckCircle2 },
+            { label: 'Unavailable', value: q.data.filter((game) => !game.enabled).length, icon: XCircle, tone: 'gold' },
+          ]}
+        />
+      )}
       <DataTable
         caption="Games"
         rows={q.data}
@@ -47,7 +57,7 @@ export default function GamesPage() {
         ]}
       />
       <GameModal game={editing} onClose={() => setEditing(null)} />
-    </>
+    </ContentModulePage>
   );
 }
 

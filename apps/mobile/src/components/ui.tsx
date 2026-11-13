@@ -5,8 +5,6 @@ import {
   RefreshControl,
   ScrollView,
   StyleSheet,
-  Text,
-  TextInput,
   View,
   type StyleProp,
   type TextInputProps,
@@ -15,6 +13,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, fontSizes, radii, shadow, spacing, TOUCH } from '../theme';
+import { Text, TextInput } from './Typography';
 
 export type IconName = React.ComponentProps<typeof Ionicons>['name'];
 
@@ -57,12 +56,12 @@ export function Spacer({ size = spacing.md }: { size?: number }) {
 
 // ------------------------------------------------------------------ text
 export function Title({ children, style }: { children: React.ReactNode; style?: StyleProp<TextStyle> }) {
-  return <Text style={[styles.title, style]}>{children}</Text>;
+  return <Text variant="display" style={[styles.title, style]}>{children}</Text>;
 }
 export function SectionTitle({ children, action }: { children: React.ReactNode; action?: React.ReactNode }) {
   return (
     <View style={styles.sectionTitleRow}>
-      <Text style={styles.sectionTitle}>{children}</Text>
+      <Text variant="display" style={styles.sectionTitle}>{children}</Text>
       {action}
     </View>
   );
@@ -233,7 +232,7 @@ export function EmptyState({ icon = 'leaf-outline', title, message, action }: { 
       <View style={styles.stateIcon}>
         <Ionicons name={icon} size={32} color={colors.primary} />
       </View>
-      <Text style={styles.stateTitle}>{title}</Text>
+      <Text variant="display" style={styles.stateTitle}>{title}</Text>
       {message ? <Muted style={{ textAlign: 'center' }}>{message}</Muted> : null}
       {action ? <View style={{ marginTop: spacing.lg, alignSelf: 'stretch' }}>{action}</View> : null}
     </View>

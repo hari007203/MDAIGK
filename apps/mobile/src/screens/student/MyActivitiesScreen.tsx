@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, Text, View } from 'react-native';
+import { Modal, View } from 'react-native';
+import { Text } from '../../components/Typography';
 import { endpoints, errorMessage, type StudentActivity } from '../../api';
 import { Async, Badge, Body, Button, Card, InlineError, Muted, Row, Screen, Segmented, TextField } from '../../components/ui';
 import { useApi } from '../../hooks/useApi';

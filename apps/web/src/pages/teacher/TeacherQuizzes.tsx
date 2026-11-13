@@ -1,17 +1,59 @@
-import { useState } from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { useId, useState } from 'react';
+import { BookOpen, CalendarDays, Check, ClipboardList, Clock3, Flag, FlaskConical, Leaf, Plus, Sigma, Trash2, type LucideIcon } from 'lucide-react';
 import { api, ApiError } from '../../api/client';
 import { useGet, useMutate } from '../../api/hooks';
 import type { QuizListRow } from '../../api/portalTypes';
 import type { Paginated } from '../../api/types';
-import { Card, PageHeader } from '../../components/Cards';
-import { DataTable } from '../../components/DataTable';
-import { InlineAlert } from '../../components/Feedback';
+import { ErrorState, InlineAlert, Loading } from '../../components/Feedback';
+import { StatusBadge } from '../../components/Badge';
 import { FormField, FormGrid } from '../../components/Form';
 import { Modal } from '../../components/Modal';
 import { useAuth } from '../../auth/AuthContext';
-import { date } from '../../lib/format';
+import { date, num } from '../../lib/format';
 import { useTeacherClasses } from './shared';
+import './TeacherQuizzes.css';
+
+function QuizTrophy({ empty = false }: { empty?: boolean }) {
+  const goldId = useId();
+  return (
+    <svg viewBox="0 0 180 150" fill="none" aria-hidden="true" focusable="false">
+      <ellipse cx="90" cy="137" rx="66" ry="8" fill="#e3eed6" />
+      {empty && <path d="M18 125Q3 94 25 68Q46 86 29 125M151 126Q170 101 158 81Q139 99 151 126" fill="#89bb72" />}
+      <path d="M57 30H31V43C31 63 44 76 63 76M123 30H149V43C149 63 136 76 117 76" stroke="#f5b800" strokeWidth="9" strokeLinecap="round" />
+      <path d="M52 21H128V59C128 82 112 100 90 100S52 82 52 59V21Z" fill={`url(#${goldId})`} />
+      <path d="M61 27V55C61 69 65 76 69 81" stroke="#fff3ab" strokeWidth="6" strokeLinecap="round" />
+      <path d="M90 42L95 52L106 54L98 62L100 73L90 68L80 73L82 62L74 54L85 52L90 42Z" fill="#fff8c2" />
+      <path d="M81 98H99V116H81Z" fill="#e5a000" />
+      <path d="M72 114H108L118 128H62L72 114Z" fill="#ffc928" />
+      <rect x="59" y="128" width="62" height="7" rx="3.5" fill="#e3a409" />
+      <path d="M143 9L146 16L153 19L146 22L143 29L140 22L133 19L140 16L143 9Z" fill="#ffc928" />
+      <path d="M30 85L33 91L39 94L33 97L30 103L27 97L21 94L27 91L30 85Z" fill="#66a75c" />
+      <circle cx="35" cy="13" r="4" fill="#90bb72" />
+      <circle cx="149" cy="104" r="4" fill="#ffc928" />
+      <defs>
+        <linearGradient id={goldId} x1="54" y1="27" x2="126" y2="91" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#ffe679" />
+          <stop offset=".48" stopColor="#ffc928" />
+          <stop offset="1" stopColor="#eda500" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
+function QuizSubjectIcon({ subject }: { subject: string }) {
+  let Icon: LucideIcon = BookOpen;
+  let tone = 'green';
+  if (/science|physics|chemistry/i.test(subject)) Icon = FlaskConical;
+  else if (/math/i.test(subject)) {
+    Icon = Sigma;
+    tone = 'gold';
+  } else if (/social|history|civics|geography/i.test(subject)) {
+    Icon = Flag;
+    tone = 'gold';
+  } else if (/environment|biology|nature/i.test(subject)) Icon = Leaf;
+  return <span className={`teacher-quizzes-subject teacher-quizzes-subject--${tone}`} aria-hidden="true"><Icon size={32} strokeWidth={2} /></span>;
+}
 
 interface QDraft {
   prompt: string;
@@ -85,33 +127,71 @@ export default function TeacherQuizzes() {
   const upd = (i: number, patch: Partial<QDraft>) => setQs((list) => list.map((x, j) => (j === i ? { ...x, ...patch } : x)));
 
   return (
-    <>
-      <PageHeader
-        title="My quizzes"
-        subtitle="Simple quizzes you write for your own classes. They are published straight away and can be attached to quiz activities."
-        actions={
-          <button type="button" className="btn btn--primary" onClick={openNew}>
-            <Plus size={16} aria-hidden /> New quiz
-          </button>
-        }
-      />
-      <Card>
-        <DataTable
-          rows={mine}
-          loading={q.isLoading}
-          error={q.isError ? q.error : undefined}
-          onRetry={() => void q.refetch()}
-          rowKey={(r) => r._id}
-          emptyTitle="You haven’t written any quizzes yet"
-          emptyMessage="Platform quizzes are always available in the activity quiz picker."
-          columns={[
-            { key: 'title', header: 'Title', render: (r) => <strong>{r.title}</strong> },
-            { key: 'subject', header: 'Subject', render: (r) => (typeof r.subjectId === 'object' && r.subjectId ? r.subjectId.name : '—') },
-            { key: 'n', header: 'Questions', align: 'right', render: (r) => r.questionCount ?? '—' },
-            { key: 'created', header: 'Created', render: (r) => date(r.createdAt ?? null), hideSm: true },
-          ]}
-        />
-      </Card>
+    <div className="teacher-quizzes-page">
+      <header className="teacher-quizzes-heading">
+        <span className="teacher-quizzes-heading__art"><QuizTrophy /></span>
+        <div className="teacher-quizzes-heading__copy">
+          <h1>My quizzes</h1>
+          <p>Create quizzes for your own classes.</p>
+        </div>
+        <button type="button" className="btn btn--primary teacher-quizzes-new" onClick={openNew}>
+          <Plus size={18} aria-hidden /> New quiz
+        </button>
+      </header>
+      {mine !== undefined && (
+        <section className="teacher-quizzes-summary" aria-label="Quiz summary">
+          <div className="teacher-quizzes-stat">
+            <span className="teacher-quizzes-stat__icon" aria-hidden="true"><ClipboardList size={28} /></span>
+            <div><strong>{num(mine.length)}</strong><span>Total Quizzes</span></div>
+          </div>
+          <div className="teacher-quizzes-stat teacher-quizzes-stat--published">
+            <span className="teacher-quizzes-stat__icon" aria-hidden="true"><Check size={32} strokeWidth={3} /></span>
+            <div><strong>{num(mine.filter((r) => r.status === 'published').length)}</strong><span>Published</span></div>
+          </div>
+          <div className="teacher-quizzes-stat teacher-quizzes-stat--archived">
+            <span className="teacher-quizzes-stat__icon" aria-hidden="true"><Clock3 size={28} /></span>
+            <div><strong>{num(mine.filter((r) => r.status === 'archived').length)}</strong><span>Archived</span></div>
+          </div>
+        </section>
+      )}
+      <p className="teacher-quizzes-note">Quizzes are published straight away and can be attached to quiz activities.</p>
+      <section className="teacher-quizzes-results" aria-label="My quizzes" aria-busy={q.isFetching}>
+        {q.isLoading && !mine ? <Loading /> : q.isError && !mine ? (
+          <ErrorState error={q.error} onRetry={() => void q.refetch()} />
+        ) : !mine?.length ? (
+          <div className="teacher-quizzes-empty" role="status">
+            <span className="teacher-quizzes-empty__art"><QuizTrophy empty /></span>
+            <h2>You haven’t written any quizzes yet</h2>
+            <p>Platform quizzes are always available in the activity quiz picker.</p>
+          </div>
+        ) : (
+          <>
+            <p className="teacher-quizzes-results__caption">Your quizzes in the loaded results</p>
+            <ul className="teacher-quizzes-list">
+              {mine.map((r, i) => {
+                const subject = typeof r.subjectId === 'object' && r.subjectId ? r.subjectId.name : '—';
+                return (
+                  <li key={r._id} className="teacher-quizzes-card" style={{ animationDelay: `${Math.min(i, 5) * 40}ms` }}>
+                    <QuizSubjectIcon subject={subject} />
+                    <div className="teacher-quizzes-card__copy">
+                      <h2>{r.title}</h2>
+                      <div className="teacher-quizzes-card__meta">
+                        <span>{subject}</span>
+                        <span>{r.classLevels?.length ? r.classLevels.map((level) => `Class ${level}`).join(' · ') : r.context}</span>
+                      </div>
+                      <div className="teacher-quizzes-card__details">
+                        <span><ClipboardList size={13} aria-hidden /> {r.questionCount ?? '—'} Questions</span>
+                        <span><CalendarDays size={13} aria-hidden /> Created {date(r.createdAt ?? null)}</span>
+                      </div>
+                    </div>
+                    <div className={`teacher-quizzes-card__status teacher-quizzes-card__status--${r.status}`}><StatusBadge status={r.status} /></div>
+                  </li>
+                );
+              })}
+            </ul>
+          </>
+        )}
+      </section>
       <Modal
         open={open}
         title="New activity quiz"
@@ -202,6 +282,6 @@ export default function TeacherQuizzes() {
           )}
         </div>
       </Modal>
-    </>
+    </div>
   );
 }

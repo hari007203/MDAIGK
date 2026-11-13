@@ -1222,6 +1222,13 @@ a.programme-card:focus-visible {
   flex-direction: column;
   min-width: 180px;
 }
+.cert-preview__frame {
+  width: 100%;
+  height: min(70vh, 640px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+}
 .cert-earned {
   display: flex;
   align-items: center;
@@ -1448,4 +1455,264 @@ a.programme-card:focus-visible {
   .activity-list {
     grid-template-columns: 1fr;
   }
+}
+
+/* ---------------------------------------------------------------- student portal polish */
+/* Student-only presentation refinements. Shared Teacher/Admin views stay intact. */
+.app.app--student .student-page { max-width: 1320px; width: 100%; }
+.app.app--student .page-header {
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 18px 22px;
+  border: 1px solid #e4eadf;
+  border-radius: 18px;
+  background: linear-gradient(115deg, #edf6e9 0%, #fffdf5 68%);
+  box-shadow: 0 6px 18px rgba(20, 62, 39, .045);
+}
+.app.app--student .page-header h1 {
+  color: #145c38;
+  font: 800 28px/1.15 var(--font-display);
+  letter-spacing: -.025em;
+}
+.app.app--student .page-header__sub { max-width: 68ch; margin-top: 6px; line-height: 1.5; }
+.app.app--student .section-title { margin-top: 24px; margin-bottom: 12px; }
+.app.app--student .section-title h2,
+.app.app--student .card__title { color: #174d32; font-family: var(--font-display); }
+
+/* News & GK */
+.app.app--student .chip-row { gap: 8px; margin: 0 0 16px; }
+.app.app--student .chip-row .chip {
+  min-height: 36px;
+  border-color: #e4e8dc;
+  background: #fff;
+  transition: background-color .18s ease, border-color .18s ease, transform .18s ease;
+}
+.app.app--student .chip-row .chip:hover { transform: translateY(-1px); border-color: #d9a520; }
+.app.app--student .chip-row .chip.chip--active { background: #ffc928; border-color: #ffc928; }
+.app.app--student .news-grid { gap: 16px; }
+.app.app--student .news-card {
+  min-height: 174px;
+  padding: 17px 18px;
+  border: 1px solid #e8e8dd;
+  border-top: 4px solid #ffc928;
+  border-radius: 16px;
+  box-shadow: 0 5px 14px rgba(34, 55, 39, .055);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.app.app--student .news-card:hover {
+  transform: translateY(-2px);
+  border-color: #e1c34d;
+  box-shadow: 0 10px 22px rgba(34, 55, 39, .10);
+}
+.app.app--student .news-card__cat { color: #145c38; }
+.app.app--student .news-card__title { color: #252b25; font: 750 17px/1.35 var(--font-display); }
+.app.app--student .news-card__meta { padding-top: 8px; }
+
+/* Games */
+.app.app--student .game-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 16px; }
+.app.app--student .game-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 300px;
+  padding: 20px;
+  border-color: #e7e8de;
+  border-radius: 20px;
+  box-shadow: 0 7px 20px rgba(28, 57, 39, .07);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.app.app--student .game-card::before { position: absolute; inset: 0 0 auto; height: 5px; background: #ffc928; content: ''; }
+.app.app--student .game-card:nth-child(4n + 2)::before { background: #44b96b; }
+.app.app--student .game-card:nth-child(4n + 3)::before { background: #4aa8e8; }
+.app.app--student .game-card:nth-child(4n + 4)::before { background: #a77be8; }
+.app.app--student .game-card:hover { transform: translateY(-3px); border-color: #d7e6d5; box-shadow: 0 13px 28px rgba(28, 57, 39, .12); }
+.app.app--student .game-card__icon { width: 54px; height: 54px; border-radius: 16px; box-shadow: 0 4px 10px rgba(217, 165, 32, .2); }
+.app.app--student .game-card h2 { margin: 2px 0 0; color: #174d32; font: 800 19px/1.25 var(--font-display); }
+.app.app--student .game-card__stats { gap: 8px; margin: 7px 0; }
+.app.app--student .game-card__stats div { padding: 9px 6px; border: 1px solid #eeede4; border-radius: 12px; background: #fbfaf4; }
+.app.app--student .game-card__stats dt { line-height: 1.3; }
+.app.app--student .game-card__stats dd { color: #174d32; }
+.app.app--student .game-card .btn { min-height: 42px; border-radius: 13px; }
+.app.app--student .game-card.is-out { background: #fafaf6; }
+
+/* Programmes */
+.app.app--student .programme-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); gap: 16px; }
+.app.app--student .programme-card {
+  min-height: 190px;
+  padding: 19px;
+  border-color: #e4e9df;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(28, 57, 39, .06);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.app.app--student a.programme-card:hover { transform: translateY(-2px); border-color: #d9a520; box-shadow: 0 12px 24px rgba(28, 57, 39, .10); }
+.app.app--student .programme-card h3 { color: #174d32; font: 800 18px/1.3 var(--font-display); }
+.app.app--student .programme-card--premium { border-color: #e4ca70; background: linear-gradient(145deg, #fff8df, #fff 72%); }
+.app.app--student .programme-card.is-locked { box-shadow: none; }
+.app.app--student .programme-card .btn { min-height: 38px; border-radius: 11px; }
+.app.app--student .seg { padding: 4px; background: #f1f1e7; }
+.app.app--student .seg__btn { min-height: 38px; }
+
+/* Certificates and earned items */
+.app.app--student .cert-ladder { gap: 12px; }
+.app.app--student .cert-step {
+  gap: 16px;
+  padding: 16px 18px;
+  border-color: #e5e9df;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(28, 57, 39, .045);
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.app.app--student .cert-step--available { border-color: #c8e2cb; background: linear-gradient(100deg, #f2f9ef, #fff 62%); }
+.app.app--student .cert-step--certified { border-color: #e4ca70; background: linear-gradient(100deg, #fff8df, #fff 68%); }
+.app.app--student .cert-step--locked { background: #fafaf6; }
+.app.app--student .cert-step__num { width: 48px; height: 48px; background: #eef2e8; }
+.app.app--student .cert-step--available .cert-step__num { background: #ffc928; }
+.app.app--student .cert-step__body h3 { color: #174d32; font: 800 17px/1.3 var(--font-display); }
+.app.app--student .cert-step__body p { margin-top: 5px; }
+.app.app--student .cert-step__action .btn { min-height: 36px; border-radius: 11px; }
+.app.app--student .cert-list li { border-color: #e5e9df; border-radius: 15px; padding: 14px 16px; }
+.app.app--student .cert-earned { border-radius: 16px; padding: 16px; }
+
+/* Progress dashboard */
+.app.app--student .stat-grid { gap: 14px; }
+.app.app--student .stat {
+  min-height: 126px;
+  padding: 17px 18px;
+  border-color: #e5e9df;
+  border-radius: 17px;
+  box-shadow: 0 5px 15px rgba(28, 57, 39, .055);
+}
+.app.app--student .stat__label { color: #65766c; }
+.app.app--student .stat__value { color: #174d32; font-family: var(--font-display); }
+.app.app--student .grid-2 { gap: 16px; }
+.app.app--student .chart-card,
+.app.app--student .student-page .card { border-radius: 17px; border-color: #e5e9df; box-shadow: 0 5px 16px rgba(28, 57, 39, .055); }
+.app.app--student .chart-card__body { padding: 10px 16px 14px; }
+.app.app--student .subject-bars { gap: 13px; }
+.app.app--student .subject-bars li { min-width: 0; }
+.app.app--student .subject-bars li > span:first-child { font-weight: 650; color: #34483a; }
+.app.app--student .badge-grid { gap: 12px; }
+.app.app--student .badge-tile { min-height: 138px; border-radius: 16px; transition: transform .18s ease, box-shadow .18s ease; }
+.app.app--student .badge-tile.is-earned { background: linear-gradient(150deg, #fff8df, #fff); border-color: #ecd67d; }
+.app.app--student .badge-tile.is-earned:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(28, 57, 39, .08); }
+
+/* Profile and notification surfaces */
+.app.app--student .profile-head { padding-bottom: 16px; border-bottom: 1px solid #e8ebe2; }
+.app.app--student .profile-head h2 { color: #174d32; font: 800 22px/1.25 var(--font-display); }
+.app.app--student .avatar-option { transition: transform .16s ease, border-color .16s ease, background-color .16s ease; }
+.app.app--student .avatar-option:hover { transform: translateY(-2px); border-color: #d9a520; }
+.app.app--student .avatar-option.is-selected { border-color: #145c38; background: #e8f3e8; box-shadow: 0 0 0 2px #145c38; }
+.app.app--student .kv__row { border-color: #e8ebe2; }
+.app.app--student .table-wrap { overflow-x: auto; border: 1px solid #e5e9df; border-radius: 15px; background: #fff; }
+.app.app--student .table-wrap table { min-width: 600px; }
+
+@media (max-width: 760px) {
+  .app.app--student .student-page { max-width: none; }
+  .app.app--student .page-header { align-items: flex-start; padding: 15px 16px; border-radius: 15px; }
+  .app.app--student .page-header h1 { font-size: 24px; }
+  .app.app--student .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app.app--student .stat { min-height: 112px; padding: 14px; }
+  .app.app--student .grid-2 { grid-template-columns: minmax(0, 1fr); }
+  .app.app--student .cert-step { align-items: flex-start; }
+  .app.app--student .cert-step__body { min-width: 0; }
+  .app.app--student .cert-step__action { width: 100%; padding-left: 64px; }
+}
+@media (max-width: 460px) {
+  .app.app--student .stat-grid { grid-template-columns: minmax(0, 1fr); }
+  .app.app--student .stat { min-height: 0; }
+  .app.app--student .game-card { min-height: 0; padding: 17px; }
+  .app.app--student .news-grid,
+  .app.app--student .programme-grid { grid-template-columns: minmax(0, 1fr); }
+  .app.app--student .cert-step { gap: 11px; padding: 13px; }
+  .app.app--student .cert-step__action { padding-left: 0; }
+  .app.app--student .cert-step__action .btn { flex: 1; }
+  .app.app--student .avatar-picker__grid { gap: 7px; }
+  .app.app--student .avatar-option { width: 46px; height: 46px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app.app--student .news-card,
+  .app.app--student .game-card,
+  .app.app--student .programme-card,
+  .app.app--student .cert-step,
+  .app.app--student .badge-tile,
+  .app.app--student .avatar-option,
+  .app.app--student .chip-row .chip { transition: none; }
+}
+
+/* Student portal motion — short, one-time entrances complement the existing
+   Home, Activities, and Learn effects without delaying content or actions. */
+@keyframes student-portal-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes student-portal-card-enter {
+  from { opacity: 0; transform: translateY(10px) scale(.992); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.app.app--student .page-header {
+  animation: student-portal-enter .42s cubic-bezier(.2, .7, .3, 1) both;
+}
+.app.app--student .news-card,
+.app.app--student .game-card,
+.app.app--student .programme-card,
+.app.app--student .cert-step,
+.app.app--student .cert-list > li,
+.app.app--student .stat,
+.app.app--student .chart-card,
+.app.app--student .badge-tile {
+  animation: student-portal-card-enter .42s cubic-bezier(.2, .7, .3, 1) both;
+}
+.app.app--student .news-card:nth-child(2),
+.app.app--student .game-card:nth-child(2),
+.app.app--student .programme-card:nth-child(2),
+.app.app--student .cert-step:nth-child(2),
+.app.app--student .cert-list > li:nth-child(2),
+.app.app--student .stat:nth-child(2),
+.app.app--student .badge-tile:nth-child(2) { animation-delay: 45ms; }
+.app.app--student .news-card:nth-child(3),
+.app.app--student .game-card:nth-child(3),
+.app.app--student .programme-card:nth-child(3),
+.app.app--student .cert-step:nth-child(3),
+.app.app--student .cert-list > li:nth-child(3),
+.app.app--student .stat:nth-child(3),
+.app.app--student .badge-tile:nth-child(3) { animation-delay: 90ms; }
+.app.app--student .news-card:nth-child(4),
+.app.app--student .game-card:nth-child(4),
+.app.app--student .programme-card:nth-child(4),
+.app.app--student .cert-step:nth-child(4),
+.app.app--student .cert-list > li:nth-child(4),
+.app.app--student .stat:nth-child(4),
+.app.app--student .badge-tile:nth-child(4) { animation-delay: 135ms; }
+.app.app--student .news-card:nth-child(5),
+.app.app--student .cert-step:nth-child(5),
+.app.app--student .cert-list > li:nth-child(5),
+.app.app--student .badge-tile:nth-child(5) { animation-delay: 180ms; }
+.app.app--student .news-card:nth-child(6),
+.app.app--student .cert-step:nth-child(6),
+.app.app--student .cert-list > li:nth-child(6),
+.app.app--student .badge-tile:nth-child(6) { animation-delay: 225ms; }
+.app.app--student .news-card:nth-child(n + 7),
+.app.app--student .cert-step:nth-child(n + 7),
+.app.app--student .cert-list > li:nth-child(n + 7),
+.app.app--student .badge-tile:nth-child(n + 7) { animation-delay: 270ms; }
+.app.app--student .chart-card { animation-delay: 45ms; }
+.app.app--student .game-card__icon { transition: transform .22s cubic-bezier(.2, .7, .3, 1), box-shadow .22s ease; }
+.app.app--student .game-card:hover .game-card__icon { transform: translateY(-2px) scale(1.03); }
+.app.app--student :is(.news-card, .game-card, a.programme-card, .cert-step, .badge-tile):focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(20, 92, 56, .2), 0 8px 20px rgba(28, 57, 39, .1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .app.app--student .page-header,
+  .app.app--student .news-card,
+  .app.app--student .game-card,
+  .app.app--student .programme-card,
+  .app.app--student .cert-step,
+  .app.app--student .cert-list > li,
+  .app.app--student .stat,
+  .app.app--student .chart-card,
+  .app.app--student .badge-tile { animation: none; }
+  .app.app--student .game-card__icon { transition: none; }
+  .app.app--student :is(.news-card:hover, .game-card:hover, a.programme-card:hover, .badge-tile.is-earned:hover, .avatar-option:hover) { transform: none; }
+  .app.app--student .game-card:hover .game-card__icon { transform: none; }
 }
