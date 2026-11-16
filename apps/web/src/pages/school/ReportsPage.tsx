@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Download } from 'lucide-react';
+import { Award, BarChart3, BookOpen, Download, Gamepad2, Info, Target, Trophy, Users, type LucideIcon } from 'lucide-react';
 import { api, errorMessage, type Query } from '../../api/client';
 import { useGet } from '../../api/hooks';
 import type { ClassAccessRow, ProgrammeEntitlement, ReportResponse, ReportType } from '../../api/types';
 import { useSchoolId } from '../../auth/AuthContext';
-import { Card, PageHeader, Toolbar } from '../../components/Cards';
+import { Card, Toolbar } from '../../components/Cards';
 import { DataTable, type Column } from '../../components/DataTable';
 import { Tabs } from '../../components/Tabs';
 import { useToast } from '../../components/Toast';
 import { num, pct } from '../../lib/format';
 import { FilterField, periodLabel, useSections, useSubjects } from './shared';
+import './ReportsPage.css';
 
 type Filter = 'range' | 'class' | 'subject' | 'programme';
 interface ReportDef {
@@ -39,6 +40,16 @@ const REPORTS: ReportDef[] = [
   { id: 'programmes', label: 'Programme participation', type: 'programmes', filters: ['programme'], description: 'Enrolments, completions and average progress (all time).' },
   { id: 'students', label: 'Student list', type: 'students', filters: ['range', 'class', 'subject'], description: 'Active students with quiz, game and certificate activity.' },
 ];
+
+const REPORT_TAB_ICONS: Record<string, LucideIcon> = {
+  class: BarChart3,
+  subject: BookOpen,
+  accuracy: Target,
+  games: Gamepad2,
+  certificates: Award,
+  programmes: Trophy,
+  students: Users,
+};
 
 const LABELS: Record<string, string> = {
   class: 'Class',
@@ -116,6 +127,7 @@ export default function ReportsPage() {
   const period = has('range') ? periodLabel(from, to) : 'All time';
   const levels = (access.data ?? []).filter((a) => a.enabled).map((a) => a.levelNumber);
   const sectionOptions = (sections.data ?? []).filter((s) => !s.locked && (!level || s.levelNumber === Number(level)));
+  const ActiveReportIcon = REPORT_TAB_ICONS[active.id];
 
   async function exportCsv() {
     setDownloading(true);
@@ -130,18 +142,24 @@ export default function ReportsPage() {
   }
 
   return (
-    <>
-      <PageHeader
-        title="Reports"
-        subtitle="Filter, review and export school reports as CSV."
-        actions={
-          <button type="button" className="btn btn--primary" onClick={exportCsv} disabled={downloading || Boolean(rangeError) || !rows?.length}>
-            <Download size={16} aria-hidden /> {downloading ? 'Exporting…' : 'Export CSV'}
-          </button>
-        }
-      />
-      <Tabs label="Report type" tabs={REPORTS.map((r) => ({ id: r.id, label: r.label }))} active={active.id} onChange={(id) => setParams({ type: id }, { replace: true })}>
-        <Card title={active.label} subtitle={`${active.description} · Period: ${period}`}>
+    <div className="school-reports">
+      <div className="reports-hero">
+        <div className="reports-hero__copy">
+          <span className="reports-hero__icon" aria-hidden />
+          <div>
+            <h1>Reports</h1>
+            <p>Filter, review and export school reports as CSV.</p>
+          </div>
+        </div>
+        <button type="button" className="btn btn--primary reports-export" onClick={exportCsv} disabled={downloading || Boolean(rangeError) || !rows?.length}>
+          <Download size={17} aria-hidden /> {downloading ? 'Exporting…' : 'Export CSV'}
+        </button>
+      </div>
+      <Tabs label="Report type" tabs={REPORTS.map((r) => {
+        const Icon = REPORT_TAB_ICONS[r.id];
+        return { id: r.id, label: <><Icon size={17} aria-hidden /><span>{r.label}</span></> };
+      })} active={active.id} onChange={(id) => setParams({ type: id }, { replace: true })}>
+        <Card className="reports-card" title={<span className="reports-card__title"><ActiveReportIcon size={22} aria-hidden />{active.label}</span>} subtitle={`${active.description} · Period: ${period}`}>
           <Toolbar>
             {has('range') && (
               <>
@@ -221,12 +239,13 @@ export default function ReportsPage() {
             emptyMessage={rangeError ? undefined : 'Nothing was recorded for the selected filters and period.'}
           />
           {rows && rows.length > 0 && (
-            <p className="muted small" style={{ marginTop: 8 }}>
+            <p className="reports-summary muted small">
+              <Info size={17} aria-hidden />
               {num(rows.length)} row(s) · {period}. Percentages show “—” where no attempts were recorded.
             </p>
           )}
         </Card>
       </Tabs>
-    </>
+    </div>
   );
 }

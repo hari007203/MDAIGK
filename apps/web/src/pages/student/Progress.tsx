@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { Award, Crown, Flame, Lock, Medal } from 'lucide-react';
+import { Award, BookOpen, ClipboardCheck, Crown, Flame, Lock, Medal, TrendingUp } from 'lucide-react';
 import { useGet } from '../../api/hooks';
 import type { StudentProgress } from '../../api/portalTypes';
 import { Card, ChartCard, PageHeader, StatCard, StatGrid } from '../../components/Cards';
@@ -9,6 +9,7 @@ import { EmptyState, QueryState } from '../../components/Feedback';
 import { CHART, axisProps, pctTick, tooltipProps } from '../../components/charts';
 import { date, titleCase } from '../../lib/format';
 import { Meter, SectionTitle, pctOrDash } from './shared';
+import './Progress.css';
 
 const RANGES = [
   { id: '7d', label: '7 days' },
@@ -23,20 +24,30 @@ export default function ProgressPage() {
   const q = useGet<StudentProgress>('/student/progress', { range });
 
   return (
-    <div className="student-page">
-      <PageHeader
-        title="My progress"
-        subtitle={q.data ? `Showing: ${q.data.rangeLabel}` : undefined}
-        actions={
-          <div className="seg" role="radiogroup" aria-label="Time range">
-            {RANGES.map((r) => (
-              <button key={r.id} type="button" role="radio" aria-checked={range === r.id} className={`seg__btn ${range === r.id ? 'seg__btn--active' : ''}`} onClick={() => setParams({ range: r.id })}>
-                {r.label}
-              </button>
-            ))}
-          </div>
-        }
-      />
+    <div className="student-page student-progress-page">
+      <div className="progress-hero">
+        <span className="progress-hero__icon"><TrendingUp size={35} aria-hidden /></span>
+        <PageHeader
+          title="My progress"
+          subtitle={q.data ? `Showing: ${q.data.rangeLabel}` : undefined}
+          actions={
+            <div className="seg progress-range" role="radiogroup" aria-label="Time range">
+              {RANGES.map((r) => (
+                <button key={r.id} type="button" role="radio" aria-checked={range === r.id} className={`seg__btn ${range === r.id ? 'seg__btn--active' : ''}`} onClick={() => setParams({ range: r.id })}>
+                  {r.label}
+                </button>
+              ))}
+            </div>
+          }
+        />
+        <div className="progress-hero__art" aria-hidden="true">
+          <span className="progress-hero__leaf progress-hero__leaf--one" />
+          <span className="progress-hero__leaf progress-hero__leaf--two" />
+          <span className="progress-hero__leaf progress-hero__leaf--three" />
+          <span className="progress-hero__spark">✦</span>
+          <span className="progress-hero__chart"><i /><i /><i /><b><TrendingUp size={40} /></b></span>
+        </div>
+      </div>
       <QueryState query={q} loadingLabel="Loading your progress…">
         {(p) => {
           const subjects = p.subjects.map((s) => ({ name: s.name, value: s.averagePercent, n: s.sampleSize }));
@@ -44,13 +55,14 @@ export default function ProgressPage() {
           return (
             <>
               <StatGrid>
-                <StatCard label="Average quiz score" value={pctOrDash(p.overall.averagePercent)} hint={`${p.rangeLabel} · ${p.overall.sampleSize} quiz${p.overall.sampleSize === 1 ? '' : 'zes'}`} />
+                <StatCard icon={Medal} label="Average quiz score" value={pctOrDash(p.overall.averagePercent)} hint={`${p.rangeLabel} · ${p.overall.sampleSize} quiz${p.overall.sampleSize === 1 ? '' : 'zes'}`} />
                 <StatCard
+                  icon={ClipboardCheck}
                   label="Activities completed"
                   value={p.activityCompletion ? `${p.activityCompletion.completed} / ${p.activityCompletion.expected}` : p.overall.completedActivities}
                   hint={p.activityCompletion?.ratePercent !== undefined ? `${pctOrDash(p.activityCompletion?.ratePercent)} · ${p.rangeLabel}` : p.rangeLabel}
                 />
-                <StatCard label="Lessons completed" value={p.overall.learningItemsCompleted} hint={p.rangeLabel} />
+                <StatCard icon={BookOpen} label="Lessons completed" value={p.overall.learningItemsCompleted} hint={p.rangeLabel} />
                 <StatCard label="Learning streak" value={`${p.streak.current} day${p.streak.current === 1 ? '' : 's'}`} hint={`${p.streak.activeDaysInWindow} active days recently`} icon={Flame} tone="gold" />
               </StatGrid>
 
@@ -81,8 +93,9 @@ export default function ProgressPage() {
                 </Card>
               </div>
 
+              <section className="progress-history">
               <SectionTitle>Quiz history</SectionTitle>
-              <Card>
+              <Card className="progress-history-card">
                 <DataTable
                   rows={p.history}
                   rowKey={(r) => r._id}
@@ -97,9 +110,10 @@ export default function ProgressPage() {
                   ]}
                 />
               </Card>
+              </section>
 
               <div className="grid-2">
-                <Card title="Programmes">
+                <Card title="Programmes" className="progress-programmes-card">
                   {p.programmes.length === 0 ? (
                     <EmptyState title="No programmes" />
                   ) : (
@@ -128,7 +142,7 @@ export default function ProgressPage() {
                     </ul>
                   )}
                 </Card>
-                <Card title="Certification">
+                <Card title="Certification" className="progress-certification-card">
                   <p className="cert-summary">
                     <Award size={28} aria-hidden className="text-gold" />
                     <span>
@@ -145,6 +159,7 @@ export default function ProgressPage() {
                 </Card>
               </div>
 
+              <section className="progress-badges">
               <SectionTitle>Badges</SectionTitle>
               <div className="badge-grid">
                 {p.badges
@@ -164,6 +179,7 @@ export default function ProgressPage() {
                   </div>
                 ))}
               </div>
+              </section>
             </>
           );
         }}

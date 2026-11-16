@@ -1,0 +1,104 @@
+.app.app--student .student-profile-page { display: flex; flex-direction: column; gap: 16px; max-width: 1320px; width: 100%; }
+.app.app--student .student-profile-page > .page-header { margin: 0; padding: 0 2px; border: 0; background: transparent; box-shadow: none; }
+.app.app--student .student-profile-page > .page-header h1 { color: #124d35; font: 900 24px/1.2 var(--font-display); }
+
+.app.app--student .student-profile-page .card { min-width: 0; overflow: hidden; border: 1px solid #eadfbd; border-radius: 19px; background: linear-gradient(145deg,#fffefa,#fffaf0); box-shadow: 0 7px 20px #374b2f12; }
+.app.app--student .student-profile-page .profile-summary-card .card__body { padding: 0; }
+.app.app--student .student-profile-page .profile-head { position: relative; z-index: 0; min-height: 138px; overflow: hidden; gap: 18px; margin: 0; padding: 22px 24px; border-bottom: 1px solid #f0e4a9; background: linear-gradient(110deg,#fff0ae 0%,#fff9d9 48%,#e9f6c8 100%); }
+.app.app--student .student-profile-page .profile-head::before,
+.app.app--student .student-profile-page .profile-head::after { position: absolute; z-index: -1; right: -20px; bottom: -78px; width: 260px; height: 145px; border-radius: 80% 0 80% 0; content: ''; background: linear-gradient(140deg,#a8df43,#54b749); transform: rotate(-13deg); }
+.app.app--student .student-profile-page .profile-head::after { right: 130px; bottom: -104px; width: 215px; background: linear-gradient(140deg,#fff2a6,#cedf61); transform: rotate(7deg); }
+.app.app--student .student-profile-page .profile-head > .student-avatar { z-index: 1; width: 88px; height: 88px; flex: 0 0 88px; border: 5px solid #fff; color: #175439; background: radial-gradient(circle at 28% 25%,#fff5c8,#ffcd31 68%); box-shadow: 0 5px 14px #76551425; font-size: 43px; }
+.app.app--student .student-profile-page .profile-head > div { z-index: 1; min-width: 0; }
+.app.app--student .student-profile-page .profile-head h2 { margin: 0; color: #105337; font: 900 28px/1.15 var(--font-display); }
+.app.app--student .student-profile-page .profile-head p { margin: 6px 0 0; color: #4e6455; font-size: 14px; }
+.app.app--student .student-profile-page .profile-info-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin: 0; padding: 5px 18px; }
+.app.app--student .student-profile-page .profile-info-item { display: flex; align-items: center; gap: 11px; min-width: 0; padding: 13px 11px; border-bottom: 1px solid #eeeadd; }
+.app.app--student .student-profile-page .profile-info-item:nth-last-child(-n+2) { border-bottom: 0; }
+.app.app--student .student-profile-page .profile-info-item:nth-child(odd) { border-right: 1px solid #eeeadd; }
+.app.app--student .student-profile-page .profile-info-item > div { min-width: 0; }
+.app.app--student .student-profile-page .profile-info-item dt { color: #748075; font-size: 11px; font-weight: 750; letter-spacing: .035em; text-transform: uppercase; }
+.app.app--student .student-profile-page .profile-info-item dd { margin: 3px 0 0; overflow-wrap: anywhere; color: #183d2b; font-size: 14px; font-weight: 750; }
+.app.app--student .student-profile-page .profile-info-icon { display: grid; width: 40px; height: 40px; flex: 0 0 40px; place-items: center; border: 1px solid #d8e8b6; border-radius: 13px; color: #08724a; background: linear-gradient(145deg,#f5ffdc,#e3f1bd); }
+
+.app.app--student .student-profile-page .profile-personalise-card .card__header,
+.app.app--student .student-profile-page .profile-signout-card .card__header { position: relative; overflow: hidden; align-items: center; min-height: 55px; padding: 13px 18px; border-bottom: 1px solid #e5edc8; background: linear-gradient(100deg,#eaf5ce,#fff9df); }
+.app.app--student .student-profile-page .card__title { display: flex; align-items: center; gap: 9px; color: #125338; font: 850 17px/1.3 var(--font-display); }
+.app.app--student .student-profile-page .profile-personalise-card .card__title > svg,
+.app.app--student .student-profile-page .profile-signout-card .card__title > svg { width: 34px; height: 34px; padding: 7px; border-radius: 11px; color: #08734a; background: #d8edaa; }
+.app.app--student .student-profile-page .card__body { padding: 17px 18px 19px; }
+.app.app--student .student-profile-page .profile-personalise-card .stack { gap: 15px; }
+.app.app--student .student-profile-page .profile-personalise-card .field { gap: 6px; }
+.app.app--student .student-profile-page .profile-personalise-card .field__label { color: #284a36; font-size: 13px; }
+.app.app--student .student-profile-page .profile-personalise-card .field input:not([type='checkbox']):not([type='radio']) { height: 47px; border-color: #d9d4bd; border-radius: 12px; background: #fffefb; transition: border-color .18s ease, box-shadow .18s ease, background .18s ease; }
+.app.app--student .student-profile-page .profile-personalise-card .field input:focus { border-color: #128252; background: #fff; box-shadow: 0 0 0 3px #12825220; }
+.app.app--student .student-profile-page .profile-personalise-card .field__hint { color: #68786c; }
+.app.app--student .student-profile-page .avatar-picker__grid { gap: 10px; margin-top: 8px; }
+.app.app--student .student-profile-page .avatar-option { position: relative; width: 62px; height: 62px; border: 2px solid #e8e3d2; color: inherit; background: #fffefa; box-shadow: 0 3px 8px #354b3010; font-size: 30px; transition: transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease; }
+.app.app--student .student-profile-page .avatar-option:hover { z-index: 1; transform: translateY(-2px); border-color: #e6bf39; box-shadow: 0 7px 13px #55481d1c; }
+.app.app--student .student-profile-page .avatar-option.is-selected { border: 3px solid #116643; color: inherit; background: linear-gradient(145deg,#f4ffdf,#e2f2bd); box-shadow: 0 0 0 3px #1166431c,0 5px 12px #244b2a20; }
+.app.app--student .student-profile-page .avatar-option.is-selected::after { position: absolute; top: -2px; right: -2px; width: 16px; height: 16px; border: 2px solid #fff; border-radius: 50%; background: #07834d; content: '✓'; color: #fff; font: 700 10px/12px Inter,sans-serif; text-align: center; }
+.app.app--student .student-profile-page .avatar-option:focus-within { outline: 3px solid #d4ab25; outline-offset: 3px; box-shadow: none; }
+.app.app--student .student-profile-page .profile-personalise-card .row { margin-top: 1px; }
+.app.app--student .student-profile-page .profile-personalise-card .btn--mango { min-width: 166px; height: 45px; padding: 0 20px; border: 1px solid #e7b624; border-radius: 12px; background: linear-gradient(135deg,#ffd43b,#ffbb17); color: #124d35; font-weight: 800; box-shadow: 0 5px 12px #9e741a24; transition: transform .18s ease,box-shadow .18s ease,filter .18s ease; }
+.app.app--student .student-profile-page .profile-personalise-card .btn--mango:hover:not(:disabled) { transform: translateY(-1px); filter: saturate(1.06); box-shadow: 0 8px 16px #9e741a30; }
+.app.app--student .student-profile-page .profile-personalise-card .btn--mango:active:not(:disabled) { transform: translateY(1px); }
+.app.app--student .student-profile-page .profile-signout-card { border-color: #e8e1cc; background: linear-gradient(135deg,#fffefa,#f5f8eb); }
+.app.app--student .student-profile-page .profile-signout-card .card__header { border-bottom-color: #e8e8d7; background: linear-gradient(100deg,#e8f3d6,#f8f6e7); }
+.app.app--student .student-profile-page .profile-signout-card .card__body { position: relative; }
+.app.app--student .student-profile-page .profile-signout-card .card__body::after { position: absolute; top: 16px; right: 24px; color: #b7d88b; content: '✦'; font-size: 24px; pointer-events: none; }
+.app.app--student .student-profile-page .profile-signout-card .card__body p { margin: 0 0 13px; color: #66756a; }
+.app.app--student .student-profile-page .profile-signout-card .btn--secondary { min-width: 132px; height: 42px; padding-inline: 15px; border: 1px solid #168253; border-radius: 11px; color: #07583b; background: #f4fae9; font-weight: 750; transition: background .18s ease,transform .18s ease; }
+.app.app--student .student-profile-page .profile-signout-card .btn--secondary:hover { transform: translateY(-1px); background: #e7f3d8; }
+
+.app.app--student:has(.student-profile-page) .sidebar { background: radial-gradient(ellipse at 108% 48%,#159255 0%,transparent 40%),linear-gradient(165deg,#075e42 0%,#034d38 55%,#056b49 100%); }
+.app.app--student:has(.student-profile-page) .nav-link { transition: background .16s ease,color .16s ease,transform .16s ease; }
+.app.app--student:has(.student-profile-page) .nav-link:not(.nav-link--active):hover { transform: translateX(2px); background: #ffffff12; }
+.app.app--student:has(.student-profile-page) .topbar { border-bottom-color: #eee8d8; background: linear-gradient(100deg,#fffdf7,#fff9e9); }
+
+@keyframes student-profile-enter { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+.student-profile-page > .page-header,.student-profile-page > .card { animation: student-profile-enter .36s ease both; }
+.student-profile-page > .card:nth-of-type(2) { animation-delay: .05s; }
+.student-profile-page > .card:nth-of-type(3) { animation-delay: .1s; }
+@media (prefers-reduced-motion: reduce) {
+  .student-profile-page > .page-header,.student-profile-page > .card { animation: none; }
+  .app.app--student .student-profile-page .avatar-option,
+  .app.app--student .student-profile-page .btn,
+  .app.app--student .student-profile-page .field input { transition: none; }
+}
+
+@media (max-width: 760px) {
+  .app.app--student .student-profile-page { gap: 12px; }
+  .app.app--student .student-profile-page .profile-head { min-height: 116px; gap: 12px; padding: 16px; }
+  .app.app--student .student-profile-page .profile-head > .student-avatar { width: 70px; height: 70px; flex-basis: 70px; font-size: 34px; }
+  .app.app--student .student-profile-page .profile-head h2 { font-size: 24px; }
+  .app.app--student .student-profile-page .profile-head p { font-size: 12px; }
+  .app.app--student .student-profile-page .profile-info-grid { padding: 4px 10px; }
+  .app.app--student .student-profile-page .profile-info-item { gap: 8px; padding: 11px 7px; }
+  .app.app--student .student-profile-page .profile-info-icon { width: 34px; height: 34px; flex-basis: 34px; }
+  .app.app--student .student-profile-page .profile-info-icon svg { width: 17px; }
+  .app.app--student .student-profile-page .profile-info-item dd { font-size: 12px; }
+  .app.app--student .student-profile-page .card__body { padding: 14px; }
+  .app.app--student .student-profile-page .profile-summary-card .card__body { padding: 0; }
+  .app.app--student .student-profile-page .avatar-option { width: 56px; height: 56px; font-size: 27px; }
+}
+@media (max-width: 640px) {
+  .app.app--student:has(.student-profile-page) .school-pill { min-width: 0; max-width: 44vw; flex: 0 1 auto; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+}
+@media (max-width: 460px) {
+  .app.app--student .student-profile-page > .page-header h1 { font-size: 21px; }
+  .app.app--student .student-profile-page .profile-head { min-height: 106px; }
+  .app.app--student .student-profile-page .profile-head > .student-avatar { width: 60px; height: 60px; flex-basis: 60px; font-size: 30px; }
+  .app.app--student .student-profile-page .profile-head h2 { font-size: 21px; }
+  .app.app--student .student-profile-page .profile-head p { max-width: 220px; font-size: 11px; line-height: 1.4; }
+  .app.app--student .student-profile-page .profile-head p { overflow-wrap: anywhere; }
+  .app.app--student .student-profile-page .profile-head::before,
+  .app.app--student .student-profile-page .profile-head::after { display: none; }
+  .app.app--student .student-profile-page .profile-info-grid { grid-template-columns: minmax(0,1fr); }
+  .app.app--student .student-profile-page .profile-info-item,
+  .app.app--student .student-profile-page .profile-info-item:nth-child(odd) { border-right: 0; border-bottom: 1px solid #eeeadd; }
+  .app.app--student .student-profile-page .profile-info-item:last-child { border-bottom: 0; }
+  .app.app--student .student-profile-page .avatar-picker__grid { gap: 9px; }
+  .app.app--student .student-profile-page .avatar-option { width: 52px; height: 52px; font-size: 25px; }
+  .app.app--student .student-profile-page .profile-personalise-card .btn--mango { width: 100%; }
+}

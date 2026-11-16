@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from '../components/Typography';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { endpoints, errorMessage } from '../api';
@@ -42,9 +42,7 @@ export default function LoginScreen() {
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
           <View style={styles.hero}>
-            <View style={styles.logo}>
-              <Text style={styles.logoText}>MD</Text>
-            </View>
+            <Image source={require('../../assets/mango-dude-symbol.png')} style={styles.logo} accessibilityLabel="Mango Dude logo" />
             <Text style={styles.brand}>Mango Dude</Text>
             <Text style={styles.tagline}>Learn, play and grow every day</Text>
           </View>
@@ -104,8 +102,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.forestGreen },
   container: { flexGrow: 1, padding: spacing.lg, justifyContent: 'center' },
   hero: { alignItems: 'center', marginBottom: spacing.xl },
-  logo: { width: 72, height: 72, borderRadius: 36, backgroundColor: colors.mangoYellow, alignItems: 'center', justifyContent: 'center', marginBottom: spacing.md },
-  logoText: { fontSize: fontSizes.xl, fontWeight: '900', color: colors.forestGreen },
+  logo: { width: 82, height: 82, borderRadius: 18, backgroundColor: colors.warmIvory, padding: 5, resizeMode: 'contain', marginBottom: spacing.md },
   brand: { fontSize: fontSizes.xxl, fontWeight: '800', color: colors.white },
   tagline: { fontSize: fontSizes.md, color: colors.lightGreen, marginTop: spacing.xs },
   card: { backgroundColor: colors.warmIvory, borderRadius: radii.lg, padding: spacing.lg },

@@ -12,6 +12,7 @@ import { LockedBadge, StatusBadge } from '../../components/Badge';
 import { useToast } from '../../components/Toast';
 import { useSections } from './shared';
 import './school.css';
+import './ClassesPage.css';
 
 const SECTION_RX = /^[A-Za-z0-9]{1,10}$/;
 
@@ -105,7 +106,7 @@ export default function ClassesPage() {
   const academicYear = sections.data[0]?.academicYear;
 
   return (
-    <>
+    <div className="school-classes">
       <PageHeader
         title="Classes & sections"
         subtitle={`${enabled.length} of 10 class levels granted to your school${academicYear ? ` · Academic year ${academicYear}` : ''}. Class access is managed by the platform owner.`}
@@ -226,6 +227,6 @@ export default function ClassesPage() {
         onConfirm={() => toggling && toggle.mutate(toggling)}
         onCancel={() => setToggling(null)}
       />
-    </>
+    </div>
   );
 }

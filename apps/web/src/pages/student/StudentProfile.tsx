@@ -1,14 +1,15 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogOut } from 'lucide-react';
+import { IdCard, LogOut, School, Settings, ShieldCheck, UserRound, UsersRound } from 'lucide-react';
 import { api, ApiError } from '../../api/client';
 import { useGet, useMutate } from '../../api/hooks';
 import type { StudentProfileData } from '../../api/portalTypes';
 import { useAuth } from '../../auth/AuthContext';
-import { Card, KeyValue, PageHeader } from '../../components/Cards';
+import { Card, PageHeader } from '../../components/Cards';
 import { InlineAlert, QueryState } from '../../components/Feedback';
 import { FormField } from '../../components/Form';
 import { AVATARS, Avatar } from './shared';
+import './StudentProfile.css';
 
 export function validateDisplayName(v: string): string | undefined {
   const t = v.trim();
@@ -53,12 +54,12 @@ export default function StudentProfilePage() {
   }
 
   return (
-    <div className="student-page student-page--narrow">
+    <div className="student-page student-profile-page">
       <PageHeader title="My profile" />
       <QueryState query={q} loadingLabel="Loading profile…">
         {(p) => (
           <>
-            <Card>
+            <Card className="profile-summary-card">
               <div className="profile-head">
                 <Avatar avatar={avatar} name={name || p.name} size="lg" />
                 <div>
@@ -68,16 +69,14 @@ export default function StudentProfilePage() {
                   </p>
                 </div>
               </div>
-              <KeyValue
-                items={[
-                  ['Full name', p.name],
-                  ['Student ID', p.studentCode],
-                  ['Class', `Class ${p.levelNumber}-${p.section}`],
-                  ['School', p.schoolName],
-                ]}
-              />
+              <dl className="profile-info-grid">
+                <div className="profile-info-item"><span className="profile-info-icon"><UserRound size={19} aria-hidden /></span><div><dt>Full name</dt><dd>{p.name}</dd></div></div>
+                <div className="profile-info-item"><span className="profile-info-icon"><IdCard size={19} aria-hidden /></span><div><dt>Student ID</dt><dd>{p.studentCode}</dd></div></div>
+                <div className="profile-info-item"><span className="profile-info-icon"><UsersRound size={19} aria-hidden /></span><div><dt>Class</dt><dd>Class {p.levelNumber}-{p.section}</dd></div></div>
+                <div className="profile-info-item"><span className="profile-info-icon"><School size={19} aria-hidden /></span><div><dt>School</dt><dd>{p.schoolName}</dd></div></div>
+              </dl>
             </Card>
-            <Card title="Personalise">
+            <Card className="profile-personalise-card" title={<><Settings size={19} aria-hidden /><span>Personalise</span></>}>
               <form onSubmit={submit} className="stack" noValidate>
                 {save.isError && <InlineAlert>{save.error instanceof ApiError ? save.error.message : 'Could not save your profile.'}</InlineAlert>}
                 {saved && !save.isPending && <InlineAlert tone="success">Your profile has been updated.</InlineAlert>}
@@ -103,7 +102,7 @@ export default function StudentProfilePage() {
                 </div>
               </form>
             </Card>
-            <Card title="Sign out">
+            <Card className="profile-signout-card" title={<><ShieldCheck size={19} aria-hidden /><span>Sign out</span></>}>
               <p className="muted">Using a shared computer? Always sign out when you finish.</p>
               <button
                 type="button"

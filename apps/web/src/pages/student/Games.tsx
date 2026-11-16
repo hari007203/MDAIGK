@@ -13,6 +13,7 @@ import MathSprint from '../../games/MathSprint';
 import SpellMaster from '../../games/SpellMaster';
 import type { GameProps, GameResult } from '../../games/types';
 import { timeOfDay } from './shared';
+import './Games.css';
 
 const GAME_UI: Record<string, (p: GameProps) => React.JSX.Element> = {
   SPELL_MASTER: SpellMaster,
@@ -36,11 +37,28 @@ export function resetText(resetsAt: string | undefined): string {
   return `${d.toLocaleDateString(undefined, { weekday: 'long' })} at ${timeOfDay(d)}`;
 }
 
+function gameArtClass(code: string): string {
+  if (code.includes('SPELL')) return 'spell';
+  if (code.includes('GRAMMAR')) return 'grammar';
+  if (code.includes('2048')) return 'tiles';
+  if (code.includes('MATH')) return 'math';
+  return 'default';
+}
+
 export default function GamesPage() {
   const q = useGet<StudentGame[]>('/games');
   return (
-    <div className="student-page">
-      <PageHeader title="Games" subtitle="Learn while you play. Each game has a daily play limit so there’s time for everything else too." />
+    <div className="student-page student-games-page">
+      <div className="games-hero">
+        <div className="games-hero__icon"><Gamepad2 size={37} aria-hidden /></div>
+        <PageHeader title="Games" subtitle="Learn while you play. Each game has a daily play limit so there’s time for everything else too." />
+        <div className="games-hero__art" aria-hidden="true">
+          <span className="games-hero__book"><i /><i /></span>
+          <span className="games-hero__controller"><Gamepad2 size={84} /></span>
+          <span className="games-hero__spark games-hero__spark--one">✦</span>
+          <span className="games-hero__spark games-hero__spark--two">✦</span>
+        </div>
+      </div>
       <QueryState query={q} loadingLabel="Loading games…">
         {(games) =>
           games.length === 0 ? (
@@ -52,11 +70,19 @@ export default function GamesPage() {
                 const out = u.remaining <= 0;
                 const playable = Boolean(gameComponentFor(g.code));
                 return (
-                  <article key={g._id} className={`game-card ${out ? 'is-out' : ''}`}>
-                    <div className="game-card__icon">
-                      <Gamepad2 size={26} aria-hidden />
+                  <article key={g._id} className={`game-card game-card--${gameArtClass(g.code)} ${out ? 'is-out' : ''}`}>
+                    <div className="game-card__art" aria-hidden="true">
+                      {gameArtClass(g.code) === 'spell' && <><span className="art-tile art-tile--a">A</span><span className="art-tile art-tile--b">B</span><span className="art-tile art-tile--c">C</span><Trophy className="art-trophy" size={49} /></>}
+                      {gameArtClass(g.code) === 'grammar' && <><span className="art-book"><i /><i /></span><span className="art-pencil">✎</span><span className="art-leaf">✦</span></>}
+                      {gameArtClass(g.code) === 'tiles' && <><span className="number-tile number-tile--two">2</span><span className="number-tile number-tile--zero">0</span><span className="number-tile number-tile--four">4</span><span className="number-tile number-tile--eight">8</span></>}
+                      {gameArtClass(g.code) === 'math' && <><span className="operator-tile operator-tile--plus">+</span><span className="operator-tile operator-tile--minus">−</span><span className="operator-tile operator-tile--times">×</span><span className="operator-tile operator-tile--divide">÷</span></>}
                     </div>
-                    <h2>{g.name}</h2>
+                    <div className="game-card__heading">
+                      <div className="game-card__icon">
+                        <Gamepad2 size={21} aria-hidden />
+                      </div>
+                      <h2>{g.name}</h2>
+                    </div>
                     {g.description && <p className="muted small">{g.description}</p>}
                     <dl className="game-card__stats">
                       <div>

@@ -1,10 +1,10 @@
 import { useState, type FormEvent } from 'react';
-import { Plus, Search } from 'lucide-react';
+import { CirclePause, CirclePlay, Pencil, Plus, Search, Users, UserRoundPlus } from 'lucide-react';
 import { ApiError, api, errorMessage } from '../../api/client';
 import { useGet, useMutate } from '../../api/hooks';
 import type { Section, Subject, Teacher } from '../../api/types';
 import { useSchoolId } from '../../auth/AuthContext';
-import { PageHeader, Toolbar } from '../../components/Cards';
+import { Toolbar } from '../../components/Cards';
 import { DataTable } from '../../components/DataTable';
 import { ConfirmDialog, Modal, SecretDialog } from '../../components/Modal';
 import { EMAIL_RX, FormField, FormGrid } from '../../components/Form';
@@ -13,6 +13,7 @@ import { Badge, StatusBadge } from '../../components/Badge';
 import { useToast } from '../../components/Toast';
 import { dateTime } from '../../lib/format';
 import { FilterField, sectionLabel, useSections, useSubjects } from './shared';
+import './TeachersPage.css';
 
 /** sectionId → subjectIds */
 type AssignmentMap = Record<string, string[]>;
@@ -224,20 +225,23 @@ export default function TeachersPage() {
   );
 
   return (
-    <>
-      <PageHeader
-        title="Teachers"
-        subtitle={q.data ? `${q.data.length} teacher(s)` : undefined}
-        actions={
-          <button type="button" className="btn btn--primary" onClick={() => setAdding(true)}>
-            <Plus size={16} aria-hidden /> Add teacher
-          </button>
-        }
-      />
+    <div className="school-teachers">
+      <div className="teachers-hero">
+        <div className="teachers-hero__copy">
+          <span className="teachers-hero__icon" aria-hidden><Users size={27} /></span>
+          <div>
+            <h1>Teachers</h1>
+            {q.data && <p>{q.data.length} teacher(s)</p>}
+          </div>
+        </div>
+        <button type="button" className="btn btn--primary" onClick={() => setAdding(true)}>
+          <Plus size={17} aria-hidden /> Add teacher
+        </button>
+      </div>
       <Toolbar>
         <FilterField label="Search">
           <span className="row" style={{ flexWrap: 'nowrap' }}>
-            <Search size={16} aria-hidden className="muted" />
+            <Search size={18} aria-hidden className="teachers-search-icon" />
             <input type="search" placeholder="Name or email" value={search} onChange={(e) => setSearch(e.target.value)} />
           </span>
         </FilterField>
@@ -261,7 +265,7 @@ export default function TeachersPage() {
         emptyMessage={search || status ? 'Try a different search or status.' : 'Add your first teacher to start assigning classes.'}
         rowClassName={(t) => (t.membershipStatus === 'active' ? undefined : 'row--muted')}
         columns={[
-          { key: 'name', header: 'Teacher', render: (t) => (<div><strong>{t.name}</strong><div className="muted small">{t.email}</div></div>) },
+          { key: 'name', header: 'Teacher', render: (t) => (<div className="teacher-person"><span className="teacher-person__avatar" aria-hidden>{t.name.trim().split(/\s+/).slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase()}</span><span className="teacher-person__details"><strong>{t.name}</strong><span>{t.email}</span></span></div>) },
           { key: 'phone', header: 'Phone', render: (t) => t.phone || '—', hideSm: true },
           {
             key: 'assignments',
@@ -283,17 +287,18 @@ export default function TeachersPage() {
           { key: 'status', header: 'Status', render: (t) => <StatusBadge status={t.membershipStatus} /> },
           {
             key: 'actions',
-            header: <span className="sr-only">Actions</span>,
+            header: 'Actions',
             align: 'right',
             render: (t) => (
               <div className="actions">
                 <button type="button" className="btn btn--ghost btn--sm" onClick={() => setAssigning(t)} disabled={t.membershipStatus !== 'active'}>
-                  Assign
+                  <UserRoundPlus size={14} aria-hidden /> Assign
                 </button>
                 <button type="button" className="btn btn--ghost btn--sm" onClick={() => setEditing(t)}>
-                  Edit
+                  <Pencil size={14} aria-hidden /> Edit
                 </button>
-                <button type="button" className="btn btn--ghost btn--sm" onClick={() => setToggling(t)}>
+                <button type="button" className={`btn btn--ghost btn--sm ${t.membershipStatus === 'active' ? 'teacher-action--deactivate' : 'teacher-action--activate'}`} onClick={() => setToggling(t)}>
+                  {t.membershipStatus === 'active' ? <CirclePause size={14} aria-hidden /> : <CirclePlay size={14} aria-hidden />}
                   {t.membershipStatus === 'active' ? 'Deactivate' : 'Activate'}
                 </button>
               </div>
@@ -328,6 +333,6 @@ export default function TeachersPage() {
         onCancel={() => setToggling(null)}
       />
       <SecretDialog secret={secret?.value} label="Temporary password" subject={secret?.name} onClose={() => setSecret(null)} />
-    </>
+    </div>
   );
 }

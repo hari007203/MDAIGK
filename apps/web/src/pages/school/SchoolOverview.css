@@ -1,0 +1,243 @@
+/* Overview-only dashboard skin. All selectors stay within this page or its active app shell. */
+.app:has(.school-overview) {
+  --overview-emerald: #075d38;
+  --overview-forest: #06452d;
+  --overview-gold: #f4bd16;
+  --overview-cream: #fff9e8;
+  --overview-line: #e8dfbd;
+  background: #fffdf5;
+}
+
+.app:has(.school-overview) .sidebar {
+  background: radial-gradient(ellipse at 0% 100%, #087d43 0, transparent 48%), linear-gradient(160deg, #075b38 0%, #03482e 58%, #063c29 100%);
+  box-shadow: 5px 0 24px rgba(11, 71, 43, .12);
+}
+
+.app:has(.school-overview) .sidebar__head {
+  min-height: 82px;
+  border-bottom-color: rgba(255,255,255,.13);
+}
+
+.app:has(.school-overview) .brand__mark {
+  border-radius: 50%;
+  box-shadow: 0 3px 12px rgba(0,0,0,.18);
+}
+
+.app:has(.school-overview) .nav-group { padding: 18px 12px 0; }
+.app:has(.school-overview) .nav-link {
+  min-height: 46px;
+  border-radius: 15px;
+  transition: background-color .18s ease, transform .18s ease, color .18s ease;
+}
+.app:has(.school-overview) .nav-link:hover { transform: translateX(2px); background: rgba(255,255,255,.13); }
+.app:has(.school-overview) .nav-link--active,
+.app:has(.school-overview) .nav-link--active:hover {
+  background: linear-gradient(100deg, #ffda36, #ffc817);
+  color: #143d1e;
+  box-shadow: 0 5px 16px rgba(0,0,0,.16);
+}
+
+.app:has(.school-overview) .topbar {
+  background: rgba(255,253,245,.96);
+  border-bottom-color: #eee6ce;
+  padding-inline: clamp(16px, 2.2vw, 30px);
+}
+.app:has(.school-overview) .school-pill,
+.app:has(.school-overview) .school-switcher {
+  min-height: 40px;
+  border-radius: 999px;
+  border-color: #e8dfbd;
+  background: #fffaf0;
+  box-shadow: 0 2px 8px rgba(78,64,14,.06);
+}
+.app:has(.school-overview) .user-btn { border-radius: 999px; }
+.app:has(.school-overview) .avatar { background: var(--overview-emerald); }
+
+.school-overview {
+  --ov-green: #087a43;
+  --ov-ink: #143d28;
+  --ov-muted: #657064;
+  --ov-gold: #efbd19;
+  width: 100%;
+  animation: ov-enter .38s ease-out both;
+}
+.school-overview .page-header {
+  min-height: 138px;
+  position: relative;
+  isolation: isolate;
+  align-items: center;
+  overflow: hidden;
+  padding: 24px clamp(22px, 3vw, 42px);
+  margin-bottom: 16px;
+  border: 1px solid #eee0a5;
+  border-radius: 20px;
+  background: linear-gradient(103deg, #fff0a1 0%, #fff9df 41%, #f0f7c5 100%);
+  box-shadow: 0 5px 16px rgba(73,76,25,.10), inset 0 1px rgba(255,255,255,.9);
+}
+.school-overview .page-header::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: min(48%, 570px);
+  height: 132%;
+  right: 0;
+  bottom: -27%;
+  background: url('/school-illustration.svg') center bottom / contain no-repeat;
+  opacity: .92;
+  pointer-events: none;
+}
+.school-overview .page-header > div:first-child { max-width: 67%; }
+.school-overview .page-header h1 {
+  color: #10472b;
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 900;
+  letter-spacing: -.035em;
+}
+.school-overview .page-header__sub {
+  color: #173d28;
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.8vw, 21px);
+  font-weight: 800;
+  margin-top: 3px;
+}
+.school-overview .page-header__actions { align-self: flex-start; }
+.school-overview .period-banner {
+  color: #0b5835;
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(9,103,57,.15);
+  padding: 8px 13px;
+}
+
+.school-overview > .card:first-of-type {
+  border-radius: 17px;
+  border-color: #eee5c9;
+  background: linear-gradient(110deg, #fffefa, #fff9e9);
+  box-shadow: 0 4px 14px rgba(68,60,23,.07);
+}
+.school-overview .toolbar { gap: 12px; margin: 0; align-items: end; }
+.school-overview .toolbar .field { flex: 1 1 145px; min-width: min(145px, 100%); }
+.school-overview .field label,
+.school-overview .field__label { color: #435348; font-size: 12px; font-weight: 700; }
+.school-overview .toolbar input,
+.school-overview .toolbar select {
+  min-height: 42px;
+  border-radius: 11px;
+  border-color: #e4dcc2;
+  background-color: #fff;
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+.school-overview .toolbar input:focus,
+.school-overview .toolbar select:focus { border-color: #16834d; box-shadow: 0 0 0 3px rgba(22,131,77,.13); }
+.school-overview .field__error { margin: 10px 2px 0; }
+
+.school-overview .stack { gap: 16px; }
+.school-overview .stat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; }
+.school-overview .stat {
+  position: relative;
+  overflow: hidden;
+  min-height: 104px;
+  padding: 15px 17px;
+  border: 1px solid #e7e6ce;
+  border-radius: 17px;
+  background: linear-gradient(130deg, #fffefa 0%, #fbfbee 100%);
+  box-shadow: 0 3px 10px rgba(44,67,35,.07);
+  transition: transform .2s ease, box-shadow .2s ease;
+  animation: ov-card-in .42s both;
+}
+.school-overview .stat:nth-child(2) { animation-delay: 35ms; }
+.school-overview .stat:nth-child(3) { animation-delay: 70ms; }
+.school-overview .stat:nth-child(4) { animation-delay: 105ms; }
+.school-overview .stat:nth-child(5) { animation-delay: 140ms; }
+.school-overview .stat:nth-child(6) { animation-delay: 175ms; }
+.school-overview .stat:nth-child(7) { animation-delay: 210ms; }
+.school-overview .stat:nth-child(8) { animation-delay: 245ms; }
+.school-overview .stat:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(44,67,35,.12); }
+.school-overview .stat::after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 62px;
+  border-radius: 100% 0 0;
+  right: -23px;
+  bottom: -35px;
+  background: linear-gradient(135deg, rgba(165,223,104,.08), rgba(145,211,72,.32));
+  transform: rotate(-12deg);
+}
+.school-overview .stat--positive { background: linear-gradient(130deg, #fffefa 0%, #f0f8df 100%); border-color: #d4e7b9; }
+.school-overview .stat--gold { background: linear-gradient(130deg, #fffefa 0%, #fff4d0 100%); border-color: #eddfaa; }
+.school-overview .stat__top { color: #303d33; font-size: 13px; text-transform: none; letter-spacing: 0; }
+.school-overview .stat__icon { color: #087846; }
+.school-overview .stat--gold .stat__icon { color: #9a7000; }
+.school-overview .stat__value { color: #131e17; font-size: clamp(23px, 2vw, 29px); font-weight: 800; margin-top: 3px; }
+.school-overview .stat__hint { font-size: 11px; position: relative; z-index: 1; }
+
+.school-overview .grid-2 { gap: 16px; }
+.school-overview .card,
+.school-overview .chart-card {
+  overflow: hidden;
+  border-color: #dcdab9;
+  border-radius: 17px;
+  background: linear-gradient(145deg, #fffefa, #fffdf3);
+  box-shadow: 0 4px 14px rgba(42,65,35,.07);
+}
+.school-overview .chart-card .card__header,
+.school-overview .card:not(:first-of-type) .card__header {
+  padding: 13px 16px 10px;
+  border-bottom: 1px solid #e4edcf;
+  background: linear-gradient(100deg, #edf7df, #fffbea);
+}
+.school-overview .card__title { color: #153d29; font-size: 17px; font-weight: 900; }
+.school-overview .card__sub { color: var(--ov-muted); }
+.school-overview .chart-card__body { padding: 12px 12px 8px; }
+.school-overview .chart-card__footer { color: #687366; }
+.school-overview .chart-card .recharts-cartesian-grid-horizontal line { stroke: #e7eadb; }
+.school-overview .chart-card .recharts-cartesian-axis-tick text { fill: #34453a; font-size: 11px; }
+.school-overview .chart-card .recharts-bar-rectangle { transition: opacity .18s ease; }
+.school-overview .data-table { font-size: 12px; }
+.school-overview .data-table th { color: #26392d; background: #f4f7e8; }
+.school-overview .data-table tr { transition: background-color .16s ease; }
+.school-overview .data-table tbody tr:hover { background: #f6faed; }
+.school-overview .btn--ghost { border-radius: 999px; color: #075f38; }
+.school-overview .btn--ghost:hover { background: #eaf5e6; }
+
+@keyframes ov-enter { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ov-card-in { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 1100px) {
+  .school-overview .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .school-overview .page-header::after { width: 44%; opacity: .7; }
+}
+@media (max-width: 760px) {
+  .school-overview .page-header { min-height: 150px; padding: 20px; }
+  .school-overview .page-header > div:first-child { max-width: 74%; }
+  .school-overview .page-header__actions { position: absolute; left: 18px; bottom: 12px; }
+  .school-overview .page-header::after { width: 42%; height: 100%; bottom: -12%; right: -6%; }
+  .school-overview .toolbar .field { flex-basis: calc(50% - 8px); }
+  .school-overview .chart-card__body { height: 245px !important; }
+}
+@media (max-width: 520px) {
+  .school-overview .page-header { min-height: 168px; padding: 19px 17px; align-items: flex-start; }
+  .school-overview .page-header > div:first-child { max-width: 100%; padding-right: 6px; }
+  .school-overview .page-header h1 { font-size: 28px; }
+  .school-overview .page-header__sub { font-size: 16px; }
+  .school-overview .page-header::after { width: 42%; height: 77%; bottom: -15%; right: -8%; opacity: .34; }
+  .school-overview .period-banner { max-width: min(100%, 275px); white-space: normal; line-height: 1.25; }
+  .school-overview .toolbar .field { flex-basis: 100%; }
+  .school-overview .stat-grid { gap: 9px; }
+  .school-overview .stat { min-height: 100px; padding: 12px; border-radius: 14px; }
+  .school-overview .stat__top { gap: 4px; font-size: 11px; }
+  .school-overview .stat__value { font-size: 23px; }
+  .school-overview .stat__hint { font-size: 10px; }
+  .school-overview .chart-card__body { height: 225px !important; padding-inline: 5px; }
+  .school-overview .card__header { flex-wrap: wrap; }
+  .school-overview .card__actions { width: 100%; }
+  .school-overview .card__actions .btn { min-height: 40px; }
+  .school-overview .data-table { min-width: 560px; }
+  .school-overview .card .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .school-overview,
+  .school-overview .stat { animation: none !important; }
+  .school-overview *,
+  .app:has(.school-overview) .nav-link { transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

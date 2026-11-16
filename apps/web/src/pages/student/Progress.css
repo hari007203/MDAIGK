@@ -1,0 +1,148 @@
+.app.app--student .student-progress-page { display: flex; flex-direction: column; gap: 16px; max-width: none; }
+
+.app.app--student .progress-hero { position: relative; display: flex; align-items: center; min-height: 126px; overflow: hidden; padding: 18px 24px; border: 1px solid #eedf9d; border-radius: 21px; background: linear-gradient(108deg,#fff4c9 0%,#fffdf1 52%,#eff6d7 100%); box-shadow: 0 9px 22px #6d5e2815; }
+.progress-hero::before,.progress-hero::after { position: absolute; right: -3%; bottom: -120px; width: 44%; height: 170px; border-radius: 50%; content: ''; background: linear-gradient(135deg,#d8ed77,#7dcb40); transform: rotate(-7deg); }
+.progress-hero::after { right: 20%; bottom: -143px; width: 38%; background: linear-gradient(135deg,#f5f2ae,#b7db54); transform: rotate(7deg); }
+.app.app--student .progress-hero > .page-header { z-index: 2; flex: 1; min-width: 0; align-items: center; margin: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
+.app.app--student .progress-hero .page-header h1 { color: #07583b; font: 900 30px/1.15 var(--font-display); letter-spacing: -.4px; }
+.app.app--student .progress-hero .page-header__sub { margin-top: 5px; color: #4e6255; font-size: 13px; }
+.app.app--student .progress-hero .page-header__actions { z-index: 3; margin-left: 12px; }
+.progress-hero__icon { z-index: 2; display: grid; width: 68px; height: 68px; flex: 0 0 68px; place-items: center; margin-right: 17px; border: 4px solid #fff; border-radius: 50%; color: #087449; background: radial-gradient(circle at 30% 25%,#fff8cf,#dff095 62%,#a8d74e); box-shadow: 0 5px 15px #48632e30; }
+.progress-hero__art { position: absolute; z-index: 1; right: 0; bottom: 0; width: 190px; height: 100%; pointer-events: none; }
+.progress-hero__leaf { position: absolute; bottom: 0; width: 66px; height: 30px; border-radius: 100% 0 100% 0; background: linear-gradient(140deg,#a7db40,#48b547); transform-origin: bottom right; }
+.progress-hero__leaf--one { right: 26px; transform: rotate(-53deg); }
+.progress-hero__leaf--two { right: 63px; transform: rotate(-30deg) scale(.78); }
+.progress-hero__leaf--three { right: -1px; transform: rotate(-69deg) scale(.8); }
+.progress-hero__spark { position: absolute; top: 12px; right: 34px; color: #ffc327; font-size: 24px; text-shadow: 0 2px 4px #bd8d2940; }
+.progress-hero__chart { position: absolute; right: 20px; bottom: 17px; display: flex; align-items: flex-end; gap: 5px; width: 78px; height: 48px; padding: 5px; border: 1px solid #ffffffb5; border-radius: 12px; background: #fffdf0b8; box-shadow: 0 4px 12px #4b6a2522; transform: rotate(-5deg); }
+.progress-hero__chart i { z-index: 1; width: 12px; border-radius: 4px 4px 2px 2px; background: linear-gradient(180deg,#ffda34,#f0a900); }
+.progress-hero__chart i:nth-child(1) { height: 16px; }
+.progress-hero__chart i:nth-child(2) { height: 25px; }
+.progress-hero__chart i:nth-child(3) { height: 34px; background: linear-gradient(180deg,#31ba65,#087149); }
+.progress-hero__chart b { position: absolute; top: 0; left: 4px; color: #0b9252; }
+
+.app.app--student .student-progress-page .progress-range { gap: 3px; padding: 4px; border: 1px solid #e6dbaa; background: #fff9e8; box-shadow: 0 3px 9px #5e512318; }
+.app.app--student .student-progress-page .progress-range .seg__btn { min-height: 38px; padding: 6px 12px; color: #4e5e51; font-size: 12px; transition: color .18s ease, background .18s ease, box-shadow .18s ease; }
+.app.app--student .student-progress-page .progress-range .seg__btn--active { color: #fff; background: linear-gradient(130deg,#07814d,#07583b); box-shadow: 0 3px 9px #07583b35; }
+.app.app--student .student-progress-page .progress-range .seg__btn:not(.seg__btn--active):hover { color: #07583b; background: #fff; }
+.app.app--student .student-progress-page .progress-range .seg__btn:focus-visible { outline: 2px solid #d3a922; outline-offset: 2px; }
+
+.app.app--student .student-progress-page .stat-grid { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; margin: 0; }
+.app.app--student .student-progress-page .stat { position: relative; min-height: 100px; overflow: hidden; padding: 13px 15px; border: 1px solid #e2e8d2; border-radius: 16px; background: linear-gradient(115deg,#fffefa,#f0f7e5); box-shadow: 0 5px 14px #294b3210; }
+.app.app--student .student-progress-page .stat::after { position: absolute; right: -14px; bottom: -35px; width: 130px; height: 52px; border-radius: 50%; background: linear-gradient(90deg,#e8f5c3,#d4ed93); content: ''; opacity: .7; transform: rotate(-8deg); }
+.app.app--student .student-progress-page .stat:nth-child(2) { background: linear-gradient(115deg,#fffef8,#f6f6dc); }
+.app.app--student .student-progress-page .stat:nth-child(3) { background: linear-gradient(115deg,#fffefa,#eaf5de); }
+.app.app--student .student-progress-page .stat--gold { border-color: #e9d38d; background: linear-gradient(115deg,#fff9e8,#ffedc2); }
+.app.app--student .student-progress-page .stat__top { position: relative; z-index: 1; align-items: center; color: #4e6556; font-size: 11px; letter-spacing: .025em; }
+.app.app--student .student-progress-page .stat__icon { width: 37px; height: 37px; padding: 8px; border: 1px solid #d4e4be; border-radius: 12px; color: #087549; background: linear-gradient(145deg,#f5ffdc,#dcefa4); }
+.app.app--student .student-progress-page .stat--gold .stat__icon { color: #ae7300; border-color: #f0d785; background: #fff1c1; }
+.app.app--student .student-progress-page .stat__value { position: relative; z-index: 1; margin-top: 2px; color: #123f2d; font: 900 25px/1.15 var(--font-display); }
+.app.app--student .student-progress-page .stat__hint { position: relative; z-index: 1; margin-top: 2px; color: #67766b; font-size: 10px; }
+
+.app.app--student .student-progress-page .grid-2 { grid-template-columns: minmax(0,1.12fr) minmax(0,.88fr); gap: 13px; }
+.app.app--student .student-progress-page .card,
+.app.app--student .student-progress-page .chart-card { min-width: 0; overflow: hidden; border: 1px solid #e7e4d3; border-radius: 16px; background: linear-gradient(145deg,#fffefa,#fffdf5); box-shadow: 0 5px 15px #354a2e10; }
+.app.app--student .student-progress-page .card__header { padding: 13px 15px 0; }
+.app.app--student .student-progress-page .card__title { color: #154a34; font: 850 16px/1.3 var(--font-display); }
+.app.app--student .student-progress-page .card__sub { color: #738075; font-size: 11px; }
+.app.app--student .student-progress-page .chart-card .card__header { padding-bottom: 1px; }
+.app.app--student .student-progress-page .chart-card__body { padding: 6px 10px 12px; }
+.app.app--student .student-progress-page .subject-bars { gap: 7px; padding: 0; }
+.app.app--student .student-progress-page .subject-bars li { grid-template-columns: minmax(90px,1fr) minmax(80px,1.6fr) minmax(62px,auto); gap: 8px; min-width: 0; align-items: center; }
+.app.app--student .student-progress-page .subject-bars li > span:first-child { overflow: hidden; color: #344b3c; font-size: 12px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.app.app--student .student-progress-page .subject-bars li > span:last-child { color: #3c5b46; font-size: 11px; text-align: right; white-space: nowrap; }
+.app.app--student .student-progress-page .subject-bars .progress { height: 10px; overflow: hidden; border-radius: 999px; background: #edf2da; }
+.app.app--student .student-progress-page .subject-bars .progress__bar { border-radius: inherit; background: linear-gradient(90deg,#ffc928,#efa900); }
+.app.app--student .student-progress-page .progress-programmes-card .subject-bars li,
+.app.app--student .student-progress-page .progress-certification-card .subject-bars li { padding: 8px 9px; border: 1px solid #efecdf; border-radius: 11px; background: #fffdf7; }
+.app.app--student .student-progress-page .progress-programmes-card .subject-bars li > span:first-child { white-space: normal; }
+.app.app--student .student-progress-page .progress-certification-card .cert-summary { align-items: center; padding: 9px 10px; border: 1px solid #eedf9f; border-radius: 13px; background: linear-gradient(110deg,#fff8dc,#fffdf4); }
+.app.app--student .student-progress-page .progress-certification-card .cert-summary > svg { flex: 0 0 auto; padding: 5px; border-radius: 10px; background: #fff0b6; }
+.app.app--student .student-progress-page .progress-certification-card a { display: inline-flex; align-items: center; justify-content: center; min-height: 38px; margin-top: 8px; padding: 0 13px; border: 1px solid #c6dfbb; border-radius: 11px; color: #07583b; background: #f3fae9; font-weight: 750; text-decoration: none; }
+.app.app--student .student-progress-page .progress-certification-card a:hover { background: #e7f3d8; }
+
+.app.app--student .student-progress-page .progress-history .section-title { margin: 2px 0 8px; padding: 0 2px; }
+.app.app--student .student-progress-page .progress-history .section-title h2,
+.app.app--student .student-progress-page .progress-badges .section-title h2 { color: #154a34; font: 850 18px/1.3 var(--font-display); }
+.app.app--student .student-progress-page .progress-history .card { padding: 0; }
+.app.app--student .student-progress-page .progress-history .card__body { padding: 0; }
+.app.app--student .student-progress-page .progress-history .table-wrap { overflow: hidden; border: 0; border-radius: 0; background: transparent; }
+.app.app--student .student-progress-page .progress-history .table { min-width: 620px; font-size: 12px; }
+.app.app--student .student-progress-page .progress-history .table th { padding: 9px 11px; color: #15543a; background: #edf5d4; font-size: 10px; }
+.app.app--student .student-progress-page .progress-history .table td { padding: 8px 11px; border-color: #efeddf; }
+.app.app--student .student-progress-page .progress-history .table tbody tr:nth-child(even) { background: #fffdf7; }
+.app.app--student .student-progress-page .progress-history .table tbody tr:hover { background: #f6f9eb; }
+
+.app.app--student .student-progress-page .progress-badges .section-title { margin: 2px 0 9px; }
+.app.app--student .student-progress-page .badge-grid { grid-template-columns: repeat(auto-fill,minmax(126px,1fr)); gap: 10px; }
+.app.app--student .student-progress-page .badge-tile { position: relative; min-width: 0; min-height: 120px; overflow: hidden; padding: 12px 9px; border: 1px solid #e5d58e; border-radius: 15px; background: linear-gradient(145deg,#fff9df,#fffef7); box-shadow: 0 4px 12px #5447170d; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+.app.app--student .student-progress-page .badge-tile.is-earned { color: #164d34; border-color: #e2cb70; background: linear-gradient(145deg,#fff6d2,#f7f9e9); }
+.app.app--student .student-progress-page .badge-tile.is-earned svg { width: 36px; height: 36px; padding: 6px; border: 1px solid #edcf56; border-radius: 50%; color: #bd8a04; background: radial-gradient(circle,#fff7c2,#f8d85d); filter: drop-shadow(0 3px 3px #9c771d30); }
+.app.app--student .student-progress-page .badge-tile.is-locked { border-color: #e3e2d8; border-style: dashed; color: #737a73; background: linear-gradient(145deg,#f5f4ed,#fffefa); }
+.app.app--student .student-progress-page .badge-tile.is-locked svg { color: #92978e; }
+.app.app--student .student-progress-page .badge-tile strong { font: 800 12px/1.25 var(--font-display); }
+.app.app--student .student-progress-page .badge-tile .small { font-size: 10px; line-height: 1.35; }
+.app.app--student .student-progress-page .badge-tile:hover { transform: translateY(-2px); border-color: #d5bd55; box-shadow: 0 8px 18px #344b2518; }
+
+.app.app--student:has(.student-progress-page) .sidebar { background: radial-gradient(ellipse at 108% 48%,#159255 0%,transparent 40%),linear-gradient(165deg,#075e42 0%,#034d38 55%,#056b49 100%); }
+.app.app--student:has(.student-progress-page) .topbar { border-bottom-color: #eee8d8; background: linear-gradient(100deg,#fffdf7,#fff9e9); }
+
+@keyframes progress-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.student-progress-page > .progress-hero { animation: progress-enter .38s ease both; }
+.student-progress-page .stat-grid > .stat { animation: progress-enter .34s ease both; }
+.student-progress-page .stat-grid > .stat:nth-child(2) { animation-delay: .04s; }
+.student-progress-page .stat-grid > .stat:nth-child(3) { animation-delay: .08s; }
+.student-progress-page .stat-grid > .stat:nth-child(4) { animation-delay: .12s; }
+@media (prefers-reduced-motion: reduce) {
+  .student-progress-page > .progress-hero,
+  .student-progress-page .stat-grid > .stat { animation: none; }
+  .app.app--student .student-progress-page .progress-range .seg__btn,
+  .app.app--student .student-progress-page .badge-tile { transition: none; }
+}
+
+@media (max-width: 1050px) {
+  .app.app--student .student-progress-page .stat-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .app.app--student .student-progress-page .grid-2 { grid-template-columns: minmax(0,1fr); }
+}
+@media (max-width: 760px) {
+  .app.app--student .progress-hero { align-items: flex-start; min-height: 0; padding: 16px 14px; border-radius: 17px; }
+  .app.app--student .progress-hero > .page-header { flex-wrap: wrap; gap: 8px; }
+  .app.app--student .progress-hero .page-header h1 { font-size: 24px; }
+  .app.app--student .progress-hero .page-header__actions { width: 100%; margin: 3px 0 0; }
+  .app.app--student .student-progress-page .progress-range { display: flex; width: 100%; justify-content: space-between; }
+  .app.app--student .student-progress-page .progress-range .seg__btn { flex: 1; min-height: 42px; padding-inline: 5px; }
+  .progress-hero__icon { width: 48px; height: 48px; flex-basis: 48px; margin: 2px 10px 0 0; }
+  .progress-hero__icon svg { width: 25px; }
+  .progress-hero__art { display: none; }
+  .app.app--student .student-progress-page .stat { min-height: 105px; padding: 12px; }
+  .app.app--student .student-progress-page .stat__value { font-size: 23px; }
+  .app.app--student .student-progress-page .subject-bars li { grid-template-columns: minmax(0,1fr) minmax(62px,1fr) auto; gap: 6px; }
+  .app.app--student .student-progress-page .subject-bars li > span:first-child { font-size: 11px; }
+  .app.app--student .student-progress-page .subject-bars li > span:last-child { font-size: 10px; }
+  .app.app--student .student-progress-page .progress-history .table-wrap { overflow: visible; }
+  .app.app--student .student-progress-page .progress-history .table-scroll { overflow: visible; }
+  .app.app--student .student-progress-page .progress-history .table { display: block; width: 100%; min-width: 0; }
+  .app.app--student .student-progress-page .progress-history .table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; clip-path: inset(50%); }
+  .app.app--student .student-progress-page .progress-history .table tbody { display: grid; gap: 8px; padding: 9px; }
+  .app.app--student .student-progress-page .progress-history .table tbody tr { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); overflow: hidden; border: 1px solid #e9e5d5; border-radius: 12px; background: #fffefa; }
+  .app.app--student .student-progress-page .progress-history .table tbody tr td,
+  .app.app--student .student-progress-page .progress-history .table tbody tr td.hide-sm { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding: 8px 10px; border-top: 1px solid #f0eee3; text-align: left !important; overflow-wrap: anywhere; }
+  .app.app--student .student-progress-page .progress-history .table tbody tr td:first-child { grid-column: 1/-1; border-top: 0; color: #154a34; font-weight: 750; }
+  .app.app--student .student-progress-page .progress-history .table tbody tr td:nth-child(2)::before { content: 'Subject'; }
+  .app.app--student .student-progress-page .progress-history .table tbody tr td:nth-child(3)::before { content: 'Type'; }
+  .app.app--student .student-progress-page .progress-history .table tbody tr td:nth-child(4)::before { content: 'Score'; }
+  .app.app--student .student-progress-page .progress-history .table tbody tr td:nth-child(5)::before { content: 'Date'; }
+  .app.app--student .student-progress-page .progress-history .table tbody tr td:not(:first-child)::before { color: #748076; font-size: 9px; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
+  .app.app--student .student-progress-page .badge-grid { grid-template-columns: repeat(auto-fill,minmax(104px,1fr)); }
+}
+@media (max-width: 640px) {
+  .app.app--student:has(.student-progress-page) .school-pill { min-width: 0; max-width: 44vw; flex: 0 1 auto; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+}
+@media (max-width: 420px) {
+  .app.app--student .student-progress-page .stat-grid { grid-template-columns: minmax(0,1fr); }
+  .app.app--student .student-progress-page .stat { min-height: 0; }
+  .app.app--student .student-progress-page .subject-bars li { grid-template-columns: minmax(0,1fr) auto; }
+  .app.app--student .student-progress-page .subject-bars .progress { grid-column: 1; grid-row: 2; }
+  .app.app--student .student-progress-page .subject-bars li > span:last-child { grid-column: 2; grid-row: 2; }
+  .app.app--student .student-progress-page .progress-range .seg__btn { font-size: 10px; }
+}

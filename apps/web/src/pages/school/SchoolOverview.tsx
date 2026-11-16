@@ -12,6 +12,7 @@ import { PremiumBadge } from '../../components/Badge';
 import { CHART, axisProps, pctTick, tooltipProps } from '../../components/charts';
 import { classLevels, date, num, pct } from '../../lib/format';
 import { FilterField, ProgressBar, periodLabel, useSections, useSubjects } from './shared';
+import './SchoolOverview.css';
 
 export default function SchoolOverview() {
   const schoolId = useSchoolId();
@@ -40,7 +41,7 @@ export default function SchoolOverview() {
   const filtersActive = Boolean(from || to || level || sectionId || subjectId);
 
   return (
-    <>
+    <div className="school-overview">
       <PageHeader title="School overview" subtitle={schoolName} actions={<span className="period-banner"><CalendarRange size={14} aria-hidden /> {period}{scope ? ` · ${scope}` : ''}</span>} />
       <Card>
         <Toolbar>
@@ -193,6 +194,6 @@ export default function SchoolOverview() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

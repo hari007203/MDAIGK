@@ -1,14 +1,15 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { Lock } from 'lucide-react';
+import { Building2, Crown, FileText, Grid2X2, RotateCcw, Save, UsersRound } from 'lucide-react';
 import { ApiError, api, errorMessage } from '../../api/client';
 import { useGet, useMutate } from '../../api/hooks';
 import type { ClassAccessRow, ProgrammeEntitlement, School, Subscription } from '../../api/types';
 import { useSchoolId } from '../../auth/AuthContext';
-import { Card, KeyValue, PageHeader } from '../../components/Cards';
+import { Card, KeyValue } from '../../components/Cards';
 import { EMAIL_RX, FormField, FormGrid, Toggle } from '../../components/Form';
 import { EmptyState, InlineAlert, QueryState } from '../../components/Feedback';
 import { Badge, LockedBadge, PremiumBadge, StatusBadge } from '../../components/Badge';
 import { classLevels, date } from '../../lib/format';
+import './SettingsPage.css';
 
 function ProfileForm({ school }: { school: School }) {
   const schoolId = school._id;
@@ -53,7 +54,7 @@ function ProfileForm({ school }: { school: School }) {
     });
   }
   return (
-    <Card title="School profile & preferences" subtitle="Name, code, status and timezone are managed by the platform owner.">
+    <Card className="settings-card settings-card--profile" title={<span className="settings-card__title"><Building2 size={22} aria-hidden />School profile & preferences</span>} subtitle="Name, code, status and timezone are managed by the platform owner.">
       <form onSubmit={submit} noValidate>
         {formError && <InlineAlert>{formError}</InlineAlert>}
         <FormGrid>
@@ -82,10 +83,12 @@ function ProfileForm({ school }: { school: School }) {
         <p className="form-section-title">Preferences</p>
         <Toggle checked={f.allowStudentLeaderboard} onChange={(v) => setF((x) => ({ ...x, allowStudentLeaderboard: v }))} label="Show a class leaderboard to students" />
         <div className="form-actions">
-          <button type="button" className="btn btn--ghost" onClick={() => (setF(init()), setErrors({}), setFormError(null))} disabled={save.isPending}>
+          <button type="button" className="btn btn--ghost settings-discard" onClick={() => (setF(init()), setErrors({}), setFormError(null))} disabled={save.isPending}>
+            <RotateCcw size={16} aria-hidden />
             Discard changes
           </button>
           <button type="submit" className="btn btn--primary" disabled={save.isPending}>
+            <Save size={16} aria-hidden />
             {save.isPending ? 'Saving…' : 'Save settings'}
           </button>
         </div>
@@ -124,14 +127,22 @@ export default function SchoolSettingsPage() {
   const progs = useGet<ProgrammeEntitlement[]>(`/schools/${schoolId}/programme-entitlements`);
 
   return (
-    <>
-      <PageHeader title="Settings" subtitle="School profile and local preferences. Subscription and entitlements are read-only." />
+    <div className="school-settings">
+      <div className="settings-hero">
+        <div className="settings-hero__copy">
+          <span className="settings-hero__icon" aria-hidden />
+          <div>
+            <h1>Settings</h1>
+            <p>School profile and local preferences. Subscription and entitlements are read-only.</p>
+          </div>
+        </div>
+      </div>
       <div className="stack">
         <QueryState query={school} loadingLabel="Loading school profile…">
           {(s) => (
-            <div className="grid-2-1">
+            <div className="settings-overview grid-2-1">
               <ProfileForm school={s} />
-              <Card title="School record" subtitle="Managed by the platform owner">
+              <Card className="settings-card settings-card--record" title={<span className="settings-card__title"><FileText size={21} aria-hidden />School record</span>} subtitle="Managed by the platform owner">
                 <KeyValue
                   items={[
                     ['Name', s.name],
@@ -147,8 +158,8 @@ export default function SchoolSettingsPage() {
           )}
         </QueryState>
 
-        <div className="grid-3">
-          <Card title={<span className="row"><Lock size={14} aria-hidden /> Subscription</span>} subtitle="Read-only">
+        <div className="settings-lower grid-3">
+          <Card className="settings-card settings-card--subscription" title={<span className="settings-card__title"><Crown size={21} aria-hidden />Subscription</span>} subtitle="Read-only">
             <QueryState query={sub}>
               {(d) =>
                 d.current ? (
@@ -167,7 +178,7 @@ export default function SchoolSettingsPage() {
               }
             </QueryState>
           </Card>
-          <Card title={<span className="row"><Lock size={14} aria-hidden /> Class access</span>} subtitle="Read-only · granted by the platform owner">
+          <Card className="settings-card settings-card--access" title={<span className="settings-card__title"><UsersRound size={21} aria-hidden />Class access</span>} subtitle="Read-only · granted by the platform owner">
             <QueryState query={access}>
               {(rows) => {
                 const on = rows.filter((r) => r.enabled).map((r) => r.levelNumber);
@@ -184,7 +195,7 @@ export default function SchoolSettingsPage() {
               }}
             </QueryState>
           </Card>
-          <Card title={<span className="row"><Lock size={14} aria-hidden /> Programmes</span>} subtitle="Read-only · entitlements and validity">
+          <Card className="settings-card settings-card--programmes" title={<span className="settings-card__title"><Grid2X2 size={21} aria-hidden />Programmes</span>} subtitle="Read-only · entitlements and validity">
             <QueryState query={progs}>
               {(rows) => (
                 <div className="stack stack--sm">
@@ -202,6 +213,6 @@ export default function SchoolSettingsPage() {
           </Card>
         </div>
       </div>
-    </>
+    </div>
   );
 }

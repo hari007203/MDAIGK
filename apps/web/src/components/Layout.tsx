@@ -32,6 +32,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import './StudentSidebar.css';
+import './SchoolSidebar.css';
 import { ROLES } from '@mango/shared';
 import { useAuth } from '../auth/AuthContext';
 import { useGet } from '../api/hooks';
@@ -138,11 +139,12 @@ function navFor(role: string | undefined): NavGroup[] {
 function Logo({ student = false }: { student?: boolean }) {
   return (
     <Link to="/" className="brand" aria-label="Mango Dude AIGK home">
-      {student ? (
-        <img className="student-sidebar__logo" src="/assets/student-home/mango-logo.png" width="78" height="97" alt="" />
-      ) : (
-        <span className="brand__mark" aria-hidden>M</span>
-      )}
+      <img
+        className={`brand__mark${student ? ' student-sidebar__logo' : ''}`}
+        src="/assets/mango-dude-symbol.png"
+        alt=""
+        aria-hidden="true"
+      />
       <span className="brand__text">
         Mango Dude <small>AIGK</small>
       </span>
@@ -152,6 +154,7 @@ function Logo({ student = false }: { student?: boolean }) {
 
 export function Sidebar({ groups, open, onClose }: { groups: NavGroup[]; open: boolean; onClose: () => void }) {
   const isSuperAdmin = groups === SUPER_NAV;
+  const isSchoolAdmin = groups === SCHOOL_NAV;
   const isStudent = groups === STUDENT_NAV;
   const settingsItem = isSuperAdmin ? groups.flatMap((group) => group.items).find((item) => item.to === '/super/settings') : undefined;
   const visibleGroups = isSuperAdmin
@@ -159,7 +162,7 @@ export function Sidebar({ groups, open, onClose }: { groups: NavGroup[]; open: b
     : isStudent ? groups.map((group) => ({ ...group, items: group.items.filter((item) => item.to !== '/student/profile') })) : groups;
   return (
     <>
-      <aside className={`sidebar ${isSuperAdmin ? 'sidebar--super' : ''} ${open ? 'sidebar--open' : ''}`} aria-label="Main navigation">
+      <aside className={`sidebar ${isSuperAdmin ? 'sidebar--super' : ''} ${isSchoolAdmin ? 'sidebar--school' : ''} ${open ? 'sidebar--open' : ''}`} aria-label="Main navigation">
         <div className="sidebar__head">
           <Logo student={isStudent} />
           <button type="button" className="icon-btn sidebar__close" onClick={onClose} aria-label="Close navigation">

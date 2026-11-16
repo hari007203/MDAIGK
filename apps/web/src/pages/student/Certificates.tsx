@@ -13,6 +13,7 @@ import { QuizPlayer } from '../../components/QuizPlayer';
 import { useToast } from '../../components/Toast';
 import { date } from '../../lib/format';
 import { SectionTitle, lockText, pctOrDash } from './shared';
+import './Certificates.css';
 
 interface PreviewTarget {
   id: string;
@@ -119,14 +120,23 @@ export default function CertificatesPage() {
   const [preview, setPreview] = useState<PreviewTarget | null>(null);
 
   return (
-    <div className="student-page">
-      <PageHeader title="Certificates" subtitle="Pass each level’s assessment to earn a Mango Dude GK certificate. Levels unlock one after another." />
+    <div className="student-page student-certificates-page">
+      <div className="certificates-hero">
+        <span className="certificates-hero__icon"><Award size={42} aria-hidden /></span>
+        <PageHeader title="Certificates" subtitle="Pass each level’s assessment to earn a Mango Dude GK certificate. Levels unlock one after another." />
+        <div className="certificates-hero__art" aria-hidden="true">
+          <span className="certificates-hero__scroll"><i /><b /></span>
+          <span className="certificates-hero__ribbon" />
+          <span className="certificates-hero__leaf certificates-hero__leaf--one" />
+          <span className="certificates-hero__leaf certificates-hero__leaf--two" />
+          <span className="certificates-hero__spark certificates-hero__spark--one">✦</span>
+          <span className="certificates-hero__spark certificates-hero__spark--two">✦</span>
+        </div>
+      </div>
       <QueryState query={levels} loadingLabel="Loading levels…">
         {(d) => (
           <>
-            <p className="muted">
-              Current level: <strong>{d.currentLevel > 0 ? `Level ${d.currentLevel}` : 'not certified yet'}</strong>
-            </p>
+            <div className="cert-current-level"><Award size={20} aria-hidden /><span>Current level:</span><strong>{d.currentLevel > 0 ? `Level ${d.currentLevel}` : 'not certified yet'}</strong></div>
             {d.levels.length === 0 ? (
               <EmptyState title="No certification levels yet" />
             ) : (
@@ -136,7 +146,7 @@ export default function CertificatesPage() {
                   return (
                     <li key={l.id} className={`cert-step cert-step--${certified ? 'certified' : l.state}`}>
                       <span className="cert-step__num" aria-hidden>
-                        {certified ? <Award size={20} /> : l.state === 'locked' ? <Lock size={18} /> : l.level}
+                        <Award size={20} />
                       </span>
                       <div className="cert-step__body">
                         <h3>
@@ -184,38 +194,40 @@ export default function CertificatesPage() {
         )}
       </QueryState>
 
-      <SectionTitle>My certificates</SectionTitle>
-      <QueryState query={certs}>
-        {(list) =>
-          list.length === 0 ? (
-            <EmptyState title="No certificates yet" message="Pass Level 1 to earn your first certificate." />
-          ) : (
-            <ul className="cert-list">
-              {list.map((c) => (
-                <li key={c._id}>
-                  <Award size={22} aria-hidden className="text-gold" />
-                  <div>
-                    <strong>
-                      Level {c.level}
-                      {c.levelTitle ? `: ${c.levelTitle}` : ''}
-                    </strong>
-                    <span className="muted small">
-                      No. {c.certificateNumber} · issued {date(c.issuedAt)}
-                      {c.percent !== undefined ? ` · scored ${Math.round(c.percent)}%` : ''}
-                    </span>
-                  </div>
-                  <button type="button" className="btn btn--ghost btn--sm" onClick={() => setPreview({ id: c._id, number: c.certificateNumber })}>
-                    <Eye size={14} aria-hidden /> Preview
-                  </button>
-                  <button type="button" className="btn btn--secondary btn--sm" disabled={busy === c._id} onClick={() => void download(c._id, c.certificateNumber)}>
-                    <Download size={14} aria-hidden /> {busy === c._id ? 'Downloading…' : 'Download PDF'}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )
-        }
-      </QueryState>
+      <section className="certificates-collection" aria-label="My certificates">
+        <SectionTitle>My certificates</SectionTitle>
+        <QueryState query={certs}>
+          {(list) =>
+            list.length === 0 ? (
+              <EmptyState title="No certificates yet" message="Pass Level 1 to earn your first certificate." />
+            ) : (
+              <ul className="cert-list">
+                {list.map((c) => (
+                  <li key={c._id}>
+                    <span className="cert-list__thumb" aria-hidden="true"><Award size={28} /></span>
+                    <div>
+                      <strong>
+                        Level {c.level}
+                        {c.levelTitle ? `: ${c.levelTitle}` : ''}
+                      </strong>
+                      <span className="muted small">
+                        No. {c.certificateNumber} · issued {date(c.issuedAt)}
+                        {c.percent !== undefined ? ` · scored ${Math.round(c.percent)}%` : ''}
+                      </span>
+                    </div>
+                    <button type="button" className="btn btn--ghost btn--sm" onClick={() => setPreview({ id: c._id, number: c.certificateNumber })}>
+                      <Eye size={14} aria-hidden /> Preview
+                    </button>
+                    <button type="button" className="btn btn--secondary btn--sm" disabled={busy === c._id} onClick={() => void download(c._id, c.certificateNumber)}>
+                      <Download size={14} aria-hidden /> {busy === c._id ? 'Downloading…' : 'Download PDF'}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </QueryState>
+      </section>
 
       <CertificatePreviewDialog
         target={preview}
@@ -240,7 +252,7 @@ export function AssessmentPage() {
   const { download, busy } = useCertificateDownload();
 
   return (
-    <div className="student-page student-page--narrow">
+    <div className="student-page student-page--narrow student-certificate-assessment">
       <PageHeader
         title={q.data ? `Level ${q.data.level.level}: ${q.data.level.title}` : 'Certification assessment'}
         subtitle={q.data ? `${q.data.quiz.questionCount} questions · pass mark ${q.data.level.passPercent}%` : undefined}

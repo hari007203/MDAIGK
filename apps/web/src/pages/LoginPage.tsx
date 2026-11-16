@@ -6,6 +6,7 @@ import { useAuth } from '../auth/AuthContext';
 import { homePathFor } from '../auth/guards';
 import { FormField, EMAIL_RX } from '../components/Form';
 import { InlineAlert } from '../components/Feedback';
+import { LoginIllustration } from '../components/LoginIllustration';
 import { Eye, EyeOff, UsersRound } from 'lucide-react';
 
 export function validateLogin(email: string, password: string): Record<string, string> {
@@ -53,7 +54,6 @@ export function LoginPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-
   if (status === 'authenticated' && user) {
     return <Navigate to={homePathFor(user.role) ?? '/unsupported'} replace />;
   }
@@ -84,14 +84,8 @@ export function LoginPage() {
     <div className="auth-page">
       <section className="auth-hero" aria-hidden="false">
         <div className="auth-brand" aria-label="Mango Dude AIGK">
-          <svg className="auth-brand__mark" viewBox="0 0 88 82" role="img" aria-label="Mango and open book">
-            <path d="M44 13c-3-6-2-10 3-12 2 5 2 9-1 13 8-8 16-10 25-8-5 9-13 13-25 11" fill="#b8df79" />
-            <path d="M43 13c-14 2-25 17-26 33-1 10 4 19 13 22 8 3 15-2 17-11 3 9 10 14 18 11 9-3 14-12 13-22-1-16-12-31-26-33-4 0-6 1-9 3-3-2-5-3-9-3Z" fill="#ffc928" />
-            <path d="M22 51c8-4 15-3 22 3 7-6 14-7 22-3l11 8c-12-2-23 0-33 8-10-8-21-10-33-8l11-8Z" fill="#fffdf5" />
-            <path d="M11 61c12-2 23 1 33 8 10-7 21-10 33-8l-5 8c-10-1-19 1-28 8-9-7-18-9-28-8l-5-8Z" fill="#b8df79" />
-            <path d="M44 54v15" stroke="#145c38" strokeWidth="2.5" strokeLinecap="round" />
-          </svg>
-          <span className="auth-brand__name">Mango Dude<span className="auth-brand__tag">AIGK</span></span>
+          <img className="auth-brand__logo" src="/assets/mango-dude-logo.png" alt="Mango Dude" />
+          <span className="auth-brand__tag">AIGK</span>
         </div>
         <div className="auth-hero__content">
           <div className="auth-hero__copy">
@@ -102,7 +96,7 @@ export function LoginPage() {
             <p>One place for platform owners, school administrators, teachers and students to run classes, activities, learning, quizzes, games, programmes and certification.</p>
           </div>
           <div className="auth-illustration" aria-hidden="true">
-            <img src="/assets/mango-dude-illustration-transparent.png" alt="A mango above an open book, surrounded by learning icons" />
+            <LoginIllustration />
           </div>
         </div>
         <p className="auth-hero__note"><span className="auth-hero__note-icon"><UsersRound size={19} /></span><span className="auth-hero__note-divider" aria-hidden="true" /><span>Students: sign in with your school code, student ID and PIN from your teacher.</span></p>

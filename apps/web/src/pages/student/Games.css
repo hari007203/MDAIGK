@@ -1,0 +1,137 @@
+.student-page.student-games-page { gap: 24px; max-width: none; }
+
+.student-games-page .games-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 172px;
+  overflow: hidden;
+  padding: 26px 32px;
+  border: 1px solid #e7e7cf;
+  border-radius: 25px;
+  background: linear-gradient(112deg, #fff7d9 0%, #fffdf2 50%, #eaf7df 100%);
+  box-shadow: 0 12px 26px rgba(68, 83, 39, .09);
+}
+.student-games-page .games-hero::before,
+.student-games-page .games-hero::after {
+  position: absolute;
+  content: '';
+  pointer-events: none;
+}
+.student-games-page .games-hero::before {
+  width: 390px;
+  height: 190px;
+  right: 0;
+  bottom: -112px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, #b8e857, #5cbd43);
+  transform: rotate(-12deg);
+}
+.student-games-page .games-hero::after {
+  width: 300px;
+  height: 150px;
+  right: 52px;
+  bottom: -118px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, #e1f48a, #9bd849);
+  transform: rotate(11deg);
+}
+.app.app--student .student-games-page .games-hero > .page-header { z-index: 1; flex: 1; min-width: 0; padding: 0; border: 0; background: none; box-shadow: none; }
+.student-games-page .games-hero .page-header h1 { color: #07583b; font: 900 34px/1.12 var(--font-display); letter-spacing: -.5px; }
+.student-games-page .games-hero .page-header__sub { max-width: 640px; color: #4c5d50; font-size: 15px; }
+.student-games-page .games-hero__icon { z-index: 1; display: grid; width: 82px; height: 82px; flex: 0 0 82px; place-items: center; margin-right: 20px; border: 4px solid #fff; border-radius: 50%; color: #087c4a; background: linear-gradient(145deg, #e8f9cf, #fff2a5); box-shadow: 0 5px 16px rgba(54, 93, 41, .14); }
+.student-games-page .games-hero__art { position: absolute; z-index: 1; right: 35px; bottom: 0; width: 300px; height: 150px; pointer-events: none; }
+.student-games-page .games-hero__book { position: absolute; bottom: 19px; left: 15px; display: flex; width: 120px; height: 35px; transform: perspective(90px) rotateX(12deg); }
+.student-games-page .games-hero__book i { width: 50%; border: 2px solid #dfcc87; background: linear-gradient(180deg,#fffef5,#f1e6c0); }
+.student-games-page .games-hero__book i:first-child { border-radius: 24px 3px 4px 10px; transform: skewY(9deg); }
+.student-games-page .games-hero__book i:last-child { border-radius: 3px 24px 10px 4px; transform: skewY(-9deg); }
+.student-games-page .games-hero__controller { position: absolute; right: 0; bottom: 18px; display: grid; width: 132px; height: 88px; place-items: center; color: #075b3e; border: 2px solid #f4d84d; border-radius: 31px 31px 39px 39px; background: linear-gradient(145deg,#26a765,#087446); box-shadow: 0 9px 0 #075c3c, 0 15px 22px #7eaa4f66; transform: rotate(-7deg); }
+.student-games-page .games-hero__controller svg { color: #f6d648; filter: drop-shadow(0 2px 0 #075c3c); }
+.student-games-page .games-hero__spark { position: absolute; color: #ffbf12; text-shadow: 0 2px 4px #dba52066; }
+.student-games-page .games-hero__spark--one { top: 7px; right: 36px; font-size: 27px; }
+.student-games-page .games-hero__spark--two { top: 38px; right: 175px; font-size: 17px; }
+
+.app.app--student .student-games-page .game-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.app.app--student .student-games-page .game-card {
+  position: relative;
+  min-width: 0;
+  min-height: 390px;
+  overflow: hidden;
+  padding: 0 16px 15px;
+  gap: 7px;
+  border: 1px solid #e8e3cf;
+  border-radius: 23px;
+  background: linear-gradient(180deg,#fff 0%,#fffefa 100%);
+  box-shadow: 0 10px 22px rgba(39, 72, 44, .09);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.app.app--student .student-games-page .game-card::before { z-index: 1; height: 4px; background: linear-gradient(90deg,#ffc91f,#f3a900); }
+.app.app--student .student-games-page .game-card--grammar::before { background: linear-gradient(90deg,#55c95e,#179a66); }
+.app.app--student .student-games-page .game-card--tiles::before { background: linear-gradient(90deg,#40bc75,#159d72); }
+.app.app--student .student-games-page .game-card--math::before { background: linear-gradient(90deg,#a77be8,#579be9); }
+.app.app--student .student-games-page .game-card:hover { transform: translateY(-4px); border-color: #d9e6c5; box-shadow: 0 16px 30px rgba(39, 72, 44, .14); }
+.student-games-page .game-card__art { position: relative; display: flex; align-items: center; justify-content: center; height: 112px; flex: 0 0 112px; margin: 0 -16px 2px; overflow: hidden; background: radial-gradient(ellipse at 50% 120%, #80d34b 0%, #28ad5b 52%, #087349 100%); }
+.student-games-page .game-card__art::before,
+.student-games-page .game-card__art::after { position: absolute; content: ''; border-radius: 50%; background: #b7e64b44; }
+.student-games-page .game-card__art::before { width: 150px; height: 150px; top: -95px; left: -35px; }
+.student-games-page .game-card__art::after { width: 190px; height: 190px; right: -86px; bottom: -145px; background: #d9f48555; }
+.student-games-page .game-card--grammar .game-card__art { background: radial-gradient(ellipse at 50% 120%,#9bdd51,#2aaf63 58%,#08734a); }
+.student-games-page .game-card--tiles .game-card__art { background: radial-gradient(ellipse at 50% 120%,#b8df41,#42bb57 56%,#13854d); }
+.student-games-page .game-card--math .game-card__art { background: radial-gradient(ellipse at 50% 120%,#b1e544,#49bd57 50%,#6b54b1); }
+.student-games-page .game-card__heading { display: flex; align-items: center; gap: 10px; min-height: 38px; }
+.student-games-page .game-card__icon { position: static; z-index: 2; display: inline-flex; flex: 0 0 38px; width: 38px; height: 38px; border: 2px solid #fff7cd; border-radius: 12px; color: #075b3d; background: #ffcf20; box-shadow: 0 5px 12px #304c2133; }
+.app.app--student .student-games-page .game-card__heading h2 { min-width: 0; margin: 0; color: #172e24; font: 850 18px/1.22 var(--font-display); }
+.app.app--student .student-games-page .game-card > p { min-height: 36px; color: #59645d; font-size: 12px; line-height: 1.4; }
+.app.app--student .student-games-page .game-card__stats { gap: 7px; margin: 3px 0; }
+.app.app--student .student-games-page .game-card__stats div { min-width: 0; padding: 7px 3px; border: 1px solid #eeeadc; border-radius: 12px; background: #faf8ef; }
+.app.app--student .student-games-page .game-card__stats dt { color: #687168; font-size: 11px; line-height: 1.25; }
+.app.app--student .student-games-page .game-card__stats dd { color: #14553a; font: 850 16px/1.25 var(--font-display); }
+.app.app--student .student-games-page .game-card > p.muted { min-height: 21px; }
+.app.app--student .student-games-page .game-card__limit { color: #805a00; }
+.app.app--student .student-games-page .game-card .btn { min-height: 43px; border: 0; border-radius: 13px; color: #113c2b; background: linear-gradient(180deg,#ffdb35,#ffb900); box-shadow: 0 5px 12px #d79a1940; font-weight: 850; transition: transform .16s ease, box-shadow .16s ease; }
+.app.app--student .student-games-page .game-card .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 17px #d79a1955; }
+.app.app--student .student-games-page .game-card .btn:active { transform: translateY(1px) scale(.99); }
+.student-games-page .art-tile,.student-games-page .number-tile,.student-games-page .operator-tile { position: absolute; z-index: 1; display: grid; place-items: center; border: 2px solid #ffffffba; border-radius: 13px; color: #075638; background: linear-gradient(145deg,#ffe978,#ffb923); box-shadow: 0 8px 15px #063f323e; font: 900 31px/1 var(--font-display); }
+.student-games-page .art-tile { width: 52px; height: 56px; }
+.student-games-page .art-tile--a { left: 14%; bottom: 25px; transform: rotate(-14deg); }
+.student-games-page .art-tile--b { left: 35%; top: 18px; background: linear-gradient(145deg,#fff2bd,#f6d871); transform: rotate(8deg); }
+.student-games-page .art-tile--c { left: 51%; bottom: 20px; background: linear-gradient(145deg,#fff2bd,#f6d871); transform: rotate(-7deg); }
+.student-games-page .art-trophy { position: absolute; right: 12%; bottom: 20px; color: #ffd433; filter: drop-shadow(0 5px 3px #03452f77); }
+.student-games-page .art-book { position: absolute; left: 24%; bottom: 26px; display: flex; width: 135px; height: 63px; filter: drop-shadow(0 7px 5px #03452f77); transform: rotate(-5deg); }
+.student-games-page .art-book i { width: 50%; border: 3px solid #e6d9a6; background: repeating-linear-gradient(180deg,#fffdf1 0 10px,#e4e0c8 11px 13px); }
+.student-games-page .art-book i:first-child { border-radius: 28px 4px 5px 10px; transform: skewY(8deg); }
+.student-games-page .art-book i:last-child { border-radius: 4px 28px 10px 5px; transform: skewY(-8deg); }
+.student-games-page .art-pencil { position: absolute; z-index: 2; left: 51%; top: 7px; color: #ffb723; font: 900 62px/1 var(--font-display); text-shadow: 0 3px 2px #074b3580; transform: rotate(19deg); }
+.student-games-page .art-leaf { position: absolute; right: 13%; top: 19px; color: #ffe65c; font-size: 25px; }
+.student-games-page .number-tile,.student-games-page .operator-tile { width: 58px; height: 60px; font-size: 35px; }
+.student-games-page .number-tile--two { left: 24%; top: 21px; transform: rotate(-9deg); }
+.student-games-page .number-tile--zero { left: 46%; top: 13px; color: #08714c; background: linear-gradient(145deg,#b8eff2,#5dbbd4); transform: rotate(7deg); }
+.student-games-page .number-tile--four { left: 35%; bottom: 13px; color: #fff; background: linear-gradient(145deg,#ffad35,#f27925); transform: rotate(6deg); }
+.student-games-page .number-tile--eight { left: 57%; bottom: 12px; color: #fff; background: linear-gradient(145deg,#ff9b50,#ee5e39); transform: rotate(-8deg); }
+.student-games-page .operator-tile { width: 54px; height: 55px; border-radius: 11px; color: #fff; font-size: 34px; }
+.student-games-page .operator-tile--plus { left: 20%; top: 15px; background: linear-gradient(145deg,#ffbc4b,#f18128); transform: rotate(-7deg); }
+.student-games-page .operator-tile--minus { left: 47%; top: 21px; background: linear-gradient(145deg,#67d5dc,#259bc2); transform: rotate(8deg); }
+.student-games-page .operator-tile--times { left: 34%; bottom: 13px; background: linear-gradient(145deg,#c296ef,#7950c8); transform: rotate(7deg); }
+.student-games-page .operator-tile--divide { left: 62%; bottom: 18px; background: linear-gradient(145deg,#4bd5b4,#1c9d86); transform: rotate(-6deg); }
+
+@media (max-width: 1120px) {
+  .app.app--student .student-games-page .game-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 850px) {
+  .student-games-page .games-hero__art { display: none; }
+}
+@media (max-width: 700px) {
+  .student-page.student-games-page { gap: 16px; }
+  .student-games-page .games-hero { min-height: 156px; padding: 20px 18px; border-radius: 19px; }
+  .student-games-page .games-hero__icon { width: 58px; height: 58px; flex-basis: 58px; margin-right: 13px; }
+  .student-games-page .games-hero__icon svg { width: 29px; }
+  .student-games-page .games-hero .page-header h1 { font-size: 27px; }
+  .student-games-page .games-hero .page-header__sub { max-width: 42ch; font-size: 13px; }
+  .app.app--student .student-games-page .game-grid { grid-template-columns: minmax(0,1fr); gap: 14px; }
+  .app.app--student .student-games-page .game-card { min-height: 0; padding: 0 16px 16px; }
+  .student-games-page .game-card__art { height: 104px; flex-basis: 104px; margin-right: -16px; margin-left: -16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app.app--student .student-games-page .game-card,
+  .app.app--student .student-games-page .game-card .btn { transition: none; }
+}

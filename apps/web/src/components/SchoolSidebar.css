@@ -1,0 +1,113 @@
+/* One shared skin for all School Admin routes. Navigation markup and behaviour stay in Layout.tsx. */
+.app:has(.sidebar--school):has(.sidebar) { --sidebar-w: 258px; }
+.app:has(.sidebar--school):has(.sidebar) .sidebar {
+  background:
+    radial-gradient(ellipse at 5% 78%, rgba(13,122,66,.72), transparent 43%),
+    linear-gradient(158deg, #075d39 0%, #045234 56%, #063e2c 100%);
+  color: #fff;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.28) transparent;
+}
+.app:has(.sidebar--school):has(.sidebar) .sidebar::-webkit-scrollbar { width: 6px; }
+.app:has(.sidebar--school):has(.sidebar) .sidebar::-webkit-scrollbar-thumb { border-radius: 8px; background: rgba(255,255,255,.28); }
+.app:has(.sidebar--school):has(.sidebar) .sidebar__head {
+  height: 116px;
+  min-height: 116px;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom-color: rgba(255,255,255,.13);
+  background: transparent;
+}
+.app:has(.sidebar--school):has(.sidebar) .sidebar .brand {
+  min-width: 0;
+  gap: 11px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.app:has(.sidebar--school):has(.sidebar) .sidebar .brand__mark {
+  width: 62px;
+  height: 78px;
+  flex: 0 0 auto;
+  border-radius: 14px;
+  color: transparent;
+  font-size: 0;
+  object-fit: contain;
+  padding: 4px;
+  background: #fffbf2;
+}
+.app:has(.sidebar--school):has(.sidebar) .sidebar .brand__text { white-space: nowrap; }
+.app:has(.sidebar--school):has(.sidebar) .sidebar .brand__text small {
+  display: block;
+  margin: 3px 0 0;
+  color: #ffd12f;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: .015em;
+}
+.app:has(.sidebar--school):has(.sidebar) .sidebar .nav-group { padding: 8px 14px 0; }
+.app:has(.sidebar--school):has(.sidebar) .sidebar .nav-link {
+  min-height: 49px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 10px 13px;
+  margin-bottom: 5px;
+  border: 1px solid transparent;
+  border-radius: 15px;
+  color: rgba(255,255,255,.97);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+  transition: background-color .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.app:has(.sidebar--school):has(.sidebar) .sidebar .nav-link svg {
+  width: 23px;
+  height: 23px;
+  flex: 0 0 23px;
+  stroke-width: 2.25;
+  color: currentColor;
+  transition: transform .18s ease;
+}
+.app:has(.sidebar--school):has(.sidebar) .sidebar .nav-link:hover:not(.nav-link--active) {
+  color: #fff;
+  background: rgba(255,255,255,.12);
+  transform: translateX(2px);
+}
+.app:has(.sidebar--school):has(.sidebar) .sidebar .nav-link:hover svg { transform: scale(1.06); }
+.app:has(.sidebar--school):has(.sidebar) .sidebar .nav-link--active,
+.app:has(.sidebar--school):has(.sidebar) .sidebar .nav-link--active:hover {
+  border-color: rgba(255,235,119,.9);
+  color: #123d25;
+  background: linear-gradient(105deg, #ffdc37 0%, #ffc91e 100%);
+  box-shadow: 0 4px 13px rgba(0,0,0,.16), inset 0 1px rgba(255,255,255,.36);
+  font-weight: 800;
+}
+.app:has(.sidebar--school):has(.sidebar) .sidebar .nav-link--active svg { color: #0d5632; }
+.app:has(.sidebar--school):has(.sidebar) .sidebar .nav-link:focus-visible,
+.app:has(.sidebar--school):has(.sidebar) .sidebar .sidebar__close:focus-visible {
+  outline: 3px solid #ffe36a;
+  outline-offset: 2px;
+}
+/* Keep the existing school navigation compact; no extra promotional or profile item is introduced. */
+.app:has(.sidebar--school):has(.sidebar) .sidebar::after { content: none; }
+
+@media (max-width: 960px) {
+  .app:has(.sidebar--school):has(.sidebar) { --sidebar-w: 258px; }
+  .app:has(.sidebar--school):has(.sidebar) .sidebar__head { height: 92px; min-height: 92px; padding: 10px 15px; }
+  .app:has(.sidebar--school):has(.sidebar) .sidebar .brand { gap: 9px; font-size: 16px; }
+  .app:has(.sidebar--school):has(.sidebar) .sidebar .brand__mark { width: 52px; height: 66px; }
+  .app:has(.sidebar--school):has(.sidebar) .sidebar .brand__text small { margin-top: 2px; font-size: 18px; }
+  .app:has(.sidebar--school):has(.sidebar) .sidebar .nav-group { padding: 8px 13px 0; }
+  .app:has(.sidebar--school):has(.sidebar) .sidebar .nav-link { min-height: 48px; font-size: 14px; }
+}
+@media (max-width: 380px) {
+  .app:has(.sidebar--school):has(.sidebar) .sidebar { width: min(258px, 88vw); }
+  .app:has(.sidebar--school):has(.sidebar) .sidebar .nav-link { min-height: 48px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app:has(.sidebar--school):has(.sidebar) .sidebar .nav-link,
+  .app:has(.sidebar--school):has(.sidebar) .sidebar .nav-link svg { transition: none; }
+}

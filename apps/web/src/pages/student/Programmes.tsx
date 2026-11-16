@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, Crown, Lock, PlayCircle, Sparkles } from 'lucide-react';
+import { ArrowLeft, Atom, BookOpen, BriefcaseBusiness, CheckCircle2, Cpu, Crown, FlaskConical, GraduationCap, HeartPulse, Lock, PlayCircle, Sparkles, Star, Trophy, UserRound } from 'lucide-react';
 import { ERROR_CODES } from '@mango/shared';
 import { ApiError, api } from '../../api/client';
 import { useGet, useMutate } from '../../api/hooks';
@@ -9,8 +9,46 @@ import { Card, PageHeader } from '../../components/Cards';
 import { EmptyState, QueryState } from '../../components/Feedback';
 import { date, titleCase } from '../../lib/format';
 import { Meter, SectionTitle, lockText } from './shared';
+import './Programmes.css';
 
-function ProgrammeCard({ p }: { p: StudentProgramme }) {
+type ProgrammeTheme = 'science' | 'health' | 'chess' | 'business' | 'technology' | 'sports' | 'learning';
+
+function programmeTheme(p: StudentProgramme): ProgrammeTheme {
+  const key = `${p.code} ${p.name}`.toLowerCase();
+  if (/science|scientist|experiment|lab/.test(key)) return 'science';
+  if (/health|medical|wellness/.test(key)) return 'health';
+  if (/chess|strategy/.test(key)) return 'chess';
+  if (/entrepreneur|business|finance/.test(key)) return 'business';
+  if (/ai|computer|tech|robot/.test(key)) return 'technology';
+  if (/sport|fitness/.test(key)) return 'sports';
+  return 'learning';
+}
+
+function ProgrammeArt({ p }: { p: StudentProgramme }) {
+  const theme = programmeTheme(p);
+  const ArtIcon = ({
+    science: FlaskConical,
+    health: HeartPulse,
+    chess: Trophy,
+    business: BriefcaseBusiness,
+    technology: Cpu,
+    sports: Star,
+    learning: BookOpen,
+  })[theme];
+  return (
+    <div className={`programme-card__art programme-card__art--${theme}`} aria-hidden="true">
+      <span className="programme-card__art-orbit" />
+      <span className="programme-card__art-symbol"><ArtIcon size={58} strokeWidth={1.7} /></span>
+      <span className="programme-card__art-spark programme-card__art-spark--one">✦</span>
+      <span className="programme-card__art-spark programme-card__art-spark--two">✦</span>
+      {theme === 'science' && <span className="programme-card__flask programme-card__flask--two"><Atom size={34} /></span>}
+      {theme === 'technology' && <span className="programme-card__chip">AI</span>}
+      {theme === 'chess' && <span className="programme-card__chess-piece">♞</span>}
+    </div>
+  );
+}
+
+function ProgrammeCard({ p, featured = false }: { p: StudentProgramme; featured?: boolean }) {
   const inner = (
     <>
       <div className="programme-card__head">
@@ -52,11 +90,13 @@ function ProgrammeCard({ p }: { p: StudentProgramme }) {
   );
   // Locked cards are not links, so their module content is never requested.
   return p.locked ? (
-    <article className={`programme-card is-locked ${p.premium ? 'programme-card--premium' : ''}`} aria-label={`${p.name} (locked)`}>
+    <article className={`programme-card programme-card--${programmeTheme(p)} ${featured ? 'programme-card--featured' : ''} is-locked ${p.premium ? 'programme-card--premium' : ''}`} aria-label={`${p.name} (locked)`}>
+      <ProgrammeArt p={p} />
       {inner}
     </article>
   ) : (
-    <Link to={`/student/programmes/${p.id}`} className={`programme-card ${p.premium ? 'programme-card--premium' : ''}`}>
+    <Link to={`/student/programmes/${p.id}`} className={`programme-card programme-card--${programmeTheme(p)} ${featured ? 'programme-card--featured' : ''} ${p.premium ? 'programme-card--premium' : ''}`}>
+      <ProgrammeArt p={p} />
       {inner}
     </Link>
   );
@@ -66,9 +106,20 @@ export default function ProgrammesPage() {
   const q = useGet<{ premiumAcademies: StudentProgramme[]; otherProgrammes: StudentProgramme[] }>('/programmes');
   const [view, setView] = useState<'all' | 'mine'>('all');
   return (
-    <div className="student-page">
-      <PageHeader title="Programmes" subtitle="Enrichment programmes your school has unlocked for you." />
-      <div className="seg seg--sm" role="radiogroup" aria-label="Programme filter" style={{ marginBottom: 12 }}>
+    <div className="student-page student-programmes-page">
+      <div className="programmes-hero">
+        <span className="programmes-hero__icon"><GraduationCap size={38} aria-hidden /></span>
+        <PageHeader title="Programmes" subtitle="Enrichment programmes your school has unlocked for you." />
+        <div className="programmes-hero__art" aria-hidden="true">
+          <span className="programmes-hero__book programmes-hero__book--one" />
+          <span className="programmes-hero__book programmes-hero__book--two" />
+          <GraduationCap className="programmes-hero__cap" size={126} />
+          <span className="programmes-hero__leaf programmes-hero__leaf--one" />
+          <span className="programmes-hero__leaf programmes-hero__leaf--two" />
+          <span className="programmes-hero__spark">✦</span>
+        </div>
+      </div>
+      <div className="programmes-tabs seg seg--sm" role="radiogroup" aria-label="Programme filter">
         {(
           [
             ['all', 'All programmes'],
@@ -76,6 +127,7 @@ export default function ProgrammesPage() {
           ] as const
         ).map(([v, l]) => (
           <button key={v} type="button" role="radio" aria-checked={view === v} className={`seg__btn ${view === v ? 'seg__btn--active' : ''}`} onClick={() => setView(v)}>
+            {v === 'all' ? <Star size={17} aria-hidden /> : <UserRound size={17} aria-hidden />}
             {l}
           </button>
         ))}
@@ -105,8 +157,8 @@ export default function ProgrammesPage() {
                 <EmptyState title="No programmes yet" />
               ) : (
                 <div className="programme-grid">
-                  {others.map((p) => (
-                    <ProgrammeCard key={p.id} p={p} />
+                  {others.map((p, index) => (
+                    <ProgrammeCard key={p.id} p={p} featured={index === 0} />
                   ))}
                 </div>
               )}
@@ -138,7 +190,7 @@ export function ProgrammeDetailPage() {
 
   if (q.isError && q.error instanceof ApiError && (q.error.code === ERROR_CODES.PROGRAMME_LOCKED || q.error.status === 403)) {
     return (
-      <div className="student-page student-page--narrow">
+      <div className="student-page student-page--narrow student-programme-detail">
         <EmptyState
           title="This programme is locked"
           message={q.error.message}
@@ -153,7 +205,7 @@ export function ProgrammeDetailPage() {
   }
 
   return (
-    <div className="student-page student-page--narrow">
+    <div className="student-page student-page--narrow student-programme-detail">
       <QueryState query={q} loadingLabel="Loading programme…">
         {(p) => {
           const items = p.modules.flatMap((m) => m.items);

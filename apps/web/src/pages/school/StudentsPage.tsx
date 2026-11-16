@@ -1,11 +1,11 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus } from 'lucide-react';
+import { ArrowRightLeft, CirclePause, CirclePlay, KeyRound, Pencil, Plus } from 'lucide-react';
 import { ApiError, api, errorMessage } from '../../api/client';
 import { useGet, useMutate } from '../../api/hooks';
 import type { ClassAccessRow, Paginated, Section, StudentRow } from '../../api/types';
 import { useSchoolId } from '../../auth/AuthContext';
-import { PageHeader, Toolbar } from '../../components/Cards';
+import { Toolbar } from '../../components/Cards';
 import { DataTable } from '../../components/DataTable';
 import { ConfirmDialog, Modal, SecretDialog } from '../../components/Modal';
 import { FormField, FormGrid } from '../../components/Form';
@@ -14,6 +14,7 @@ import { StatusBadge } from '../../components/Badge';
 import { useToast } from '../../components/Toast';
 import { dateTime, num, pct } from '../../lib/format';
 import { FilterField, sectionLabel, useSections } from './shared';
+import './StudentsPage.css';
 
 function useDebounced<T>(value: T, ms = 300): T {
   const [v, setV] = useState(value);
@@ -234,16 +235,19 @@ export default function StudentsPage() {
   const filtered = Boolean(debounced || level || sectionId || status !== 'active');
 
   return (
-    <>
-      <PageHeader
-        title="Students"
-        subtitle={q.data ? `${num(q.data.total)} student(s) match` : undefined}
-        actions={
-          <button type="button" className="btn btn--primary" onClick={() => setAdding(true)}>
-            <Plus size={16} aria-hidden /> Add student
-          </button>
-        }
-      />
+    <div className="school-students">
+      <div className="students-hero">
+        <div className="students-hero__copy">
+          <span className="students-hero__icon" aria-hidden />
+          <div>
+            <h1>Students</h1>
+            {q.data && <p>{num(q.data.total)} student(s) match</p>}
+          </div>
+        </div>
+        <button type="button" className="btn btn--primary" onClick={() => setAdding(true)}>
+          <Plus size={18} aria-hidden /> Add student
+        </button>
+      </div>
       <Toolbar>
         <div className="toolbar__grow">
           <FilterField label="Search">
@@ -283,37 +287,41 @@ export default function StudentsPage() {
         emptyMessage={filtered ? 'Try clearing the search or filters.' : 'Add students to a section to get started.'}
         rowClassName={(s) => (s.status === 'active' ? undefined : 'row--muted')}
         columns={[
-          { key: 'code', header: 'Student ID', render: (s) => <span className="mono">{s.studentCode}</span> },
+          { key: 'code', header: 'Student ID', render: (s) => <span className="mono student-code">{s.studentCode}</span> },
           {
             key: 'name',
             header: 'Name',
             render: (s) => (
-              <Link to={`/school/students/${s.id}`}>
-                <strong>{s.name}</strong>
-                {s.displayName && s.displayName !== s.name && <span className="muted"> ({s.displayName})</span>}
+              <Link to={`/school/students/${s.id}`} className="student-person">
+                <span className="student-person__avatar" aria-hidden>{s.name.trim().split(/\s+/).slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase()}</span>
+                <span className="student-person__details">
+                  <strong>{s.name}</strong>
+                  {s.displayName && s.displayName !== s.name && <span>({s.displayName})</span>}
+                </span>
               </Link>
             ),
           },
-          { key: 'section', header: 'Class', render: (s) => sectionLabel(s.section) },
-          { key: 'avg', header: 'Avg score', align: 'right', render: (s) => (<span title={`${s.attempts} attempts (all time)`}>{pct(s.averagePercent)} <span className="muted small">n={s.attempts}</span></span>) },
+          { key: 'section', header: 'Class', render: (s) => <span className="student-class-badge">{sectionLabel(s.section)}</span> },
+          { key: 'avg', header: 'Avg score', align: 'right', render: (s) => (<span className="student-score" title={`${s.attempts} attempts (all time)`}>{pct(s.averagePercent)} <span className="muted small">n={s.attempts}</span></span>) },
           { key: 'login', header: 'Last sign-in', render: (s) => dateTime(s.lastLoginAt), hideSm: true },
           { key: 'status', header: 'Status', render: (s) => <StatusBadge status={s.status} /> },
           {
             key: 'actions',
-            header: <span className="sr-only">Actions</span>,
+            header: 'Actions',
             align: 'right',
             render: (s) => (
               <div className="actions">
                 <button type="button" className="btn btn--ghost btn--sm" onClick={() => setEditing({ s, mode: 'edit' })}>
-                  Edit
+                  <Pencil size={14} aria-hidden /> Edit
                 </button>
                 <button type="button" className="btn btn--ghost btn--sm" onClick={() => setEditing({ s, mode: 'move' })} disabled={s.status !== 'active'}>
-                  Move
+                  <ArrowRightLeft size={14} aria-hidden /> Move
                 </button>
                 <button type="button" className="btn btn--ghost btn--sm" onClick={() => setResetting(s)}>
-                  Reset PIN
+                  <KeyRound size={14} aria-hidden /> Reset PIN
                 </button>
-                <button type="button" className="btn btn--ghost btn--sm" onClick={() => setToggling(s)}>
+                <button type="button" className={`btn btn--ghost btn--sm ${s.status === 'active' ? 'student-action--deactivate' : 'student-action--activate'}`} onClick={() => setToggling(s)}>
+                  {s.status === 'active' ? <CirclePause size={14} aria-hidden /> : <CirclePlay size={14} aria-hidden />}
                   {s.status === 'active' ? 'Deactivate' : 'Activate'}
                 </button>
               </div>
@@ -322,9 +330,6 @@ export default function StudentsPage() {
         ]}
         pagination={q.data ? { page: q.data.page, totalPages: q.data.totalPages, total: q.data.total, pageSize: q.data.pageSize, onPage: setPage } : undefined}
       />
-      <p className="muted small" style={{ marginTop: 8 }}>
-        Average score: mean quiz/assessment percentage across all of a student’s attempts (all time); n = number of attempts.
-      </p>
       {adding && (
         <AddStudentDialog
           schoolId={schoolId}
@@ -357,7 +362,7 @@ export default function StudentsPage() {
         onCancel={() => setResetting(null)}
       />
       <SecretDialog secret={secret?.value} label="PIN" subject={secret?.subject} onClose={() => setSecret(null)} />
-    </>
+    </div>
   );
 }
 
